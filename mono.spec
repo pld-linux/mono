@@ -158,8 +158,8 @@ rm -rf $RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
-%ifnarch %{ix86}
-ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
+%ifnarch %{ix86} ppc
+ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
 %endif
 
 # Make links to all binaries. In fact we could move *.exe to
@@ -174,13 +174,12 @@ for f in *.exe ; do
 done
 cd "$old"
 
-
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
 rm -rf pld-doc
 mkdir -p pld-doc/{webpage,notes}
-cp -a doc/* pld-doc/webpage/
-cp -a docs/* pld-doc/notes/
+cp -a doc/* pld-doc/webpage
+cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
 
 %clean
