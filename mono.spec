@@ -2,13 +2,14 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Structure
 Name:		mono
 Version:	0.25
-Release:	1
+Release:	1.1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
 # Source0-md5:	086b4f0961f97a4ce25feac167c69de1
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 # Source1-md5:	4b6fb86f97bd1e034d412b78ced7acc3
+Patch0:		%{name}-nolibs.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -107,6 +108,7 @@ Statyczna biblioteka mono.
 
 %prep
 %setup -q -a1
+%patch -p1
 
 %build
 rm -f missing
@@ -114,11 +116,15 @@ rm -f missing
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-%configure --with-gc=boehm
+%configure \
+	--with-gc=boehm
+
 %{__make}
 
 # for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-%{version}/jay CC=%{__cc} CFLAGS="%{rpmcflags}"
+%{__make} -C mcs-%{version}/jay \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_prefix}/share/jay\\\""
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -126,7 +132,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 	
-install mcs-%{version}/jay/jay $RPM_BUILD_ROOT%{_bindir}/
+install mcs-%{version}/jay/jay $RPM_BUILD_ROOT%{_bindir}
 install mcs-%{version}/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %ifnarch %{ix86}
@@ -167,14 +173,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
-%attr(755,root,root) %{_bindir}/oldmono
-%attr(755,root,root) %{_libdir}/*.so.*.*
+#%attr(755,root,root) %{_bindir}/oldmono
+%attr(755,root,root) %{_libdir}/lib*.so.*.*
 %endif
 %attr(755,root,root) %{_libdir}/*.dll
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
-%{_mandir}/man1/oldmono.1*
+#%{_mandir}/man1/oldmono.1*
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
@@ -188,16 +194,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/jay
-%ifarch %{ix86}
-%attr(755,root,root) %{_bindir}/genmdesc
-%endif
+#%ifarch %{ix86}
+#%attr(755,root,root) %{_bindir}/genmdesc
+#%endif
 %attr(755,root,root) %{_bindir}/cilc*
 %ifarch %{ix86}
-%{_libdir}/*.la
-%attr(755,root,root) %{_libdir}/*.so
+%{_libdir}/lib*.la
+%attr(755,root,root) %{_libdir}/lib*.so
 %endif
 %{_datadir}/%{name}
-%{_libdir}/pkgconfig/*
+%{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
 %{_mandir}/man1/jay.1*
 %{_mandir}/man1/cilc.1*
@@ -221,8 +227,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ilasm*
 %{_mandir}/man1/ilasm.1*
 
+%ifarch %{ix86}
 %files static
 %defattr(644,root,root,755)
-%ifarch %{ix86}
 %{_libdir}/lib*.a
 %endif
