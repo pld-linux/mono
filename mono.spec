@@ -197,13 +197,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/sqlsharp.1*
 
 %files csharp
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mcs*
 %{_mandir}/man1/mcs.1*
 
 %files basic
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mbas*
 
 %files ilasm
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
 
 %files static
