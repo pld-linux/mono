@@ -1,0 +1,11 @@
+--- mono-0.31/configure.in.orig	2004-04-15 20:38:40.000000000 +0200
++++ mono-0.31/configure.in	2004-04-15 20:39:01.184092078 +0200
+@@ -835,7 +835,7 @@
+ 		;;
+ 	x86_64-*-* | amd64-*-*)
+ 		TARGET=AMD64;
+-		arch_target=x86-64;
++		arch_target=amd64;
+ 		JIT_SUPPORTED=no
+ 		;;
+ 	sparc*-*-linux*)
