@@ -148,9 +148,6 @@ oraz dotGNU.
 %patch1 -p1
 %patch2 -p1
 
-# quick hack for sparc
-%{__perl} -pi -e 's/LIBC="libc.so"//' configure.in
-
 %build
 cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
