@@ -2,10 +2,6 @@
 # Conditional build:
 %bcond_with	nptl		# enable support for NPTL
 #
-#
-# TODO:
-#	- AMD64 port (available patches seem incomplete/buggy)
-#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
@@ -18,6 +14,8 @@ Source0:	http://www.go-mono.com/archive/rc/%{name}-%{version}.tar.gz
 Source1:	http://www.go-mono.com/archive/rc/mcs-%{version}.tar.gz
 # Source1-md5:	cd1edad99b09db87af245b5fdb1243bd
 Patch0:		%{name}-nolibs.patch
+Patch1:		%{name}-install.patch
+Patch2:		%{name}-segv.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -146,11 +144,21 @@ oraz dotGNU.
 %prep
 %setup -q -a1
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
 perl -p -i -e 's/-static//' mono/mini/Makefile.am
 perl -p -i -e 's|/gacdir \$\(GAC_DIR\)||g' `find -name Makefile.am`
 
 # quick hack for sparc
 perl -p -i -e 's/LIBC="libc.so"//' configure.in
+
+# to allow build without already installed /etc/mono/config
+cat > runtime/gacutil.exe.config <<EOF
+<configuration>
+<dllmap dll="libc" target="libc.so.6"/>
+</configuration>
+EOF
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -175,13 +183,6 @@ cp -f /usr/share/automake/config.sub libgc
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_pkgconfigdir}}
-%ifnarch %{ix86} ppc sparc
-ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
-ln -sf mint.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/mono.pc
-%endif
-
-LD_LIBRARY_PATH=$RPM_BUILD_ROOT%{_libdir} \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -190,6 +191,12 @@ LD_LIBRARY_PATH=$RPM_BUILD_ROOT%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
+
+%ifnarch %{ix86} ppc sparc
+# use mint as mono on archs without JIT
+ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
+ln -sf mint.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/mono.pc
+%endif
 
 # Make links to all binaries. In fact we could move *.exe to
 # %{_libdir}, but probably something relays on it.
