@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.30
-Release:	2
+Release:	3
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -14,6 +14,7 @@ Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 # Source1-md5:	05152878b29d3e3bfcd1b902cf7e6817
 Patch0:		%{name}-alpha.patch
+Patch1:		%{name}-nolibs.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -128,9 +129,9 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %prep
 %setup -q -a1
 %patch0 -p1
+%patch1 -p1
 
 %build
-rm -f missing
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
@@ -233,10 +234,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/cilc*
 %attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/soapsuds*
-%ifarch %{ix86}
-%{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/lib*.so
-%endif
+%{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
@@ -265,8 +264,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ilasm*
 %{_mandir}/man1/ilasm.1*
 
-%ifarch %{ix86}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
-%endif
