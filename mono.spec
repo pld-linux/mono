@@ -10,7 +10,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.31
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -130,6 +130,20 @@ Yacc-like parser generator for Java and C#.
 %description jay -l pl
 Podobny do Yacca generator parserów dla Javy i C#.
 
+%package compat-links
+Summary:	Mono compatibility links
+Summary(pl):	Dowi±zania dla kompatybilno¶ci
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description compat-links
+This package contains links to binaries with names used in .NET and
+dotGNU.
+
+%description compat-links -l pl
+Pakiet ten zawiera dowi±zania do programów o nazwach u¿ywanych w .NET
+oraz dotGNU.
+
 %prep
 %setup -q -a1
 %patch0 -p1
@@ -236,6 +250,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/jay/skeleton*
 %{_mandir}/man1/jay.1*
 
+%files compat-links
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/resgen
+
 %files devel
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
@@ -243,7 +261,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xsd*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monoresgen*
-%attr(755,root,root) %{_bindir}/resgen
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/genxs*
