@@ -1,0 +1,11 @@
+--- mono-0.30/configure.in.orig	2004-02-10 10:30:17.000000000 +0000
++++ mono-0.30/configure.in	2004-02-10 10:31:19.000000000 +0000
+@@ -474,7 +474,7 @@
+ 	dnl *****************************
+ 	dnl *** Checks for libnsl     ***
+ 	dnl *****************************
+-	AC_CHECK_LIB(nsl, gethostbyaddr, LIBS="$LIBS -lnsl")
++	AC_SEARCH_LIBS(gethostbyaddr, nsl)
+ 
+ 	AC_CHECK_FUNCS(inet_pton inet_aton)
+ 
