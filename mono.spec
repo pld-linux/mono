@@ -2,7 +2,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.26
-Release:	2
+Release:	3
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -108,6 +108,17 @@ Static mono library.
 %description static -l pl
 Statyczna biblioteka mono.
 
+%package jay
+Summary:	Yacc-like parser generator for Java and C#
+Summary(pl):	Podobny do Yacca generator parserów dla Javy i C#
+Group:		Development/Tools
+
+%description jay
+Yacc-like parser generator for Java and C#.
+
+%description jay -l pl
+Podobny do Yacca generator parserów dla Javy i C#.
+
 %prep
 %setup -q -a1
 %patch -p1
@@ -126,7 +137,7 @@ rm -f missing
 # for now we only build jay, and don't rebuild runtime and mcs
 %{__make} -C mcs-%{version}/jay \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_prefix}/share/jay\\\""
+	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -134,8 +145,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install mcs-%{version}/jay/jay $RPM_BUILD_ROOT%{_bindir}
-install mcs-%{version}/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
+%{__make} -C mcs-%{version}/jay install \
+	prefix=%{_prefix} \
+	DESTDIR=$RPM_BUILD_ROOT
+mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
+rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
 %ifnarch %{ix86}
 ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
@@ -187,6 +201,14 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
 
+%files jay
+%defattr(644,root,root,755)
+%doc mcs-%{version}/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%attr(755,root,root) %{_bindir}/jay
+%dir %{_datadir}/jay
+%{_datadir}/jay/skeleton*
+%{_mandir}/man1/jay.1*
+
 %files devel
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
@@ -196,7 +218,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monoresgen*
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/sqlsharp*
-%attr(755,root,root) %{_bindir}/jay
 #%ifarch %{ix86}
 #%attr(755,root,root) %{_bindir}/genmdesc
 #%endif
@@ -208,7 +229,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
-%{_mandir}/man1/jay.1*
 %{_mandir}/man1/cilc.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
