@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.97
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/rc/%{name}-%{version}.tar.gz
@@ -19,6 +19,7 @@ Patch2:		%{name}-segv.patch
 Patch3:		%{name}-types.patch
 Patch4:		%{name}-endian.patch
 URL:		http://www.go-mono.com/
+ExcludeArch:	alpha
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
