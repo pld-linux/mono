@@ -10,7 +10,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.91
-Release:	0.2
+Release:	0.3
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/beta1/%{name}-%{version}.tar.gz
@@ -20,7 +20,6 @@ Source1:	http://www.go-mono.com/archive/beta1/mcs-%{version}.tar.gz
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
 Patch2:		%{name}-sparc.patch
-Patch3:		%{name}-amd64.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -162,6 +161,7 @@ cp -f /usr/share/automake/config.sub libgc
 %configure \
 	%{?with_nptl:--with-nptl} \
 	%{!?with_nptl:--without-nptl} \
+	--with-preview=yes \
 	--with-gc=included
 
 %{__make}
