@@ -9,14 +9,14 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.30.2
+Version:	0.31
 Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	cbc026eef3c0069073450200140c9e41
+# Source0-md5:	d8d997fc7a2a5b95becf34352270bbbe
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5:	e300f574fa79da0fef045852b2f45d6a
+# Source1-md5:	abfca065428cee064d8631570f71c5ce
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
 URL:		http://www.go-mono.com/
@@ -134,8 +134,6 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %setup -q -a1
 %patch0 -p1
 %patch1 -p1
-# this is a bug in distribution package
-mv mcs-0.30.1 mcs-%{version}
 
 %build
 %{__libtoolize}
@@ -144,6 +142,7 @@ mv mcs-0.30.1 mcs-%{version}
 %{__automake}
 %configure \
 	%{?with_nptl:--with-nptl} \
+	%{!?with_nptl:--without-nptl} \
 	--with-gc=included
 
 %{__make}
@@ -185,7 +184,7 @@ cd "$old"
 # have more meaningful name.
 rm -rf pld-doc
 mkdir -p pld-doc/{webpage,notes}
-cp -a doc/* pld-doc/webpage
+cp -a web/* pld-doc/webpage
 cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
 
@@ -204,12 +203,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn
 %attr(755,root,root) %{_bindir}/monosn
-#%attr(755,root,root) %{_bindir}/oldmono
+%attr(755,root,root) %{_bindir}/MakeCert*
+%attr(755,root,root) %{_bindir}/makecert*
+%attr(755,root,root) %{_bindir}/cert*
+%attr(755,root,root) %{_bindir}/setreg*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/*.dll
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
+%{_mandir}/man1/sn.1*
+%{_mandir}/man1/cert*.1*
+%{_mandir}/man1/makecert.1*
+%{_mandir}/man1/secutil.1*
+%{_mandir}/man1/signcode.1*
+%{_mandir}/man1/setreg.1*
+%{_mandir}/man1/chktrust.1*
 #%{_mandir}/man1/oldmono.1*
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
@@ -232,6 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/xsd*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monoresgen*
+%attr(755,root,root) %{_bindir}/resgen
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/genxs*
@@ -240,6 +250,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/cilc*
 %attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/soapsuds*
+%attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
@@ -255,6 +266,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wsdl.1*
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/disco.1*
+%{_mandir}/man1/monop.1*
 
 %files csharp
 %defattr(644,root,root,755)
