@@ -9,14 +9,16 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.31
-Release:	3
+Version:	0.91
+Release:	0.1
 License:	LGPL
 Group:		Development/Languages
-Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	d8d997fc7a2a5b95becf34352270bbbe
-Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5:	abfca065428cee064d8631570f71c5ce
+#Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
+Source0:	http://primates.ximian.com/~miguel/beta1/%{name}-%{version}.tar.gz
+# Source0-md5:	910cc2193abb9f3fa6f87001173535c4
+#Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
+Source1:	http://primates.ximian.com/~miguel/beta1/mcs-%{version}.tar.gz
+# Source1-md5:	e894c0284e965cae93febc61e823be37
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
 Patch2:		%{name}-sparc.patch
@@ -151,7 +153,6 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -221,14 +222,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/signcode*
-%attr(755,root,root) %{_bindir}/sn
+%attr(755,root,root) %{_bindir}/sn*
 %attr(755,root,root) %{_bindir}/monosn
 %attr(755,root,root) %{_bindir}/MakeCert*
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/cert*
 %attr(755,root,root) %{_bindir}/setreg*
+%attr(755,root,root) %{_bindir}/gacutil*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/*.dll
+%attr(755,root,root) %{_libdir}/mono/*.*/*.dll
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
@@ -239,7 +242,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/signcode.1*
 %{_mandir}/man1/setreg.1*
 %{_mandir}/man1/chktrust.1*
+%{_mandir}/man1/gacutil.1*
 #%{_mandir}/man1/oldmono.1*
+%dir %{_libdir}/mono
+%dir %{_libdir}/mono/1.0
+%dir %{_libdir}/mono/2.0
+%{_libdir}/mono/gac
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
@@ -275,6 +283,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/soapsuds*
 %attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/mono/*.*/*.dll
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -290,15 +299,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/disco.1*
 %{_mandir}/man1/monop.1*
+%{_mandir}/man1/xsd.1*
 
 %files csharp
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mcs*
+%attr(755,root,root) %{_bindir}/mcs
+%attr(755,root,root) %{_bindir}/gmcs
+%attr(755,root,root) %{_libdir}/mono/1.0/mcs.exe
+%attr(755,root,root) %{_libdir}/mono/2.0/gmcs.exe
 %{_mandir}/man1/mcs.1*
 
 %files basic
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mbas*
+%attr(755,root,root) %{_bindir}/mbas
+%attr(755,root,root) %{_libdir}/mono/1.0/mbas.exe
 
 %files ilasm
 %defattr(644,root,root,755)
