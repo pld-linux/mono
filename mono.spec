@@ -186,6 +186,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mint
 %attr(755,root,root) %{_bindir}/mono
 %attr(755,root,root) %{_bindir}/secutil*
+%attr(755,root,root) %{_bindir}/chktrust*
+%attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
 #%attr(755,root,root) %{_bindir}/oldmono
@@ -216,6 +218,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monoresgen*
 %attr(755,root,root) %{_bindir}/pedump
+%attr(755,root,root) %{_bindir}/wsdl*
+%attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/sqlsharp*
 #%ifarch %{ix86}
 #%attr(755,root,root) %{_bindir}/genmdesc
