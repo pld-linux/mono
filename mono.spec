@@ -1,17 +1,18 @@
 #
 # Conditional build:
-%bcond_with	nptl		# enable support for NPTL
+%bcond_without	nptl		# enable support for NPTL
 #
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.3
+Version:	1.1.4.20050219svn
 Release:	0.1
-License:	LGPL
+License:	GPL/LGPL/MIT
 Group:		Development/Languages
-Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	4d4da2dee2eefbc1ffc8a2312449f3ac
+Source0:	%{name}-%{version}.tar.bz2
+# Source0-md5:	61f1c0e0aa72e16ee9afc004c39d97a7
 Patch0:		%{name}-nolibs.patch
+Patch1:		%{name}-install.patch
 URL:		http://www.mono-project.com/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
@@ -20,8 +21,6 @@ BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	icu
-BuildRequires:	libicu-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workaround for buggy gcc 3.3.1
@@ -41,6 +40,8 @@ platform are:
   generate classes and code that can interoperate with other programming
   languages (The Common Language Specification: CLS).
 
+%{?with_nptl:This version was build with TLS __thread.}
+
 %description -l pl
 Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
 now± platformê developersk±. Zalety tej platformy to:
@@ -52,6 +53,8 @@ now± platformê developersk±. Zalety tej platformy to:
 - specyfikacja dla kompilatorów, które chc± generowaæ kod
   wspó³pracuj±cy z innymi jêzykami programowania (The Common Language
   Specification: CLS).
+
+%{?with_nptl:Ta wersja zosta³a zbudowana z TLS __thread.}
 
 %package devel
 Summary:	Development resources for mono
@@ -103,6 +106,18 @@ ILasm compiler for mono.
 %description ilasm -l pl
 Kompilator ILasm dla mono.
 
+%package jscript
+Summary:	jscript compiler for mono
+Summary(pl):	Kompilator jscript dla mono
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description jscript
+jscript compiler for mono.
+
+%description jscript -l pl
+Kompilator jscript dla mono.
+
 %package static
 Summary:	Static mono library
 Summary(pl):	Statyczna biblioteka mono
@@ -143,6 +158,7 @@ oraz dotGNU.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 # quick hack for sparc
 perl -p -i -e 's/LIBC="libc.so"//' configure.in
@@ -152,20 +168,23 @@ cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
 %{__aclocal}
+%{__autoheader}
 %{__autoconf}
 %{__automake}
+cd libgc
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
+cd ..
+
 %configure \
 	%{?with_nptl:--with-tls=__thread} \
 	%{!?with_nptl:--with-tls=pthread} \
 	--with-preview=yes \
-	--with-icu=yes \
+	--with-icu=no \
 	--with-jit=yes \
 	--with-gc=included
-#%ifarch amd64
-#	--with-sigaltstack=yes \
-#	--with-gc=none
-#%else
-#%endif
 
 %{__make}
 
@@ -175,10 +194,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 	
-%ifarch amd64
-mv -f $RPM_BUILD_ROOT/usr/lib/mono $RPM_BUILD_ROOT%{_libdir}
-%endif
-
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
@@ -200,9 +215,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mint
 %ifarch %{ix86} ppc sparc amd64
 %attr(755,root,root) %{_bindir}/mono
+%else
+%attr(755,root,root) %{_bindir}/mint
 %endif
 %attr(755,root,root) %{_bindir}/cert*
 %attr(755,root,root) %{_bindir}/chktrust*
@@ -213,6 +229,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/setreg*
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
+%attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/mono/*.*/*.dll
 %attr(755,root,root) %{_libdir}/mono/1.0/cert*
@@ -224,6 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mono/1.0/setreg*
 %attr(755,root,root) %{_libdir}/mono/1.0/signcode*
 %attr(755,root,root) %{_libdir}/mono/1.0/sn*
+%attr(755,root,root) %{_libdir}/mono/1.0/caspol*
 %{_mandir}/man1/cert*.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
@@ -235,6 +253,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/setreg.1*
 %{_mandir}/man1/signcode.1*
 %{_mandir}/man1/sn.1*
+%{_mandir}/man1/permview.1*
 %{_mandir}/man5/mono-config.5*
 %dir %{_libdir}/mono
 %dir %{_libdir}/mono/1.0
@@ -255,6 +274,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
 %{_mandir}/man1/jay.1*
+
+# TODO: probably Microsoft.JScript.dll & Co. should be here
+%files jscript
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/mjs
+%attr(755,root,root) %{_libdir}/mono/1.0/mjs*
 
 %files compat-links
 %defattr(644,root,root,755)
@@ -277,6 +302,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/xsd*
+%attr(755,root,root) %{_bindir}/permview
+%attr(755,root,root) %{_bindir}/dtd2xsd
+%attr(755,root,root) %{_bindir}/macpack
+%attr(755,root,root) %{_bindir}/prj2make
+%attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/mono/1.0/al*
 %attr(755,root,root) %{_libdir}/mono/1.0/cilc*
@@ -294,6 +324,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mono/1.0/CorCompare*
 %attr(755,root,root) %{_libdir}/mono/1.0/browsercaps-updater*
 %attr(755,root,root) %{_libdir}/mono/1.0/ictool*
+%attr(755,root,root) %{_libdir}/mono/1.0/permview*
+%attr(755,root,root) %{_libdir}/mono/1.0/dtd2xsd*
+%attr(755,root,root) %{_libdir}/mono/1.0/macpack*
 %{_libdir}/mono/*.*/*.dll.mdb
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
@@ -310,6 +343,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/disco.1*
 %{_mandir}/man1/monop.1*
 %{_mandir}/man1/xsd.1*
+%{_mandir}/man1/dtd2xsd.1*
+%{_mandir}/man1/macpack.1*
+%{_mandir}/man1/prj2make.1*
 
 %files csharp
 %defattr(644,root,root,755)
