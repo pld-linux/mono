@@ -16,6 +16,8 @@ Source1:	http://www.go-mono.com/archive/rc/mcs-%{version}.tar.gz
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-install.patch
 Patch2:		%{name}-segv.patch
+Patch3:		%{name}-types.patch
+Patch4:		%{name}-endian.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -146,6 +148,8 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 perl -p -i -e 's/-static//' mono/mini/Makefile.am
 perl -p -i -e 's|/gacdir \$\(GAC_DIR\)||g' `find -name Makefile.am`
