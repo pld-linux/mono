@@ -131,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-	
+
 install mcs-%{version}/jay/jay $RPM_BUILD_ROOT%{_bindir}
 install mcs-%{version}/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
@@ -139,7 +139,7 @@ install mcs-%{version}/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
 ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
 %endif
 
-# Make links to all binaries. In fact we could move *.exe to 
+# Make links to all binaries. In fact we could move *.exe to
 # %{_libdir}, but probably something relays on it.
 old="$(pwd)"
 cd $RPM_BUILD_ROOT%{_bindir}
