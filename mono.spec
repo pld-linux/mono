@@ -2,7 +2,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
 Version:	0.7
-Release:	1
+Release:	2
 License:	GPL
 Group:		Development/Languages
 Group(de):	Entwicklung/Sprachen
