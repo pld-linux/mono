@@ -81,10 +81,10 @@ aclocal
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT 
+	DESTDIR=$RPM_BUILD_ROOT
 
 %ifnarch %{ix86}
-ln -s mint $RPM_BUILD_ROOT/usr/bin/mono
+ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
 %endif
 
 rm -f doc/Makefile* docs/Makefile*
