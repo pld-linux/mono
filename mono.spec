@@ -1,18 +1,19 @@
+#
+# TODO:
+#	- AMD64 port (available patches seem incomplete/buggy)
+#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.28
-Release:	2
+Version:	0.30
+Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	108f89a08c1f1dd772b8d48ea5dcaf24
+# Source0-md5:	84bc49f39c905936d594042fd29cd07c
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5:	a437c53d588e9d7b16309d52f08fa253
-Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-sparc.patch
-Patch2:		%{name}-CFLAGS.patch
-Patch3:		%{name}-alpha.patch
+# Source1-md5:	05152878b29d3e3bfcd1b902cf7e6817
+Patch0:		%{name}-alpha.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -127,9 +128,6 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %prep
 %setup -q -a1
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 rm -f missing
@@ -197,6 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/signcode*
+%attr(755,root,root) %{_bindir}/sn
 %attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
 #%attr(755,root,root) %{_bindir}/oldmono
@@ -210,6 +209,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/browscap.ini
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/DefaultWsdlHelpGenerator.aspx
 
 %files jay
 %defattr(644,root,root,755)
@@ -230,10 +231,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/sqlsharp*
-#%ifarch %{ix86}
-#%attr(755,root,root) %{_bindir}/genmdesc
-#%endif
+%attr(755,root,root) %{_bindir}/disco*
 %attr(755,root,root) %{_bindir}/cilc*
+%attr(755,root,root) %{_bindir}/al*
+%attr(755,root,root) %{_bindir}/soapsuds*
 %ifarch %{ix86}
 %{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/lib*.so
@@ -242,11 +243,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
 %{_mandir}/man1/cilc.1*
+%{_mandir}/man1/genxs.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/sqlsharp.1*
 %{_mandir}/man1/cert2spc.1*
+%{_mandir}/man1/wsdl.1*
+%{_mandir}/man1/soapsuds.1*
+%{_mandir}/man1/disco.1*
 
 %files csharp
 %defattr(644,root,root,755)
