@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0.1
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
@@ -288,7 +288,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/soapsuds*
 %attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/mono/*.*/*.dll
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -299,7 +298,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/sqlsharp.1*
-%{_mandir}/man1/cert2spc.1*
 %{_mandir}/man1/wsdl.1*
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/disco.1*
