@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0.5
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
@@ -15,6 +15,7 @@ Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
 # Source1-md5:	aa1d0acf06eb9ba8e87b5bec1b860e1b
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
+Patch2:		%{name}-lib64.patch
 URL:		http://www.mono-project.com/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
@@ -147,9 +148,10 @@ oraz dotGNU.
 %setup -q -a1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # quick hack for sparc
-perl -p -i -e 's/LIBC="libc.so"//' configure.in
+%{__perl} -pi -e 's/LIBC="libc.so"//' configure.in
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -175,6 +177,11 @@ cp -f /usr/share/automake/config.sub libgc
 %{__make} -C mcs-*/jay \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
+
+# rebuild gacutil with lib64 patch
+%{__make} -C mcs-*/tools/gacutil \
+	MCS="`pwd`/mono/interpreter/mint `pwd`/runtime/mcs.exe -lib:`pwd`/runtime/net_1_1"
+cp -f mcs-*/tools/gacutil/gacutil.exe runtime
 
 %install
 rm -rf $RPM_BUILD_ROOT
