@@ -1,13 +1,15 @@
+%define _snap 20040118
+%define _mcs_version 0.29
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.29
+Version:	0.29.99.%{_snap}
 Release:	1
 License:	LGPL
 Group:		Development/Languages
-Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	3f79461475bacc2ec4c3f85de213d8a0
-Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
+Source0:	http://www.go-mono.com/daily/%{name}-%{version}.tar.gz
+# Source0-md5:	cc94ead1dc05ceab37678452e1fdfff4
+Source1:	http://www.go-mono.com/archive/mcs-%{_mcs_version}.tar.gz
 # Source1-md5:	a969edc9561ec6b5279c0515c59251b4
 Patch0:		%{name}-alpha.patch
 URL:		http://www.go-mono.com/
@@ -137,7 +139,7 @@ rm -f missing
 %{__make}
 
 # for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-%{version}/jay \
+%{__make} -C mcs-%{_mcs_version}/jay \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
 
@@ -147,7 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__make} -C mcs-%{version}/jay install \
+%{__make} -C mcs-%{_mcs_version}/jay install \
 	prefix=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
@@ -191,6 +193,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/signcode*
+%attr(755,root,root) %{_bindir}/sn
 %attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
 #%attr(755,root,root) %{_bindir}/oldmono
@@ -204,11 +207,12 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/browscap.ini
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/DefaultWsdlHelpGenerator.aspx
 
 %files jay
 %defattr(644,root,root,755)
-%doc mcs-%{version}/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%doc mcs-%{_mcs_version}/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
 %attr(755,root,root) %{_bindir}/jay
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
@@ -227,6 +231,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/disco*
 %attr(755,root,root) %{_bindir}/cilc*
+%attr(755,root,root) %{_bindir}/al*
+%attr(755,root,root) %{_bindir}/soapsuds*
 %ifarch %{ix86}
 %{_libdir}/lib*.la
 %attr(755,root,root) %{_libdir}/lib*.so
@@ -241,6 +247,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/sqlsharp.1*
 %{_mandir}/man1/cert2spc.1*
+%{_mandir}/man1/wsdl.1*
+%{_mandir}/man1/soapsuds.1*
+%{_mandir}/man1/disco.1*
 
 %files csharp
 %defattr(644,root,root,755)
