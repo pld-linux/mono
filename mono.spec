@@ -1,5 +1,5 @@
 Summary:	Common Language Infrastructure implementation
-Summary(pl):	Implementacja jêzyka CLI
+Summary(pl):	Implementacja Common Language Structure
 Name:		mono
 Version:	0.21
 Release:	2
@@ -33,7 +33,7 @@ platform are:
 %description -l pl
 Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
 now± platformê developersk±. Zalety tej platformy to:
-- ¶rodowisko, które dostarsza garbale collector, w±tki oraz
+- ¶rodowisko, które dostarsza garbage collector, w±tki oraz
   specyfikacjê maszyny wirtualnej (The Virtual Execution System, VES),
 - bibliotekê klas,
 - nowy jêzyk, C#. Bardzo podobny do Javy, C# pozwala programistom na
