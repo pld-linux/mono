@@ -9,8 +9,10 @@ Version:	1.0.6
 Release:	1
 License:	LGPL
 Group:		Development/Languages
+# Source0Download: http://www.mono-project.com/Downloads
 Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	61700d5e113a1c9c99511971141b6901
+# Source1Download: http://www.mono-project.com/Downloads
 Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
 # Source1-md5:	465cf1256ae0ae7aac8c70a85991ddeb
 Patch0:		%{name}-nolibs.patch
@@ -147,6 +149,8 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+
+echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
 %build
 cp -f /usr/share/automake/config.sub .
