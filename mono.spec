@@ -13,20 +13,15 @@ Source0:	http://www.go-mono.com/archive/%{version}/mono-%{version}.tar.gz
 # Source0-md5:	d5097b149effa0b248a4398fe630bd30
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.mono-project.com/
-ExcludeArch:	alpha
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
-# This is because it is an svn export, and not real release, remove in
-# the real release:
-BuildRequires:	mono-csharp
 BuildRequires:	pkgconfig
+ExclusiveArch:	%{ix86} amd64 arm hppa ppc s390 s390x sparc sparcv9 sparc64
+# alpha still broken, mips/ia64/m68k disabled in configure
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# workaround for buggy gcc 3.3.1
-%define         specflags_alpha  -mno-explicit-relocs 
 
 %description
 The Common Language Infrastructure platform. Microsoft has created a
@@ -161,8 +156,6 @@ oraz dotGNU.
 %setup -q
 %patch0 -p1
 
-# quick hack for sparc
-perl -p -i -e 's/LIBC="libc.so"//' configure.in
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -194,7 +187,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
-	
+
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
