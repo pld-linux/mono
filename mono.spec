@@ -27,6 +27,7 @@ BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+ExcludeArch:	alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workaround for buggy gcc 3.3.1
