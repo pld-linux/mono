@@ -1,13 +1,14 @@
+#
+# TODO:
+# - add unpackaged files
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
-Version:	0.16
+Version:	0.19
 Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-Patch0:		%{name}-noport.patch
-Patch1:		%{name}-libtool.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -69,8 +70,6 @@ Statyczna biblioteka mono.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 rm -f missing
@@ -112,6 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mono.1*
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
 
 %files devel
 %defattr(644,root,root,755)
