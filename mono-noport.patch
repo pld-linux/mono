@@ -1,0 +1,41 @@
+--- mono-0.15/mono/interpreter/interp.h.orig	Fri Aug  2 13:02:35 2002
++++ mono-0.15/mono/interpreter/interp.h	Thu Sep  5 13:04:09 2002
+@@ -1,4 +1,5 @@
+ 
++#include <config.h>
+ #include <glib.h>
+ #include <mono/metadata/loader.h>
+ #include <mono/metadata/object.h>
+--- mono-0.15/mono/arch/unknown.c.orig	Mon Sep 10 16:26:01 2001
++++ mono-0.15/mono/arch/unknown.c	Thu Sep  5 13:18:39 2002
+@@ -2,7 +2,7 @@
+ #include "mono/interpreter/interp.h"
+ 
+ MonoPIFunc
+-mono_create_trampoline (MonoMethod *method)
++mono_create_trampoline (MonoMethodSignature *sig, gboolean string_ctor)
+ {
+ 	g_error ("Unsupported arch");
+ 	return NULL;
+--- mono-0.15/configure.in.orig	Fri Aug 23 23:15:08 2002
++++ mono-0.15/configure.in	Thu Sep  5 13:39:16 2002
+@@ -541,6 +541,7 @@
+ AM_CONDITIONAL(M68K, test x$TARGET = xM68K)
+ AM_CONDITIONAL(POWERPC, test x$TARGET = xPOWERPC)
+ AM_CONDITIONAL(ARM, test x$TARGET = xARM)
++AM_CONDITIONAL(UNKNOWN, test x$TARGET = xunknown)
+ 
+ LIBC="libc.so.6"
+ AC_SUBST(LIBC)
+--- mono-0.15/mono/arch/Makefile.am.orig	Mon Feb 25 09:56:57 2002
++++ mono-0.15/mono/arch/Makefile.am	Thu Sep  5 13:36:36 2002
+@@ -7,7 +7,9 @@
+ 
+ libmonoarch_la_SOURCES = unknown.c
+ 
++if !UNKNOWN
+ libmonoarch_la_LIBADD = $(arch_target)/libmonoarch-$(arch_target).la
++endif
+ 
+ EXTRA_DIST = ChangeLog
+ 
