@@ -1,0 +1,21 @@
+--- mono-0.25/configure.in.orig	Thu Jun 26 15:27:38 2003
++++ mono-0.25/configure.in	Mon Jun 30 16:30:15 2003
+@@ -389,7 +389,7 @@
+ 	dnl *****************************
+ 	dnl *** Checks for libnsl     ***
+ 	dnl *****************************
+-	AC_CHECK_LIB(nsl, gethostbyaddr, LIBS="$LIBS -lnsl")
++	AC_SEARCH_LIBS(gethostbyaddr, nsl)
+ 
+ 	AC_CHECK_FUNCS(inet_pton inet_aton)
+ 
+@@ -459,7 +459,8 @@
+ 	dnl ********************************
+ 	dnl *** Checks for semaphore lib ***
+ 	dnl ********************************
+-	AC_CHECK_LIB(rt, sem_init, LIBS="$LIBS -lrt")
++	dnl sem_init may be already in -lpthread
++	AC_CHECK_FUNC(sem_init, , [AC_CHECK_LIB(rt, sem_init, LIBS="$LIBS -lrt")])
+ 
+ 	dnl ********************************
+ 	dnl *** Checks for timezone stuff **
