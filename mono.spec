@@ -174,10 +174,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+	
+%ifarch amd64
+mv -f $RPM_BUILD_ROOT/usr/lib/mono $RPM_BUILD_ROOT%{_libdir}
+%endif
 
-#%{__make} -C mcs-*/jay install \
-#	prefix=%{_prefix} \
-#	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
@@ -200,7 +201,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
-%ifarch %{ix86} ppc sparc
+%ifarch %{ix86} ppc sparc amd64
 %attr(755,root,root) %{_bindir}/mono
 %endif
 %attr(755,root,root) %{_bindir}/cert*
