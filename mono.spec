@@ -20,6 +20,9 @@ BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# workaround for buggy gcc 3.3.1
+%define         specflags_alpha "-mno-explicit-relocs"
+
 %description
 The Common Language Infrastructure platform. Microsoft has created a
 new development platform. The highlights of this new development
