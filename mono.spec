@@ -2,10 +2,11 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
 Version:	0.20
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
+Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -102,7 +103,7 @@ Static mono library.
 Statyczna biblioteka mono.
 
 %prep
-%setup -q
+%setup -q -a1
 
 %build
 rm -f missing
@@ -113,11 +114,17 @@ rm -f missing
 %configure --with-gc=boehm
 %{__make}
 
+# for now we only build jay, and don't rebuild runtime and mcs
+%{__make} -C mcs-%{version}/jay CC=%{__cc} CFLAGS="%{rpmcflags}"
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+	
+install mcs-%{version}/jay/jay $RPM_BUILD_ROOT%{_bindir}/
+install mcs-%{version}/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %ifnarch %{ix86}
 ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
@@ -134,6 +141,7 @@ for f in *.exe ; do
 	echo "%{_bindir}/mono %{_bindir}/$f" '"$@"' >> $bn
 done
 cd "$old"
+
 
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
@@ -174,6 +182,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monoresgen*
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/sqlsharp*
+%attr(755,root,root) %{_bindir}/jay
 %ifarch %{ix86}
 %{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
@@ -181,6 +190,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_libdir}/pkgconfig/*
 %{_includedir}/%{name}
+%{_mandir}/man1/jay.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
