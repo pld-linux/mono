@@ -118,7 +118,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
 %ifarch %{ix86}
-%attr(755,root,root) %{_libdir}/*.la
+%{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
 %endif
 %{_datadir}/%{name}
