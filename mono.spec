@@ -175,6 +175,11 @@ cp -f /usr/share/automake/config.sub libgc
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_bindir}
+%ifnarch %{ix86} ppc sparc
+ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
+%endif
+
 LD_LIBRARY_PATH=$RPM_BUILD_ROOT%{_libdir} \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -184,10 +189,6 @@ LD_LIBRARY_PATH=$RPM_BUILD_ROOT%{_libdir} \
 	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
-
-%ifnarch %{ix86} ppc
-ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
-%endif
 
 # Make links to all binaries. In fact we could move *.exe to
 # %{_libdir}, but probably something relays on it.
