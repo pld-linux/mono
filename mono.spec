@@ -6,8 +6,6 @@ Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-Patch0:		%{name}-DESTDIR.patch
-Patch1:		%{name}-ac_fixes.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -69,8 +67,6 @@ Statyczna biblioteka mono.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
 
 %build
 rm -f missing
