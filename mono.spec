@@ -12,6 +12,7 @@ Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-sparc.patch
 Patch2:		%{name}-CFLAGS.patch
+Patch3:		%{name}-alpha.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -128,6 +129,7 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 rm -f missing
