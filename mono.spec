@@ -5,14 +5,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.4.20050219svn
+Version:	1.1.4.20050221svn
 Release:	0.1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	61f1c0e0aa72e16ee9afc004c39d97a7
+# Source0-md5:	4b5684e0927171b106d315960ab775c1
 Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-install.patch
 URL:		http://www.mono-project.com/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
@@ -161,7 +160,6 @@ oraz dotGNU.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p0
 
 # quick hack for sparc
 perl -p -i -e 's/LIBC="libc.so"//' configure.in
@@ -330,6 +328,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/mono/1.0/permview*
 %attr(755,root,root) %{_libdir}/mono/1.0/dtd2xsd*
 %attr(755,root,root) %{_libdir}/mono/1.0/macpack*
+%attr(755,root,root) %{_libdir}/mono/1.0/prj2make*
 %{_libdir}/mono/*.*/*.dll.mdb
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
