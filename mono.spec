@@ -45,6 +45,7 @@ now± platformê developersk±. Zalety tej platformy to:
 
 %package devel
 Summary:	Development resources for mono
+Summary(pl):	Zasoby programisty do mono
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(es):	Desarrollo/Bibliotecas
@@ -58,8 +59,12 @@ Requires:	%{name} = %{version}
 %description devel
 Development resources for mono.
 
+%description devel -l pl
+Zasoby programosty do mono.
+
 %package static
 Summary:	Static mono library
+Summary(pl):	Statyczna biblioteka mono
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(es):	Desarrollo/Bibliotecas
@@ -72,6 +77,9 @@ Requires:	%{name}-devel = %{version}
 
 %description static
 Static mono library.
+
+%description static -l pl
+Statyczna biblioteka mono.
 
 %prep
 %setup -q
@@ -98,11 +106,11 @@ rm -f doc/Makefile*
 
 gzip -9nf AUTHORS ChangeLog NEWS README doc/*
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
