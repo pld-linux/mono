@@ -5,14 +5,14 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.0.4
+Version:	1.0.5
 Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	272d26525bfa121ee19713051d5b3a01
+# Source0-md5:	09c9b5e7a128e7607e79d4d35bf76f68
 Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
-# Source1-md5:	97f409e51cbeee5d6460413ef1b8555d
+# Source1-md5:	aa1d0acf06eb9ba8e87b5bec1b860e1b
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
 URL:		http://www.mono-project.com/
@@ -24,7 +24,7 @@ BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	icu
-BuildRequires:	libicu-devel
+BuildRequires:	libicu-devel >= 2.6.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workaround for buggy gcc 3.3.1
