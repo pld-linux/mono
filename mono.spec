@@ -2,7 +2,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.26
-Release:	3
+Release:	4
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -14,7 +14,6 @@ URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	gc-devel >= 6.0-3
 BuildRequires:	glib2-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
@@ -130,7 +129,7 @@ rm -f missing
 %{__autoconf}
 %{__automake}
 %configure \
-	--with-gc=boehm
+	--with-gc=included
 
 %{__make}
 
