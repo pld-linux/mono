@@ -1,18 +1,15 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.28
-Release:	2
+Version:	0.29
+Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	108f89a08c1f1dd772b8d48ea5dcaf24
+# Source0-md5:	3f79461475bacc2ec4c3f85de213d8a0
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5:	a437c53d588e9d7b16309d52f08fa253
-Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-sparc.patch
-Patch2:		%{name}-CFLAGS.patch
-Patch3:		%{name}-alpha.patch
+# Source1-md5:	a969edc9561ec6b5279c0515c59251b4
+Patch0:		%{name}-alpha.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -127,9 +124,6 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %prep
 %setup -q -a1
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 rm -f missing
@@ -210,6 +204,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/DefaultWsdlHelpGenerator.aspx
 
 %files jay
 %defattr(644,root,root,755)
@@ -230,9 +225,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/sqlsharp*
-#%ifarch %{ix86}
-#%attr(755,root,root) %{_bindir}/genmdesc
-#%endif
+%attr(755,root,root) %{_bindir}/disco*
 %attr(755,root,root) %{_bindir}/cilc*
 %ifarch %{ix86}
 %{_libdir}/lib*.la
@@ -242,6 +235,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
 %{_mandir}/man1/cilc.1*
+%{_mandir}/man1/genxs.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
