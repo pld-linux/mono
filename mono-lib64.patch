@@ -1,6 +1,6 @@
---- mono-1.0.5/mcs-1.0.5/tools/gacutil/driver.cs.orig	2004-12-07 23:28:16.000000000 +0100
-+++ mono-1.0.5/mcs-1.0.5/tools/gacutil/driver.cs	2005-02-10 21:09:30.199216879 +0100
-@@ -603,9 +603,7 @@
+--- mono-1.0.6/mcs-1.0.6/tools/gacutil/driver.cs.orig	2005-02-24 22:52:33.000000000 +0100
++++ mono-1.0.6/mcs-1.0.6/tools/gacutil/driver.cs	2005-02-24 22:52:55.000000000 +0100
+@@ -598,9 +598,7 @@
  		private static string EnsureLib (string dir)
  		{
  			DirectoryInfo d = new DirectoryInfo (dir);
