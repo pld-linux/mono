@@ -9,17 +9,15 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.96
+Version:	0.97
 Release:	1
 License:	LGPL
 Group:		Development/Languages
-Source0:	http://www.go-mono.com/archive/beta3/%{name}-%{version}.tar.gz
-# Source0-md5:	2c786b47d3531bfbcd9ee4368c5ccfed
-Source1:	http://www.go-mono.com/archive/beta3/mcs-%{version}.tar.gz
-# Source1-md5:	1bfbb8b5f2d192376817f38449a06ea3
-Patch0:		%{name}-alpha.patch
-Patch1:		%{name}-nolibs.patch
-Patch2:		%{name}-sparc.patch
+Source0:	http://www.go-mono.com/archive/rc/%{name}-%{version}.tar.gz
+# Source0-md5:	e0a1cff236eb92a61da04b5df26a242d
+Source1:	http://www.go-mono.com/archive/rc/mcs-%{version}.tar.gz
+# Source1-md5:	cd1edad99b09db87af245b5fdb1243bd
+Patch0:		%{name}-nolibs.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -27,7 +25,6 @@ BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-ExcludeArch:	alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workaround for buggy gcc 3.3.1
@@ -149,9 +146,8 @@ oraz dotGNU.
 %prep
 %setup -q -a1
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 perl -p -i -e 's/-static//' mono/mini/Makefile.am
+perl -p -i -e 's|/gacdir \$\(GAC_DIR\)||g' `find -name Makefile.am`
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -176,6 +172,7 @@ cp -f /usr/share/automake/config.sub libgc
 %install
 rm -rf $RPM_BUILD_ROOT
 
+LD_LIBRARY_PATH=$RPM_BUILD_ROOT%{_libdir} \
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
