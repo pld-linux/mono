@@ -15,10 +15,10 @@ License:	LGPL
 Group:		Development/Languages
 #Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
 Source0:	http://primates.ximian.com/~miguel/beta1/%{name}-%{version}.tar.gz
-# Source0-md5:	910cc2193abb9f3fa6f87001173535c4
+# Source0-md5:	eea86524624bd0e02fb90cec71fd0673
 #Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 Source1:	http://primates.ximian.com/~miguel/beta1/mcs-%{version}.tar.gz
-# Source1-md5:	e894c0284e965cae93febc61e823be37
+# Source1-md5:	0ba9b0d907fb2ed29858042de6b8b2db
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
 Patch2:		%{name}-sparc.patch
