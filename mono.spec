@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0
-Release:	4
+Release:	5
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/1.0/%{name}-%{version}.tar.gz
@@ -16,6 +16,7 @@ Source1:	http://www.go-mono.com/archive/1.0/mcs-%{version}.tar.gz
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-segv.patch
 Patch2:		%{name}-endian.patch
+Patch3:		%{name}-runtime-install-path.patch
 URL:		http://www.go-mono.com/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
@@ -147,6 +148,7 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # quick hack for sparc
 perl -p -i -e 's/LIBC="libc.so"//' configure.in
