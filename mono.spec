@@ -136,6 +136,8 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %patch1 -p1
 
 %build
+cp /usr/share/automake/config.sub .
+cp /usr/share/automake/config.sub ./libgc
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
