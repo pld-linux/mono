@@ -6,7 +6,9 @@ Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
+# Source0-md5: f064872ec93de8cfc47ecadb8aa73edb
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
+# Source1-md5: 1331b62892dae6f78e83a4caadaabcfe
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
