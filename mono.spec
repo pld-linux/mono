@@ -2,16 +2,17 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
 Version:	0.15
-Release:	3
+Release:	4
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
+Patch0:		%{name}-noport.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	gc-devel >= 6.0-3
 BuildRequires:	glib2-devel
 BuildRequires:	libtool
-BuildRequires:	gc-devel >= 6.0-3
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -67,6 +68,7 @@ Statyczna biblioteka mono.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 rm -f missing
@@ -106,6 +108,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
+%dir %{_sysconfdir}/mono
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 
 %files devel
 %defattr(644,root,root,755)
