@@ -48,7 +48,7 @@ platform are:
 %description -l pl
 Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
 now± platformê developersk±. Zalety tej platformy to:
-- ¶rodowisko, które dostarsza garbage collector, w±tki oraz
+- ¶rodowisko, które dostarcza garbage collector, w±tki oraz
   specyfikacjê maszyny wirtualnej (The Virtual Execution System, VES),
 - bibliotekê klas,
 - nowy jêzyk, C#. Bardzo podobny do Javy, C# pozwala programistom na
