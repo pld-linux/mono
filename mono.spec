@@ -15,7 +15,7 @@ Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
 # Source1-md5:	8052bfcb065d8c81e413b22fee549640
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
-URL:		http://www.mono-project.org/
+URL:		http://www.mono-project.com/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -159,8 +159,8 @@ cp -f /usr/share/automake/config.sub libgc
 %{__autoconf}
 %{__automake}
 %configure \
-	%{?with_nptl:--with-nptl} \
-	%{!?with_nptl:--without-nptl} \
+	%{?with_nptl:--with-tls=__thread} \
+	%{!?with_nptl:--with-tls=pthread} \
 	--with-preview=yes \
 %ifarch amd64
 	--with-sigaltstack=yes \
