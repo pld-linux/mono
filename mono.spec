@@ -183,12 +183,6 @@ rm -rf $RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
-%ifnarch %{ix86} ppc sparc
-# use mint as mono on archs without JIT
-ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
-ln -sf mint.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/mono.pc
-%endif
-
 # Make links to all binaries. In fact we could move *.exe to
 # %{_libdir}, but probably something relays on it.
 old="$(pwd)"
