@@ -1,3 +1,7 @@
+#
+# TODO:
+#	- AMD64 port (available patches seem incomplete/buggy)
+#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
@@ -127,7 +131,6 @@ Podobny do Yacca generator parserów dla Javy i C#.
 
 %build
 rm -f missing
-cp -f /usr/share/automake/config.sub .
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
