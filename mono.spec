@@ -1,28 +1,33 @@
-%define _snap 20040118
-%define _mcs_version 0.29
+#
+# Conditional build:
+%bcond_with	nptl		# enable support for NPTL
+#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.29.99.%{_snap}
-Release:	1
+Version:	1.1.2
+Release:	0.1
 License:	LGPL
 Group:		Development/Languages
-Source0:	http://www.go-mono.com/daily/%{name}-%{version}.tar.gz
-# Source0-md5:	cc94ead1dc05ceab37678452e1fdfff4
-Source1:	http://www.go-mono.com/archive/mcs-%{_mcs_version}.tar.gz
-# Source1-md5:	a969edc9561ec6b5279c0515c59251b4
-Patch0:		%{name}-alpha.patch
-URL:		http://www.go-mono.com/
+Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	5a5ca20ada7d467524ee0297f51194d4
+Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
+# Source1-md5:	91c0ec2260fdfef3548ff6a74d8e8259
+Patch0:		%{name}-nolibs.patch
+URL:		http://www.mono-project.com/
+ExcludeArch:	alpha
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	glib2-devel
+BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	icu
+BuildRequires:	libicu-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # workaround for buggy gcc 3.3.1
-%define         specflags_alpha "-mno-explicit-relocs"
+%define         specflags_alpha  -mno-explicit-relocs 
 
 %description
 The Common Language Infrastructure platform. Microsoft has created a
@@ -41,7 +46,7 @@ platform are:
 %description -l pl
 Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
 now± platformê developersk±. Zalety tej platformy to:
-- ¶rodowisko, które dostarsza garbage collector, w±tki oraz
+- ¶rodowisko, które dostarcza garbage collector, w±tki oraz
   specyfikacjê maszyny wirtualnej (The Virtual Execution System, VES),
 - bibliotekê klas,
 - nowy jêzyk, C#. Bardzo podobny do Javy, C# pozwala programistom na
@@ -54,7 +59,7 @@ now± platformê developersk±. Zalety tej platformy to:
 Summary:	Development resources for mono
 Summary(pl):	Zasoby programisty do mono
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Development resources for mono.
@@ -66,7 +71,7 @@ Zasoby programisty dla mono.
 Summary:	MonoBASIC compiler for mono
 Summary(pl):	Kompilator MonoBASIC dla mono
 Group:		Development/Languages
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description basic
 MonoBASIC compiler for mono.
@@ -78,7 +83,7 @@ Kompilator MonoBASIC dla mono.
 Summary:	C# compiler for mono
 Summary(pl):	Kompilator C# dla mono
 Group:		Development/Languages
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description csharp
 C# compiler for mono.
@@ -90,7 +95,7 @@ Kompilator C# dla mono.
 Summary:	ILasm compiler for mono
 Summary(pl):	Kompilator ILasm dla mono
 Group:		Development/Languages
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 Provides:	ilasm
 Obsoletes:	pnet-compiler-ilasm
 
@@ -104,7 +109,7 @@ Kompilator ILasm dla mono.
 Summary:	Static mono library
 Summary(pl):	Statyczna biblioteka mono
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static mono library.
@@ -123,23 +128,51 @@ Yacc-like parser generator for Java and C#.
 %description jay -l pl
 Podobny do Yacca generator parserów dla Javy i C#.
 
+%package compat-links
+Summary:	Mono compatibility links
+Summary(pl):	Dowi±zania dla kompatybilno¶ci
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description compat-links
+This package contains links to binaries with names used in .NET and
+dotGNU.
+
+%description compat-links -l pl
+Pakiet ten zawiera dowi±zania do programów o nazwach u¿ywanych w .NET
+oraz dotGNU.
+
 %prep
 %setup -q -a1
 %patch0 -p1
 
+# quick hack for sparc
+perl -p -i -e 's/LIBC="libc.so"//' configure.in
+
 %build
-rm -f missing
+cp -f /usr/share/automake/config.sub .
+cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
 %configure \
+	%{?with_nptl:--with-tls=__thread} \
+	%{!?with_nptl:--with-tls=pthread} \
+	--with-preview=yes \
+	--with-icu=yes \
+	--with-jit=yes \
 	--with-gc=included
+#%ifarch amd64
+#	--with-sigaltstack=yes \
+#	--with-gc=none
+#%else
+#%endif
 
 %{__make}
 
 # for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-%{_mcs_version}/jay \
+%{__make} -C mcs-*/jay \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
 
@@ -149,15 +182,11 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__make} -C mcs-%{_mcs_version}/jay install \
+%{__make} -C mcs-*/jay install \
 	prefix=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
-
-%ifnarch %{ix86}
-ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
-%endif
 
 # Make links to all binaries. In fact we could move *.exe to
 # %{_libdir}, but probably something relays on it.
@@ -167,17 +196,20 @@ for f in *.exe ; do
 	bn=$(basename $f .exe)
 	rm -f $bn
 	echo "#!/bin/sh" > $bn
+%ifarch %{ix86} ppc sparc
 	echo "%{_bindir}/mono %{_bindir}/$f" '"$@"' >> $bn
+%else
+	echo "%{_bindir}/mint %{_bindir}/$f" '"$@"' >> $bn
+%endif
 done
 cd "$old"
-
 
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
 rm -rf pld-doc
 mkdir -p pld-doc/{webpage,notes}
-cp -a doc/* pld-doc/webpage/
-cp -a docs/* pld-doc/notes/
+cp -a web/* pld-doc/webpage
+cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
 
 %clean
@@ -189,39 +221,60 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
+%ifarch %{ix86} ppc sparc
 %attr(755,root,root) %{_bindir}/mono
+%endif
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/signcode*
-%attr(755,root,root) %{_bindir}/sn
-%attr(755,root,root) %{_bindir}/monosn
-%ifarch %{ix86}
-#%attr(755,root,root) %{_bindir}/oldmono
+%attr(755,root,root) %{_bindir}/sn*
+%attr(755,root,root) %{_bindir}/MakeCert*
+%attr(755,root,root) %{_bindir}/makecert*
+%attr(755,root,root) %{_bindir}/cert*
+%attr(755,root,root) %{_bindir}/setreg*
+%attr(755,root,root) %{_bindir}/gacutil*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%endif
-%attr(755,root,root) %{_libdir}/*.dll
+%attr(755,root,root) %{_libdir}/mono/*.*/*.dll
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
-#%{_mandir}/man1/oldmono.1*
+%{_mandir}/man1/sn.1*
+%{_mandir}/man1/cert*.1*
+%{_mandir}/man1/makecert.1*
+%{_mandir}/man1/secutil.1*
+%{_mandir}/man1/signcode.1*
+%{_mandir}/man1/setreg.1*
+%{_mandir}/man1/chktrust.1*
+%{_mandir}/man1/gacutil.1*
+%dir %{_libdir}/mono
+%dir %{_libdir}/mono/1.0
+%dir %{_libdir}/mono/2.0
+%{_libdir}/mono/gac
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/browscap.ini
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/DefaultWsdlHelpGenerator.aspx
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/1.0/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/1.0/DefaultWsdlHelpGenerator.aspx
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/2.0/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/2.0/DefaultWsdlHelpGenerator.aspx
 
 %files jay
 %defattr(644,root,root,755)
-%doc mcs-%{_mcs_version}/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%doc mcs-*/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
 %attr(755,root,root) %{_bindir}/jay
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
 %{_mandir}/man1/jay.1*
 
+%files compat-links
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/resgen
+
 %files devel
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
 %attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/mono-find*
 %attr(755,root,root) %{_bindir}/xsd*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monoresgen*
@@ -233,10 +286,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/cilc*
 %attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/soapsuds*
-%ifarch %{ix86}
-%{_libdir}/lib*.la
+%attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_libdir}/lib*.so
-%endif
+%{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
@@ -246,27 +298,30 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/sqlsharp.1*
-%{_mandir}/man1/cert2spc.1*
 %{_mandir}/man1/wsdl.1*
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/disco.1*
+%{_mandir}/man1/monop.1*
+%{_mandir}/man1/xsd.1*
 
 %files csharp
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mcs*
+%attr(755,root,root) %{_bindir}/mcs
+%attr(755,root,root) %{_bindir}/gmcs
+%attr(755,root,root) %{_libdir}/mono/1.0/mcs.exe
+%attr(755,root,root) %{_libdir}/mono/2.0/gmcs.exe
 %{_mandir}/man1/mcs.1*
 
 %files basic
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mbas*
+%attr(755,root,root) %{_bindir}/mbas
+%attr(755,root,root) %{_libdir}/mono/1.0/mbas.exe
 
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
 %{_mandir}/man1/ilasm.1*
 
-%ifarch %{ix86}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
-%endif
