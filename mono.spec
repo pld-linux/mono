@@ -10,6 +10,7 @@ Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 # Source1-md5:	a437c53d588e9d7b16309d52f08fa253
 Patch0:		%{name}-nolibs.patch
+Patch1:		%{name}-sparc.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -121,6 +122,7 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %prep
 %setup -q -a1
 %patch -p1
+%patch1 -p1
 
 %build
 rm -f missing
