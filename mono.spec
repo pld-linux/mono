@@ -153,13 +153,6 @@ perl -p -i -e 's|/gacdir \$\(GAC_DIR\)||g' `find -name Makefile.am`
 # quick hack for sparc
 perl -p -i -e 's/LIBC="libc.so"//' configure.in
 
-# to allow build without already installed /etc/mono/config
-cat > runtime/gacutil.exe.config <<EOF
-<configuration>
-<dllmap dll="libc" target="libc.so.6"/>
-</configuration>
-EOF
-
 %build
 cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
