@@ -1,7 +1,7 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Structure
 Name:		mono
-Version:	0.23
+Version:	0.24
 Release:	1
 License:	LGPL
 Group:		Development/Languages
@@ -161,6 +161,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
 %attr(755,root,root) %{_bindir}/mono
+%attr(755,root,root) %{_bindir}/oldmono
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
@@ -170,6 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
+%{_mandir}/man1/oldmono.1*
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
@@ -183,6 +185,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/jay
+%attr(755,root,root) %{_bindir}/genmdesc
+%attr(755,root,root) %{_bindir}/cilc*
 %ifarch %{ix86}
 %{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
@@ -191,10 +195,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*
 %{_includedir}/%{name}
 %{_mandir}/man1/jay.1*
+%{_mandir}/man1/cilc.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/sqlsharp.1*
+%{_mandir}/man1/cert2spc.1*
 
 %files csharp
 %defattr(644,root,root,755)
@@ -208,6 +214,7 @@ rm -rf $RPM_BUILD_ROOT
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
+%{_mandir}/man1/ilasm.1*
 
 %files static
 %defattr(644,root,root,755)
