@@ -1,14 +1,14 @@
 Summary:	Common Language Infrastructure implementation
-Summary(pl):	Implementacja Common Language Structure
+Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.25
-Release:	1.1
+Version:	0.26
+Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	086b4f0961f97a4ce25feac167c69de1
+# Source0-md5:	6821b1e8e4493109d9d42a90a631223a
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5:	4b6fb86f97bd1e034d412b78ced7acc3
+# Source1-md5:	4ccc74667ff4d79ba08b341d2e684921
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
@@ -189,6 +189,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
 %attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/xsd*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monoresgen*
 %attr(755,root,root) %{_bindir}/pedump
