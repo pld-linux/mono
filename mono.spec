@@ -1,10 +1,7 @@
-#
-# TODO:
-# - add unpackaged files
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
-Version:	0.19
+Version:	0.20
 Release:	1
 License:	LGPL
 Group:		Development/Languages
@@ -54,7 +51,43 @@ Requires:	%{name} = %{version}
 Development resources for mono.
 
 %description devel -l pl
-Zasoby programosty do mono.
+Zasoby programisty dla mono.
+
+%package basic
+Summary:	MonoBASIC compiler for mono
+Summary(pl):	Kompilator MonoBASIC dla mono
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}
+
+%description basic
+MonoBASIC compiler for mono.
+
+%description basic -l pl
+Kompilator MonoBASIC dla mono.
+
+%package csharp
+Summary:	C# compiler for mono
+Summary(pl):	Kompilator C# dla mono
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}
+
+%description csharp
+C# compiler for mono.
+
+%description csharp -l pl
+Kompilator C# dla mono.
+
+%package ilasm
+Summary:	ILasm compiler for mono
+Summary(pl):	Kompilator ILasm dla mono
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}
+
+%description ilasm
+ILasm compiler for mono.
+
+%description ilasm -l pl
+Kompilator ILasm dla mono.
 
 %package static
 Summary:	Static mono library
@@ -73,10 +106,10 @@ Statyczna biblioteka mono.
 
 %build
 rm -f missing
-#%{__libtoolize}
-#%{__aclocal}
-#%{__autoconf}
-#%{__automake}
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
 %configure --with-gc=boehm
 %{__make}
 
@@ -90,7 +123,25 @@ rm -rf $RPM_BUILD_ROOT
 ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
 %endif
 
-rm -f doc/Makefile* docs/Makefile*
+# Make links to all binaries. In fact we could move *.exe to 
+# %{_libdir}, but probably something relays on it.
+old="$(pwd)"
+cd $RPM_BUILD_ROOT%{_bindir}
+for f in *.exe ; do
+	bn=$(basename $f .exe)
+	rm -f $bn
+	echo "#!/bin/sh" > $bn
+	echo "%{_bindir}/mono %{_bindir}/$f" '"$@"' >> $bn
+done
+cd "$old"
+
+# this way we can run rpmbuild -bi several times, and directories
+# have more meaningful name.
+rm -rf pld-doc
+mkdir -p pld-doc/{webpage,notes}
+cp -a doc/* pld-doc/webpage/
+cp -a docs/* pld-doc/notes/
+rm -f pld-doc/*/Makefile*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -102,6 +153,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
 %attr(755,root,root) %{_bindir}/mono
+%attr(755,root,root) %{_bindir}/secutil*
+%attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
 %attr(755,root,root) %{_libdir}/*.so.*.*
 %endif
@@ -115,10 +168,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README doc docs
-%attr(755,root,root) %{_bindir}/mcs*
+%doc AUTHORS ChangeLog NEWS README pld-doc/*
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
+%attr(755,root,root) %{_bindir}/monoresgen*
+%attr(755,root,root) %{_bindir}/pedump
+%attr(755,root,root) %{_bindir}/sqlsharp*
 %ifarch %{ix86}
 %{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
@@ -126,10 +181,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}
 %{_libdir}/pkgconfig/*
 %{_includedir}/%{name}
-%{_mandir}/man1/mcs.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monostyle.1*
+%{_mandir}/man1/sqlsharp.1*
+
+%files csharp
+%attr(755,root,root) %{_bindir}/mcs*
+%{_mandir}/man1/mcs.1*
+
+%files basic
+%attr(755,root,root) %{_bindir}/mbas*
+
+%files ilasm
+%attr(755,root,root) %{_bindir}/ilasm*
 
 %files static
 %defattr(644,root,root,755)
