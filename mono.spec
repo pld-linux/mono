@@ -9,12 +9,12 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.30.1
+Version:	0.30.2
 Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	9d055e6fe8d323ec139ba2879a118e96
+# Source0-md5:	cbc026eef3c0069073450200140c9e41
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 # Source1-md5:	e300f574fa79da0fef045852b2f45d6a
 Patch0:		%{name}-alpha.patch
@@ -134,6 +134,8 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %setup -q -a1
 %patch0 -p1
 %patch1 -p1
+# this is a bug in distribution package
+mv mcs-0.30.1 mcs-%{version}
 
 %build
 %{__libtoolize}
