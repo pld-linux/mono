@@ -20,6 +20,8 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
+# This is because it is an svn export, and not real release, remove in
+# the real release:
 BuildRequires:	mono-csharp
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
