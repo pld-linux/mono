@@ -162,8 +162,9 @@ cp -f /usr/share/automake/config.sub libgc
 	%{?with_nptl:--with-nptl} \
 	%{!?with_nptl:--without-nptl} \
 	--with-preview=yes \
-%ifnarch %{ix86} ppc sparc
+%ifarch amd64
 	--with-sigaltstack=yes \
+	--with-gc=none
 %endif
 	--with-gc=included
 
