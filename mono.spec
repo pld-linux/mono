@@ -156,6 +156,8 @@ oraz dotGNU.
 %setup -q
 %patch0 -p1
 
+# workaround for variable name disallowed by new pkgconfig
+echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
 %build
 cp -f /usr/share/automake/config.sub .
