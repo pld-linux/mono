@@ -161,10 +161,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
 %attr(755,root,root) %{_bindir}/mono
-%attr(755,root,root) %{_bindir}/oldmono
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/monosn
 %ifarch %{ix86}
+%attr(755,root,root) %{_bindir}/oldmono
 %attr(755,root,root) %{_libdir}/*.so.*.*
 %endif
 %attr(755,root,root) %{_libdir}/*.dll
@@ -185,7 +185,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/jay
+%ifarch %{ix86}
 %attr(755,root,root) %{_bindir}/genmdesc
+%endif
 %attr(755,root,root) %{_bindir}/cilc*
 %ifarch %{ix86}
 %{_libdir}/*.la
