@@ -1,14 +1,14 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Structure
 Name:		mono
-Version:	0.24
+Version:	0.25
 Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5: f064872ec93de8cfc47ecadb8aa73edb
+# Source0-md5:	086b4f0961f97a4ce25feac167c69de1
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5: 1331b62892dae6f78e83a4caadaabcfe
+# Source1-md5:	4b6fb86f97bd1e034d412b78ced7acc3
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
