@@ -2,7 +2,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	0.26
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -87,6 +87,8 @@ Summary:	ILasm compiler for mono
 Summary(pl):	Kompilator ILasm dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}
+Provides:	ilasm
+Obsoletes:	pnet-compiler-ilasm
 
 %description ilasm
 ILasm compiler for mono.
