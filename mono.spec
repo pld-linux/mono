@@ -1,9 +1,9 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
-Version:	0.7
-Release:	2
-License:	GPL
+Version:	0.13
+Release:	1
+License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
 Patch0:		%{name}-DESTDIR.patch
@@ -11,8 +11,10 @@ Patch1:		%{name}-ac_fixes.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	glib-devel >= 1.2.0
+BuildRequires:	glib2-devel
 BuildRequires:	libtool
+BuildRequires:	gc-devel >= 6.0-3
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -67,8 +69,8 @@ Statyczna biblioteka mono.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
 %build
 rm -f missing
@@ -76,19 +78,16 @@ rm -f missing
 aclocal
 %{__autoconf}
 %{__automake}
-%configure
+%configure --with-gc=boehm
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	assembliesdir=%{_libdir}
+	DESTDIR=$RPM_BUILD_ROOT 
 
-rm -f doc/Makefile*
-
-gzip -9nf AUTHORS ChangeLog NEWS README doc/*
+rm -f doc/Makefile* docs/Makefile*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,18 +97,29 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/mint
+%attr(755,root,root) %{_bindir}/mono
 %attr(755,root,root) %{_libdir}/*.so.*.*
 %attr(755,root,root) %{_libdir}/*.dll
-%{_datadir}/%{name}
-%{_mandir}/man?/*
+%{_mandir}/man5/mono-config.5*
+%{_mandir}/man1/mint.1*
+%{_mandir}/man1/mono.1*
 
 %files devel
 %defattr(644,root,root,755)
-%doc *.gz doc
+%doc AUTHORS ChangeLog NEWS README doc docs
+%attr(755,root,root) %{_bindir}/mcs*
+%attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
+%{_datadir}/%{name}
+%{_libdir}/pkgconfig/*
 %{_includedir}/%{name}
+%{_mandir}/man1/mcs.1*
+%{_mandir}/man1/monoburg.1*
+%{_mandir}/man1/monodis.1*
+%{_mandir}/man1/monostyle.1*
 
 %files static
 %defattr(644,root,root,755)
