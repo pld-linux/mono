@@ -1,7 +1,7 @@
-
+#
 # Conditional build:
 %bcond_with	nptl		# enable support for NPTL
-
+#
 #
 # TODO:
 #	- AMD64 port (available patches seem incomplete/buggy)
@@ -19,11 +19,12 @@ Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 # Source1-md5:	abfca065428cee064d8631570f71c5ce
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
+Patch2:		%{name}-sparc.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	glib2-devel
+BuildRequires:	glib2-devel >= 2.0.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -148,10 +149,11 @@ oraz dotGNU.
 %setup -q -a1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
-cp /usr/share/automake/config.sub .
-cp /usr/share/automake/config.sub ./libgc
+cp -f /usr/share/automake/config.sub .
+cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
