@@ -149,6 +149,9 @@ oraz dotGNU.
 perl -p -i -e 's/-static//' mono/mini/Makefile.am
 perl -p -i -e 's|/gacdir \$\(GAC_DIR\)||g' `find -name Makefile.am`
 
+# quick hack for sparc
+perl -p -i -e 's/LIBC="libc.so"//' configure.in
+
 %build
 cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
