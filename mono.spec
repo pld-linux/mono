@@ -127,6 +127,7 @@ Podobny do Yacca generator parserów dla Javy i C#.
 
 %build
 rm -f missing
+cp -f /usr/share/automake/config.sub .
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
