@@ -5,19 +5,17 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.97
-Release:	2
+Version:	1.0
+Release:	1
 License:	LGPL
 Group:		Development/Languages
-Source0:	http://www.go-mono.com/archive/rc/%{name}-%{version}.tar.gz
-# Source0-md5:	e0a1cff236eb92a61da04b5df26a242d
-Source1:	http://www.go-mono.com/archive/rc/mcs-%{version}.tar.gz
-# Source1-md5:	cd1edad99b09db87af245b5fdb1243bd
+Source0:	http://www.go-mono.com/archive/1.0/%{name}-%{version}.tar.gz
+# Source0-md5:	23a5787818837893073e2ae56d4ef3ac
+Source1:	http://www.go-mono.com/archive/1.0/mcs-%{version}.tar.gz
+# Source1-md5:	032d130e4bb521c5427603ca237b9c36
 Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-install.patch
-Patch2:		%{name}-segv.patch
-Patch3:		%{name}-types.patch
-Patch4:		%{name}-endian.patch
+Patch1:		%{name}-segv.patch
+Patch2:		%{name}-endian.patch
 URL:		http://www.go-mono.com/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
@@ -149,11 +147,6 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-perl -p -i -e 's/-static//' mono/mini/Makefile.am
-perl -p -i -e 's|/gacdir \$\(GAC_DIR\)||g' `find -name Makefile.am`
 
 # quick hack for sparc
 perl -p -i -e 's/LIBC="libc.so"//' configure.in
