@@ -1,3 +1,7 @@
+
+# Conditional build:
+%bcond_with	nptl		# enable support for NPTL
+
 #
 # TODO:
 #	- AMD64 port (available patches seem incomplete/buggy)
@@ -5,14 +9,14 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	0.30
-Release:	4
+Version:	0.30.1
+Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	84bc49f39c905936d594042fd29cd07c
+# Source0-md5:	9d055e6fe8d323ec139ba2879a118e96
 Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
-# Source1-md5:	05152878b29d3e3bfcd1b902cf7e6817
+# Source1-md5:	e300f574fa79da0fef045852b2f45d6a
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
 URL:		http://www.go-mono.com/
@@ -57,7 +61,7 @@ now± platformê developersk±. Zalety tej platformy to:
 Summary:	Development resources for mono
 Summary(pl):	Zasoby programisty do mono
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Development resources for mono.
@@ -69,7 +73,7 @@ Zasoby programisty dla mono.
 Summary:	MonoBASIC compiler for mono
 Summary(pl):	Kompilator MonoBASIC dla mono
 Group:		Development/Languages
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description basic
 MonoBASIC compiler for mono.
@@ -81,7 +85,7 @@ Kompilator MonoBASIC dla mono.
 Summary:	C# compiler for mono
 Summary(pl):	Kompilator C# dla mono
 Group:		Development/Languages
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description csharp
 C# compiler for mono.
@@ -93,7 +97,7 @@ Kompilator C# dla mono.
 Summary:	ILasm compiler for mono
 Summary(pl):	Kompilator ILasm dla mono
 Group:		Development/Languages
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 Provides:	ilasm
 Obsoletes:	pnet-compiler-ilasm
 
@@ -107,7 +111,7 @@ Kompilator ILasm dla mono.
 Summary:	Static mono library
 Summary(pl):	Statyczna biblioteka mono
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static mono library.
@@ -137,6 +141,7 @@ Podobny do Yacca generator parserów dla Javy i C#.
 %{__autoconf}
 %{__automake}
 %configure \
+	%{?with_nptl:--with-nptl} \
 	--with-gc=included
 
 %{__make}
