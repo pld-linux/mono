@@ -17,7 +17,7 @@ Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-segv.patch
 Patch2:		%{name}-endian.patch
 Patch3:		%{name}-runtime-install-path.patch
-URL:		http://www.go-mono.com/
+URL:		http://www.mono-project.org/
 ExcludeArch:	alpha
 BuildRequires:	autoconf
 BuildRequires:	automake
