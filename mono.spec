@@ -2,7 +2,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
 Version:	0.15
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -83,6 +83,10 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT 
 
+%ifnarch %{ix86}
+ln -s mint $RPM_BUILD_ROOT/usr/bin/mono
+%endif
+
 rm -f doc/Makefile* docs/Makefile*
 
 %clean
@@ -95,7 +99,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
 %attr(755,root,root) %{_bindir}/mono
+%ifarch {ix86}
 %attr(755,root,root) %{_libdir}/*.so.*.*
+%endif
 %attr(755,root,root) %{_libdir}/*.dll
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
@@ -107,8 +113,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mcs*
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
+%ifarch {ix86}
 %attr(755,root,root) %{_libdir}/*.la
 %attr(755,root,root) %{_libdir}/*.so
+%endif
 %{_datadir}/%{name}
 %{_libdir}/pkgconfig/*
 %{_includedir}/%{name}
@@ -119,4 +127,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files static
 %defattr(644,root,root,755)
+%ifarch {ix86}
 %{_libdir}/lib*.a
+%endif
