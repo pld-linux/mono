@@ -5,14 +5,14 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.0.1
-Release:	2
+Version:	1.0.2
+Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	e569c5b5a9153dfe10811c17bfefd884
+# Source0-md5:	4490424a30ce40d1d7534cc681f6c14c
 Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
-# Source1-md5:	ce9522b37779b91f37a4b8b819160c03
+# Source1-md5:	8052bfcb065d8c81e413b22fee549640
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
 URL:		http://www.mono-project.org/
