@@ -175,9 +175,10 @@ cp -f /usr/share/automake/config.sub libgc
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_bindir}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_pkgconfigdir}}
 %ifnarch %{ix86} ppc sparc
 ln -sf mint $RPM_BUILD_ROOT%{_bindir}/mono
+ln -sf mint.pc $RPM_BUILD_ROOT%{_pkgconfigdir}/mono.pc
 %endif
 
 LD_LIBRARY_PATH=$RPM_BUILD_ROOT%{_libdir} \
