@@ -1,7 +1,7 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja jêzyka CLI
 Name:		mono
-Version:	0.13
+Version:	0.15
 Release:	1
 License:	LGPL
 Group:		Development/Languages
