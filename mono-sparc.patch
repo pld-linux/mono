@@ -1,0 +1,15 @@
+--- mono-0.31/configure.in.orig	2004-04-15 17:08:13.000000000 +0000
++++ mono-0.31/configure.in	2004-04-15 17:52:40.000000000 +0000
+@@ -838,6 +838,12 @@
+ 		arch_target=x86-64;
+ 		JIT_SUPPORTED=no
+ 		;;
++	sparc*-*-linux*)
++		TARGET=SPARC;
++		arch_target=sparc;
++		JIT_SUPPORTED=no
++		ACCESS_UNALIGNED="no"
++		;;
+ 	sparc*-*-*)
+ 		TARGET=SPARC;
+ 		arch_target=sparc;
