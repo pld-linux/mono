@@ -197,10 +197,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn
 %attr(755,root,root) %{_bindir}/monosn
-%ifarch %{ix86}
 #%attr(755,root,root) %{_bindir}/oldmono
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%endif
 %attr(755,root,root) %{_libdir}/*.dll
 %{_mandir}/man5/mono-config.5*
 %{_mandir}/man1/mint.1*
