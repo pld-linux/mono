@@ -1,0 +1,23 @@
+--- mono-0.97/runtime/net_1_1/Makefile.am.orig	2004-06-26 15:43:17.812243000 +0200
++++ mono-0.97/runtime/net_1_1/Makefile.am	2004-06-26 15:51:01.515855502 +0200
+@@ -88,9 +88,9 @@
+ install-data-local:
+ 	@if test -n '$(gac_assemblies)'; then \
+ 	  for i in ''$(gac_assemblies); do \
+-	    echo "MONO_PATH=$(srcdir) $(DESTDIR)$(bindir)/mono $(gacutil) /i $(srcdir)/$$i /f /package 1.0 /gacdir $(GAC_DIR) /root $(GAC_DIR)" ; \
++	    echo "MONO_PATH=$(srcdir) $(mono_runtime) $(gacutil) /i $(srcdir)/$$i /f /package 1.0 /gacdir $(GAC_DIR) /root $(GAC_DIR)" ; \
+ 	    MONO_PATH=$(srcdir) \
+-	      $(LIBTOOL) --mode=execute $(DESTDIR)$(bindir)/mono $(gacutil) /i $(srcdir)/$$i /f /package 1.0 /gacdir $(GAC_DIR) /root $(GAC_DIR) || exit 1 ; \
++	      $(LIBTOOL) --mode=execute $(mono_runtime) $(gacutil) /i $(srcdir)/$$i /f /package 1.0 /gacdir $(GAC_DIR) /root $(GAC_DIR) || exit 1 ; \
+ 	  done; fi
+ 
+ uninstall-local:
+@@ -98,7 +98,7 @@
+ 	  for i in ''$(gac_assemblies_list); do \
+ 	    echo "MONO_PATH=$(srcdir) $(mono_runtime) $(gacutil) /u $$i  /root $(GAC_DIR)" ; \
+ 	    MONO_PATH=$(srcdir) \
+-	      $(LIBTOOL) --mode=execute $(DESTDIR)$(bindir)/mono $(gacutil) /u $$i /gacdir $(GAC_DIR) /root $(GAC_DIR) || true ; \
++	      $(LIBTOOL) --mode=execute $(mono_runtime) $(gacutil) /u $$i /gacdir $(GAC_DIR) /root $(GAC_DIR) || true ; \
+ 	  done; fi
+ 
+ copy_dlls:
