@@ -165,8 +165,9 @@ cp -f /usr/share/automake/config.sub libgc
 %ifarch amd64
 	--with-sigaltstack=yes \
 	--with-gc=none
-%endif
+%else
 	--with-gc=included
+%endif
 
 %{__make}
 
