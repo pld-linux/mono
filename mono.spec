@@ -1,7 +1,7 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Structure
 Name:		mono
-Version:	0.22
+Version:	0.23
 Release:	1
 License:	LGPL
 Group:		Development/Languages
