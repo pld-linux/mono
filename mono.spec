@@ -9,6 +9,7 @@ Version:	1.1.6
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
+#Source0Download: http://www.mono-project.com/Downloads
 Source0:	http://www.go-mono.com/archive/%{version}/mono-%{version}.tar.gz
 # Source0-md5:	d5097b149effa0b248a4398fe630bd30
 Patch0:		%{name}-nolibs.patch
