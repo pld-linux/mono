@@ -20,6 +20,7 @@ Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 Patch0:		%{name}-alpha.patch
 Patch1:		%{name}-nolibs.patch
 Patch2:		%{name}-sparc.patch
+Patch3:		%{name}-amd64.patch
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -150,6 +151,7 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
