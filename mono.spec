@@ -17,19 +17,17 @@ Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
 Patch2:		%{name}-lib64.patch
 URL:		http://www.mono-project.com/
-ExcludeArch:	alpha
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
-BuildRequires:	libtool
-BuildRequires:	pkgconfig
 BuildRequires:	icu
 BuildRequires:	libicu-devel >= 2.6.1
+BuildRequires:	libtool
+BuildRequires:	pkgconfig
+ExclusiveArch:	%{ix86} amd64 arm hppa ppc s390 sparc sparcv9 sparc64 
+# alpha still broken, mips/ia64/m68k disabled in configure
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-# workaround for buggy gcc 3.3.1
-%define         specflags_alpha  -mno-explicit-relocs 
 
 %description
 The Common Language Infrastructure platform. Microsoft has created a
@@ -179,6 +177,7 @@ cp -f /usr/share/automake/config.sub libgc
 	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
 
 # rebuild gacutil with lib64 patch
+MONO_PATH="`pwd`/runtime/net_1_1" \
 %{__make} -C mcs-*/tools/gacutil \
 	MCS="`pwd`/mono/interpreter/mint `pwd`/runtime/mcs.exe -lib:`pwd`/runtime/net_1_1"
 cp -f mcs-*/tools/gacutil/gacutil.exe runtime
