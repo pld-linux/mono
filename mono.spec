@@ -212,7 +212,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mint
+%ifarch %{ix86} ppc sparc
 %attr(755,root,root) %{_bindir}/mono
+%endif
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/signcode*
