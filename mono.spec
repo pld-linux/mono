@@ -75,7 +75,6 @@ Summary:	C# compiler for mono
 Summary(pl):	Kompilator C# dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}
-Requires:	ilasm
 
 %description csharp
 C# compiler for mono.
