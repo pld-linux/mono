@@ -150,6 +150,7 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+perl -p -i -e 's/-static//' mono/mini/Makefile.am
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -167,7 +168,7 @@ cp -f /usr/share/automake/config.sub libgc
 %{__make}
 
 # for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-%{version}/jay \
+%{__make} -C mcs-*/jay \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
 
@@ -177,7 +178,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__make} -C mcs-%{version}/jay install \
+%{__make} -C mcs-*/jay install \
 	prefix=%{_prefix} \
 	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
@@ -221,7 +222,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
-%attr(755,root,root) %{_bindir}/monosn
 %attr(755,root,root) %{_bindir}/MakeCert*
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/cert*
@@ -254,7 +254,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files jay
 %defattr(644,root,root,755)
-%doc mcs-%{version}/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%doc mcs-*/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
 %attr(755,root,root) %{_bindir}/jay
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
@@ -268,6 +268,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
 %attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/mono-find*
 %attr(755,root,root) %{_bindir}/xsd*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monoresgen*
