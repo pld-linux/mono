@@ -1,8 +1,8 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Structure
 Name:		mono
-Version:	0.21
-Release:	2
+Version:	0.22
+Release:	1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{name}-%{version}.tar.gz
@@ -115,7 +115,7 @@ rm -f missing
 %{__make}
 
 # for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-%{version}/jay CC=%{__cc} CFLAGS="%{rpmcflags}"
+%{__make} -C mcs/jay CC=%{__cc} CFLAGS="%{rpmcflags}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -123,8 +123,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 	
-install mcs-%{version}/jay/jay $RPM_BUILD_ROOT%{_bindir}/
-install mcs-%{version}/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install mcs/jay/jay $RPM_BUILD_ROOT%{_bindir}/
+install mcs/jay/jay.1 $RPM_BUILD_ROOT%{_mandir}/man1
 
 %ifnarch %{ix86}
 ln -s mint $RPM_BUILD_ROOT%{_bindir}/mono
