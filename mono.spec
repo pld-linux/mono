@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0
-Release:	2
+Release:	3
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/1.0/%{name}-%{version}.tar.gz
@@ -162,6 +162,9 @@ cp -f /usr/share/automake/config.sub libgc
 	%{?with_nptl:--with-nptl} \
 	%{!?with_nptl:--without-nptl} \
 	--with-preview=yes \
+%ifnarch %{ix86} ppc sparc
+	--with-sigaltstack=yes \
+%endif
 	--with-gc=included
 
 %{__make}
