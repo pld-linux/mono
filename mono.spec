@@ -10,6 +10,7 @@ Source1:	http://www.go-mono.com/archive/mcs-%{version}.tar.gz
 URL:		http://www.go-mono.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	bison
 BuildRequires:	gc-devel >= 6.0-3
 BuildRequires:	glib2-devel
 BuildRequires:	libtool
