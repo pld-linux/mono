@@ -5,14 +5,12 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.2
+Version:	1.1.3
 Release:	0.1
 License:	LGPL
 Group:		Development/Languages
 Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	5a5ca20ada7d467524ee0297f51194d4
-Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
-# Source1-md5:	91c0ec2260fdfef3548ff6a74d8e8259
+# Source0-md5:	4d4da2dee2eefbc1ffc8a2312449f3ac
 Patch0:		%{name}-nolibs.patch
 URL:		http://www.mono-project.com/
 ExcludeArch:	alpha
@@ -143,7 +141,7 @@ Pakiet ten zawiera dowi±zania do programów o nazwach u¿ywanych w .NET
 oraz dotGNU.
 
 %prep
-%setup -q -a1
+%setup -q
 %patch0 -p1
 
 # quick hack for sparc
@@ -171,38 +169,17 @@ cp -f /usr/share/automake/config.sub libgc
 
 %{__make}
 
-# for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-*/jay \
-	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
-
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__make} -C mcs-*/jay install \
-	prefix=%{_prefix} \
-	DESTDIR=$RPM_BUILD_ROOT
+#%{__make} -C mcs-*/jay install \
+#	prefix=%{_prefix} \
+#	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
-
-# Make links to all binaries. In fact we could move *.exe to
-# %{_libdir}, but probably something relays on it.
-old="$(pwd)"
-cd $RPM_BUILD_ROOT%{_bindir}
-for f in *.exe ; do
-	bn=$(basename $f .exe)
-	rm -f $bn
-	echo "#!/bin/sh" > $bn
-%ifarch %{ix86} ppc sparc
-	echo "%{_bindir}/mono %{_bindir}/$f" '"$@"' >> $bn
-%else
-	echo "%{_bindir}/mint %{_bindir}/$f" '"$@"' >> $bn
-%endif
-done
-cd "$old"
 
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
@@ -211,6 +188,8 @@ mkdir -p pld-doc/{webpage,notes}
 cp -a web/* pld-doc/webpage
 cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
+
+rm -rf $RPM_BUILD_ROOT%{_datadir}/libgc-mono
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -224,28 +203,38 @@ rm -rf $RPM_BUILD_ROOT
 %ifarch %{ix86} ppc sparc
 %attr(755,root,root) %{_bindir}/mono
 %endif
-%attr(755,root,root) %{_bindir}/secutil*
+%attr(755,root,root) %{_bindir}/cert*
 %attr(755,root,root) %{_bindir}/chktrust*
+%attr(755,root,root) %{_bindir}/gacutil*
+%attr(755,root,root) %{_bindir}/makecert*
+%attr(755,root,root) %{_bindir}/mkbundle*
+%attr(755,root,root) %{_bindir}/secutil*
+%attr(755,root,root) %{_bindir}/setreg*
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
-%attr(755,root,root) %{_bindir}/MakeCert*
-%attr(755,root,root) %{_bindir}/makecert*
-%attr(755,root,root) %{_bindir}/cert*
-%attr(755,root,root) %{_bindir}/setreg*
-%attr(755,root,root) %{_bindir}/gacutil*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/mono/*.*/*.dll
-%{_mandir}/man5/mono-config.5*
-%{_mandir}/man1/mint.1*
-%{_mandir}/man1/mono.1*
-%{_mandir}/man1/sn.1*
+%attr(755,root,root) %{_libdir}/mono/1.0/cert*
+%attr(755,root,root) %{_libdir}/mono/1.0/chktrust*
+%attr(755,root,root) %{_libdir}/mono/1.0/gacutil*
+%attr(755,root,root) %{_libdir}/mono/1.0/MakeCert*
+%attr(755,root,root) %{_libdir}/mono/1.0/mkbundle*
+%attr(755,root,root) %{_libdir}/mono/1.0/secutil*
+%attr(755,root,root) %{_libdir}/mono/1.0/setreg*
+%attr(755,root,root) %{_libdir}/mono/1.0/signcode*
+%attr(755,root,root) %{_libdir}/mono/1.0/sn*
 %{_mandir}/man1/cert*.1*
-%{_mandir}/man1/makecert.1*
-%{_mandir}/man1/secutil.1*
-%{_mandir}/man1/signcode.1*
-%{_mandir}/man1/setreg.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
+%{_mandir}/man1/makecert.1*
+%{_mandir}/man1/mkbundle.1*
+%{_mandir}/man1/mint.1*
+%{_mandir}/man1/mono.1*
+%{_mandir}/man1/secutil.1*
+%{_mandir}/man1/setreg.1*
+%{_mandir}/man1/signcode.1*
+%{_mandir}/man1/sn.1*
+%{_mandir}/man5/mono-config.5*
 %dir %{_libdir}/mono
 %dir %{_libdir}/mono/1.0
 %dir %{_libdir}/mono/2.0
@@ -260,7 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files jay
 %defattr(644,root,root,755)
-%doc mcs-*/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%doc mcs/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
 %attr(755,root,root) %{_bindir}/jay
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
@@ -273,21 +262,38 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
-%attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/al*
+%attr(755,root,root) %{_bindir}/cilc*
+%attr(755,root,root) %{_bindir}/disco*
+%attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/mono-find*
-%attr(755,root,root) %{_bindir}/xsd*
+%attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
+%attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_bindir}/monoresgen*
 %attr(755,root,root) %{_bindir}/pedump
-%attr(755,root,root) %{_bindir}/wsdl*
-%attr(755,root,root) %{_bindir}/genxs*
-%attr(755,root,root) %{_bindir}/sqlsharp*
-%attr(755,root,root) %{_bindir}/disco*
-%attr(755,root,root) %{_bindir}/cilc*
-%attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/soapsuds*
-%attr(755,root,root) %{_bindir}/monop*
+%attr(755,root,root) %{_bindir}/sqlsharp*
+%attr(755,root,root) %{_bindir}/wsdl*
+%attr(755,root,root) %{_bindir}/xsd*
 %attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/mono/1.0/al*
+%attr(755,root,root) %{_libdir}/mono/1.0/cilc*
+%attr(755,root,root) %{_libdir}/mono/1.0/disco*
+%attr(755,root,root) %{_libdir}/mono/1.0/genxs*
+%attr(755,root,root) %{_libdir}/mono/1.0/mono-find*
+%attr(755,root,root) %{_libdir}/mono/1.0/monop*
+%attr(755,root,root) %{_libdir}/mono/1.0/resgen*
+%attr(755,root,root) %{_libdir}/mono/1.0/soapsuds*
+%attr(755,root,root) %{_libdir}/mono/1.0/sqlsharp*
+%attr(755,root,root) %{_libdir}/mono/1.0/wsdl*
+%attr(755,root,root) %{_libdir}/mono/2.0/wsdl*
+%attr(755,root,root) %{_libdir}/mono/1.0/xsd*
+%attr(755,root,root) %{_libdir}/mono/1.0/mono-api-*
+%attr(755,root,root) %{_libdir}/mono/1.0/CorCompare*
+%attr(755,root,root) %{_libdir}/mono/1.0/browsercaps-updater*
+%attr(755,root,root) %{_libdir}/mono/1.0/ictool*
+%{_libdir}/mono/*.*/*.dll.mdb
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -308,18 +314,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_bindir}/gmcs
-%attr(755,root,root) %{_libdir}/mono/1.0/mcs.exe
-%attr(755,root,root) %{_libdir}/mono/2.0/gmcs.exe
+%attr(755,root,root) %{_libdir}/mono/1.0/mcs.exe*
+%attr(755,root,root) %{_libdir}/mono/2.0/gmcs.exe*
 %{_mandir}/man1/mcs.1*
 
 %files basic
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mbas
-%attr(755,root,root) %{_libdir}/mono/1.0/mbas.exe
+%attr(755,root,root) %{_libdir}/mono/1.0/mbas.exe*
 
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
+%attr(755,root,root) %{_libdir}/mono/1.0/ilasm*
 %{_mandir}/man1/ilasm.1*
 
 %files static
