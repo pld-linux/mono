@@ -228,17 +228,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sn*
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%attr(755,root,root) %{_libdir}/mono/*.*/*.dll
-%attr(755,root,root) %{_libdir}/mono/1.0/cert*
-%attr(755,root,root) %{_libdir}/mono/1.0/chktrust*
-%attr(755,root,root) %{_libdir}/mono/1.0/gacutil*
-%attr(755,root,root) %{_libdir}/mono/1.0/MakeCert*
-%attr(755,root,root) %{_libdir}/mono/1.0/mkbundle*
-%attr(755,root,root) %{_libdir}/mono/1.0/secutil*
-%attr(755,root,root) %{_libdir}/mono/1.0/setreg*
-%attr(755,root,root) %{_libdir}/mono/1.0/signcode*
-%attr(755,root,root) %{_libdir}/mono/1.0/sn*
-%attr(755,root,root) %{_libdir}/mono/1.0/caspol*
+%attr(755,root,root) /usr/lib/mono/*.*/*.dll
+%attr(755,root,root) /usr/lib/mono/1.0/cert*
+%attr(755,root,root) /usr/lib/mono/1.0/chktrust*
+%attr(755,root,root) /usr/lib/mono/1.0/gacutil*
+%attr(755,root,root) /usr/lib/mono/1.0/MakeCert*
+%attr(755,root,root) /usr/lib/mono/1.0/mkbundle*
+%attr(755,root,root) /usr/lib/mono/1.0/secutil*
+%attr(755,root,root) /usr/lib/mono/1.0/setreg*
+%attr(755,root,root) /usr/lib/mono/1.0/signcode*
+%attr(755,root,root) /usr/lib/mono/1.0/sn*
+%attr(755,root,root) /usr/lib/mono/1.0/caspol*
 %{_mandir}/man1/cert*.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
@@ -252,10 +252,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/sn.1*
 %{_mandir}/man1/permview.1*
 %{_mandir}/man5/mono-config.5*
-%dir %{_libdir}/mono
-%dir %{_libdir}/mono/1.0
-%dir %{_libdir}/mono/2.0
-%{_libdir}/mono/gac
+%dir /usr/lib/mono
+%dir /usr/lib/mono/1.0
+%dir /usr/lib/mono/2.0
+/usr/lib/mono/gac
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/browscap.ini
@@ -276,7 +276,7 @@ rm -rf $RPM_BUILD_ROOT
 %files jscript
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mjs
-%attr(755,root,root) %{_libdir}/mono/1.0/mjs*
+%attr(755,root,root) /usr/lib/mono/1.0/mjs*
 
 %files compat-links
 %defattr(644,root,root,755)
@@ -305,27 +305,27 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/prj2make
 %attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_libdir}/lib*.so
-%attr(755,root,root) %{_libdir}/mono/1.0/al*
-%attr(755,root,root) %{_libdir}/mono/1.0/cilc*
-%attr(755,root,root) %{_libdir}/mono/1.0/disco*
-%attr(755,root,root) %{_libdir}/mono/1.0/genxs*
-%attr(755,root,root) %{_libdir}/mono/1.0/mono-find*
-%attr(755,root,root) %{_libdir}/mono/1.0/monop*
-%attr(755,root,root) %{_libdir}/mono/1.0/resgen*
-%attr(755,root,root) %{_libdir}/mono/1.0/soapsuds*
-%attr(755,root,root) %{_libdir}/mono/1.0/sqlsharp*
-%attr(755,root,root) %{_libdir}/mono/1.0/wsdl*
-%attr(755,root,root) %{_libdir}/mono/2.0/wsdl*
-%attr(755,root,root) %{_libdir}/mono/1.0/xsd*
-%attr(755,root,root) %{_libdir}/mono/1.0/mono-api-*
-%attr(755,root,root) %{_libdir}/mono/1.0/CorCompare*
-%attr(755,root,root) %{_libdir}/mono/1.0/browsercaps-updater*
-%attr(755,root,root) %{_libdir}/mono/1.0/ictool*
-%attr(755,root,root) %{_libdir}/mono/1.0/permview*
-%attr(755,root,root) %{_libdir}/mono/1.0/dtd2xsd*
-%attr(755,root,root) %{_libdir}/mono/1.0/macpack*
-%attr(755,root,root) %{_libdir}/mono/1.0/prj2make*
-%{_libdir}/mono/*.*/*.dll.mdb
+%attr(755,root,root) /usr/lib/mono/1.0/al*
+%attr(755,root,root) /usr/lib/mono/1.0/cilc*
+%attr(755,root,root) /usr/lib/mono/1.0/disco*
+%attr(755,root,root) /usr/lib/mono/1.0/genxs*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-find*
+%attr(755,root,root) /usr/lib/mono/1.0/monop*
+%attr(755,root,root) /usr/lib/mono/1.0/resgen*
+%attr(755,root,root) /usr/lib/mono/1.0/soapsuds*
+%attr(755,root,root) /usr/lib/mono/1.0/sqlsharp*
+%attr(755,root,root) /usr/lib/mono/1.0/wsdl*
+%attr(755,root,root) /usr/lib/mono/2.0/wsdl*
+%attr(755,root,root) /usr/lib/mono/1.0/xsd*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-api-*
+%attr(755,root,root) /usr/lib/mono/1.0/CorCompare*
+%attr(755,root,root) /usr/lib/mono/1.0/browsercaps-updater*
+%attr(755,root,root) /usr/lib/mono/1.0/ictool*
+%attr(755,root,root) /usr/lib/mono/1.0/permview*
+%attr(755,root,root) /usr/lib/mono/1.0/dtd2xsd*
+%attr(755,root,root) /usr/lib/mono/1.0/macpack*
+%attr(755,root,root) /usr/lib/mono/1.0/prj2make*
+/usr/lib/mono/*.*/*.dll.mdb
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -349,19 +349,19 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_bindir}/gmcs
-%attr(755,root,root) %{_libdir}/mono/1.0/mcs.exe*
-%attr(755,root,root) %{_libdir}/mono/2.0/gmcs.exe*
+%attr(755,root,root) /usr/lib/mono/1.0/mcs.exe*
+%attr(755,root,root) /usr/lib/mono/2.0/gmcs.exe*
 %{_mandir}/man1/mcs.1*
 
 %files basic
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mbas
-%attr(755,root,root) %{_libdir}/mono/1.0/mbas.exe*
+%attr(755,root,root) /usr/lib/mono/1.0/mbas.exe*
 
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
-%attr(755,root,root) %{_libdir}/mono/1.0/ilasm*
+%attr(755,root,root) /usr/lib/mono/1.0/ilasm*
 %{_mandir}/man1/ilasm.1*
 
 %files static
