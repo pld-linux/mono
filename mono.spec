@@ -6,13 +6,14 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.6
-Release:	1
+Release:	2
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
 Source0:	http://www.go-mono.com/archive/%{version}/mono-%{version}.tar.gz
 # Source0-md5:	d5097b149effa0b248a4398fe630bd30
 Patch0:		%{name}-nolibs.patch
+Patch1:		%{name}-amd64-i8-fix.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -156,6 +157,7 @@ oraz dotGNU.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
