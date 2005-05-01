@@ -18,6 +18,7 @@ Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
 Patch2:		%{name}-lib64.patch
+Patch3:		%{name}-sonames.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -149,6 +150,7 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
