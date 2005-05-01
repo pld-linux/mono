@@ -172,7 +172,14 @@ cp -f /usr/share/automake/config.sub libgc
 	--with-gc=included
 %endif
 
-%{__make}
+# mint uses heap to make trampolines, which need to be executable
+# there is mprotect(...,PROT_EXEC) for ppc/s390, but not used
+# (ifdef NEED_MPROTECT, which is never defined)
+# in fact the flag should be "-Wl,-z,execheap" for libmint, but:
+# -z execheap doesn't seem to do anything currently
+# -z execstack for library makes only stack executable, but not heap
+%{__make} \
+	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
 # for now we only build jay, and don't rebuild runtime and mcs
 %{__make} -C mcs-*/jay \
