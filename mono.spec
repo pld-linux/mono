@@ -19,6 +19,7 @@ Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-runtime-install-path.patch
 Patch2:		%{name}-lib64.patch
 Patch3:		%{name}-sonames.patch
+Patch4:		%{name}-alpha.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -28,8 +29,7 @@ BuildRequires:	icu
 BuildRequires:	libicu-devel >= 2.6.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-ExclusiveArch:	%{ix86} amd64 arm hppa ppc s390 sparc sparcv9 sparc64
-# alpha still broken, mips/ia64/m68k disabled in configure
+ExclusiveArch:	%{ix86} alpha amd64 arm hppa ppc s390 sparc sparcv9 sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -151,6 +151,7 @@ oraz dotGNU.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
