@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	nptl		# enable support for NPTL
+%bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
 #
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
