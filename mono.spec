@@ -30,6 +30,7 @@ BuildRequires:	libicu-devel >= 2.6.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 ExclusiveArch:	%{ix86} alpha amd64 arm hppa ppc s390 sparc sparcv9 sparc64
+# mips/ia64/m68k disabled in configure
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
