@@ -14,6 +14,8 @@ Source0:	http://www.go-mono.com/archive/%{version}/mono-%{version}.tar.gz
 # Source0-md5:	d5097b149effa0b248a4398fe630bd30
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-amd64-i8-fix.patch
+Patch2:		%{name}-sonames.patch
+Patch3:		%{name}-alpha.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -159,6 +161,8 @@ oraz dotGNU.
 %setup -q
 %patch0 -p1
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
