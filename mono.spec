@@ -161,8 +161,8 @@ oraz dotGNU.
 %setup -q
 %patch0 -p1
 %patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%patch2 -p1
+%patch3 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
