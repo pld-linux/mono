@@ -16,6 +16,7 @@ Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-amd64-i8-fix.patch
 Patch2:		%{name}-sonames.patch
 Patch3:		%{name}-alpha.patch
+Patch4:		%{name}-alpha-float.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -163,6 +164,7 @@ oraz dotGNU.
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
@@ -190,7 +192,14 @@ cd ..
 	--with-jit=yes \
 	--with-gc=included
 
-%{__make}
+# mint uses heap to make trampolines, which need to be executable
+# there is mprotect(...,PROT_EXEC) for ppc/s390, but not used
+# (ifdef NEED_MPROTECT, which is never defined)
+# in fact the flag should be "-Wl,-z,execheap" for libmint, but:
+# -z execheap doesn't seem to do anything currently
+# -z execstack for library makes only stack executable, but not heap
+%{__make} \
+	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
 %install
 rm -rf $RPM_BUILD_ROOT
