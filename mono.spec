@@ -244,6 +244,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sn*
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+%dir /usr/lib/mono
+%dir /usr/lib/mono/1.0
+%dir /usr/lib/mono/2.0
 %attr(755,root,root) /usr/lib/mono/*.*/*.dll
 %attr(755,root,root) /usr/lib/mono/1.0/cert*
 %attr(755,root,root) /usr/lib/mono/1.0/chktrust*
@@ -268,15 +271,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/sn.1*
 %{_mandir}/man1/permview.1*
 %{_mandir}/man5/mono-config.5*
-%dir /usr/lib/mono
-%dir /usr/lib/mono/1.0
-%dir /usr/lib/mono/2.0
 /usr/lib/mono/gac
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/browscap.ini
+%dir %{_sysconfdir}/mono/1.0
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/1.0/machine.config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/1.0/DefaultWsdlHelpGenerator.aspx
+%dir %{_sysconfdir}/mono/2.0
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/2.0/machine.config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/2.0/DefaultWsdlHelpGenerator.aspx
 
