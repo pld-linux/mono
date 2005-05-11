@@ -21,9 +21,9 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
-BuildRequires:	libgdiplus-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.213
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken, mips/ia64/m68k disabled in configure
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -226,7 +226,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%ifarch %{ix86} ppc sparc amd64
+%ifarch %{ix86} ppc sparc %{x8664}
 %attr(755,root,root) %{_bindir}/mono
 %else
 %attr(755,root,root) %{_bindir}/mint
