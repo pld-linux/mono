@@ -1,12 +1,12 @@
 #
 # Conditional build:
-%bcond_with	nptl		# enable support for NPTL
+%bcond_with	nptl		# use TLS (which effectively requires NPTL libs)
 #
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0.6
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 # Source0Download: http://www.mono-project.com/Downloads
