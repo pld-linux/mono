@@ -1,12 +1,12 @@
 #
 # Conditional build:
-%bcond_with	nptl		# enable support for NPTL
+%bcond_with	nptl		# use TLS (which effectively requires NPTL libs)
 #
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0.6
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 # Source0Download: http://www.mono-project.com/Downloads
@@ -20,6 +20,7 @@ Patch1:		%{name}-runtime-install-path.patch
 Patch2:		%{name}-lib64.patch
 Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-alpha.patch
+Patch5:		%{name}-alpha-float.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -153,6 +154,7 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
