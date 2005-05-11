@@ -1,34 +1,31 @@
+#
+# Conditional build:
+%bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
+#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.0.6
-Release:	2
-License:	LGPL
+Version:	1.1.7
+Release:	0.2
+License:	GPL/LGPL/MIT
 Group:		Development/Languages
-# Source0Download: http://www.mono-project.com/Downloads
-Source0:	http://www.go-mono.com/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	61700d5e113a1c9c99511971141b6901
-# Source1Download: http://www.mono-project.com/Downloads
-Source1:	http://www.go-mono.com/archive/%{version}/mcs-%{version}.tar.gz
-# Source1-md5:	465cf1256ae0ae7aac8c70a85991ddeb
+#Source0Download: http://www.mono-project.com/Downloads
+Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
+# Source0-md5:	f81c6b02ef0c5d5ef7ab827d28eb9731
 Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-runtime-install-path.patch
-Patch2:		%{name}-lib64.patch
-Patch3:		%{name}-sonames.patch
-Patch4:		%{name}-alpha.patch
-Patch5:		%{name}-alpha-float.patch
+Patch1:		%{name}-sonames.patch
+Patch2:		%{name}-alpha.patch
+Patch3:		%{name}-alpha-float.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= 2.0.0
-BuildRequires:	icu
-BuildRequires:	libicu-devel >= 2.6.1
+BuildRequires:	libgdiplus-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.211
-ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ppc s390 sparc sparcv9 sparc64
-# mips/ia64/m68k disabled in configure
+ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x sparc sparcv9 sparc64
+# alpha still broken, mips/ia64/m68k disabled in configure
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -45,6 +42,8 @@ platform are:
   generate classes and code that can interoperate with other programming
   languages (The Common Language Specification: CLS).
 
+%{?with_nptl:This version was build with TLS __thread.}
+
 %description -l pl
 Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
 now± platformê developersk±. Zalety tej platformy to:
@@ -56,6 +55,8 @@ now± platformê developersk±. Zalety tej platformy to:
 - specyfikacja dla kompilatorów, które chc± generowaæ kod
   wspó³pracuj±cy z innymi jêzykami programowania (The Common Language
   Specification: CLS).
+
+%{?with_nptl:Ta wersja zosta³a zbudowana z TLS __thread.}
 
 %package devel
 Summary:	Development resources for mono
@@ -107,6 +108,18 @@ ILasm compiler for mono.
 %description ilasm -l pl
 Kompilator ILasm dla mono.
 
+%package jscript
+Summary:	jscript compiler for mono
+Summary(pl):	Kompilator jscript dla mono
+Group:		Development/Languages
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description jscript
+jscript compiler for mono.
+
+%description jscript -l pl
+Kompilator jscript dla mono.
+
 %package static
 Summary:	Static mono library
 Summary(pl):	Statyczna biblioteka mono
@@ -145,14 +158,13 @@ Pakiet ten zawiera dowi±zania do programów o nazwach u¿ywanych w .NET
 oraz dotGNU.
 
 %prep
-%setup -q -a1
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
+# workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
 %build
@@ -160,17 +172,23 @@ cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
 %{__aclocal}
+%{__autoheader}
 %{__autoconf}
 %{__automake}
+cd libgc
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
+cd ..
+
 %configure \
-	--with-tls=__thread \
+	%{?with_nptl:--with-tls=__thread} \
+	%{!?with_nptl:--with-tls=pthread} \
 	--with-preview=yes \
-%ifarch %{x8664}
-	--with-sigaltstack=yes \
-	--with-gc=none
-%else
+	--with-icu=no \
+	--with-jit=yes \
 	--with-gc=included
-%endif
 
 # mint uses heap to make trampolines, which need to be executable
 # there is mprotect(...,PROT_EXEC) for ppc/s390, but not used
@@ -181,44 +199,14 @@ cp -f /usr/share/automake/config.sub libgc
 %{__make} \
 	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
-# for now we only build jay, and don't rebuild runtime and mcs
-%{__make} -C mcs-*/jay \
-	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags} -DSKEL_DIRECTORY=\\\"%{_datadir}/jay\\\""
-
-# rebuild gacutil with lib64 patch
-MONO_PATH="`pwd`/runtime/net_1_1" \
-%{__make} -C mcs-*/tools/gacutil \
-	MCS="`pwd`/mono/interpreter/mint `pwd`/runtime/mcs.exe -lib:`pwd`/runtime/net_1_1"
-cp -f mcs-*/tools/gacutil/gacutil.exe runtime
-
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-%{__make} -C mcs-*/jay install \
-	prefix=%{_prefix} \
-	DESTDIR=$RPM_BUILD_ROOT
 mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
-
-# Make links to all binaries. In fact we could move *.exe to
-# %{_libdir}, but probably something relays on it.
-old="$(pwd)"
-cd $RPM_BUILD_ROOT%{_bindir}
-for f in *.exe ; do
-	bn=$(basename $f .exe)
-	rm -f $bn
-	echo "#!/bin/sh" > $bn
-%ifarch %{ix86} ppc sparc
-	echo "%{_bindir}/mono %{_bindir}/$f" '"$@"' >> $bn
-%else
-	echo "%{_bindir}/mint %{_bindir}/$f" '"$@"' >> $bn
-%endif
-done
-cd "$old"
 
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
@@ -228,6 +216,8 @@ cp -a web/* pld-doc/webpage
 cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
 
+rm -rf $RPM_BUILD_ROOT%{_datadir}/libgc-mono
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -236,51 +226,76 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mint
-%ifarch %{ix86} ppc sparc
+%ifarch %{ix86} ppc sparc amd64
 %attr(755,root,root) %{_bindir}/mono
+%else
+%attr(755,root,root) %{_bindir}/mint
 %endif
-%attr(755,root,root) %{_bindir}/secutil*
+%attr(755,root,root) %{_bindir}/cert*
 %attr(755,root,root) %{_bindir}/chktrust*
+%attr(755,root,root) %{_bindir}/gacutil*
+%attr(755,root,root) %{_bindir}/makecert*
+%attr(755,root,root) %{_bindir}/mkbundle*
+%attr(755,root,root) %{_bindir}/secutil*
+%attr(755,root,root) %{_bindir}/setreg*
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
-%attr(755,root,root) %{_bindir}/MakeCert*
-%attr(755,root,root) %{_bindir}/makecert*
-%attr(755,root,root) %{_bindir}/cert*
-%attr(755,root,root) %{_bindir}/setreg*
-%attr(755,root,root) %{_bindir}/gacutil*
+%attr(755,root,root) %{_bindir}/mono-service
+%attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%attr(755,root,root) %{_libdir}/*.dll
-%attr(755,root,root) %{_libdir}/mono/*.*/*.dll
-%{_mandir}/man5/mono-config.5*
-%{_mandir}/man1/mint.1*
-%{_mandir}/man1/mono.1*
-%{_mandir}/man1/sn.1*
+%dir /usr/lib/mono
+%dir /usr/lib/mono/1.0
+%dir /usr/lib/mono/2.0
+%attr(755,root,root) /usr/lib/mono/*.*/*.dll
+%attr(755,root,root) /usr/lib/mono/1.0/cert*
+%attr(755,root,root) /usr/lib/mono/1.0/chktrust*
+%attr(755,root,root) /usr/lib/mono/1.0/gacutil*
+%attr(755,root,root) /usr/lib/mono/1.0/MakeCert*
+%attr(755,root,root) /usr/lib/mono/1.0/mkbundle*
+%attr(755,root,root) /usr/lib/mono/1.0/secutil*
+%attr(755,root,root) /usr/lib/mono/1.0/setreg*
+%attr(755,root,root) /usr/lib/mono/1.0/signcode*
+%attr(755,root,root) /usr/lib/mono/1.0/sn*
+%attr(755,root,root) /usr/lib/mono/1.0/caspol*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-service*
 %{_mandir}/man1/cert*.1*
-%{_mandir}/man1/makecert.1*
-%{_mandir}/man1/secutil.1*
-%{_mandir}/man1/signcode.1*
-%{_mandir}/man1/setreg.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
-#%{_mandir}/man1/oldmono.1*
-%dir %{_libdir}/mono
-%dir %{_libdir}/mono/1.0
-%dir %{_libdir}/mono/2.0
-%{_libdir}/mono/gac
+%{_mandir}/man1/makecert.1*
+%{_mandir}/man1/mkbundle.1*
+%{_mandir}/man1/mint.1*
+%{_mandir}/man1/mono.1*
+%{_mandir}/man1/mono-service.1*
+%{_mandir}/man1/secutil.1*
+%{_mandir}/man1/setreg.1*
+%{_mandir}/man1/signcode.1*
+%{_mandir}/man1/sn.1*
+%{_mandir}/man1/permview.1*
+%{_mandir}/man5/mono-config.5*
+/usr/lib/mono/gac
 %dir %{_sysconfdir}/mono
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/config
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/machine.config
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/browscap.ini
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/DefaultWsdlHelpGenerator.aspx
+%dir %{_sysconfdir}/mono/1.0
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/1.0/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/1.0/DefaultWsdlHelpGenerator.aspx
+%dir %{_sysconfdir}/mono/2.0
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/2.0/machine.config
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mono/2.0/DefaultWsdlHelpGenerator.aspx
 
 %files jay
 %defattr(644,root,root,755)
-%doc mcs-*/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%doc mcs/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
 %attr(755,root,root) %{_bindir}/jay
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
 %{_mandir}/man1/jay.1*
+
+# TODO: probably Microsoft.JScript.dll & Co. should be here
+%files jscript
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/mjs
+%attr(755,root,root) /usr/lib/mono/1.0/mjs*
 
 %files compat-links
 %defattr(644,root,root,755)
@@ -289,21 +304,47 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README pld-doc/*
-%attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/al*
+%attr(755,root,root) %{_bindir}/cilc*
+%attr(755,root,root) %{_bindir}/disco*
+%attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/mono-find*
-%attr(755,root,root) %{_bindir}/xsd*
+%attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
+%attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_bindir}/monoresgen*
 %attr(755,root,root) %{_bindir}/pedump
-%attr(755,root,root) %{_bindir}/wsdl*
-%attr(755,root,root) %{_bindir}/genxs*
-%attr(755,root,root) %{_bindir}/sqlsharp*
-%attr(755,root,root) %{_bindir}/disco*
-%attr(755,root,root) %{_bindir}/cilc*
-%attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/soapsuds*
-%attr(755,root,root) %{_bindir}/monop*
+%attr(755,root,root) %{_bindir}/sqlsharp*
+%attr(755,root,root) %{_bindir}/wsdl*
+%attr(755,root,root) %{_bindir}/xsd*
+%attr(755,root,root) %{_bindir}/permview
+%attr(755,root,root) %{_bindir}/dtd2xsd
+%attr(755,root,root) %{_bindir}/macpack
+%attr(755,root,root) %{_bindir}/prj2make
+%attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) /usr/lib/mono/1.0/al*
+%attr(755,root,root) /usr/lib/mono/1.0/cilc*
+%attr(755,root,root) /usr/lib/mono/1.0/disco*
+%attr(755,root,root) /usr/lib/mono/1.0/genxs*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-find*
+%attr(755,root,root) /usr/lib/mono/1.0/monop*
+%attr(755,root,root) /usr/lib/mono/1.0/resgen*
+%attr(755,root,root) /usr/lib/mono/1.0/soapsuds*
+%attr(755,root,root) /usr/lib/mono/1.0/sqlsharp*
+%attr(755,root,root) /usr/lib/mono/1.0/wsdl*
+%attr(755,root,root) /usr/lib/mono/2.0/wsdl*
+%attr(755,root,root) /usr/lib/mono/1.0/xsd*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-api-*
+%attr(755,root,root) /usr/lib/mono/1.0/CorCompare*
+%attr(755,root,root) /usr/lib/mono/1.0/browsercaps-updater*
+%attr(755,root,root) /usr/lib/mono/1.0/ictool*
+%attr(755,root,root) /usr/lib/mono/1.0/permview*
+%attr(755,root,root) /usr/lib/mono/1.0/dtd2xsd*
+%attr(755,root,root) /usr/lib/mono/1.0/macpack*
+%attr(755,root,root) /usr/lib/mono/1.0/prj2make*
+/usr/lib/mono/*.*/*.dll.mdb
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -319,23 +360,27 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/disco.1*
 %{_mandir}/man1/monop.1*
 %{_mandir}/man1/xsd.1*
+%{_mandir}/man1/dtd2xsd.1*
+%{_mandir}/man1/macpack.1*
+%{_mandir}/man1/prj2make.1*
 
 %files csharp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_bindir}/gmcs
-%attr(755,root,root) %{_libdir}/mono/1.0/mcs.exe
-%attr(755,root,root) %{_libdir}/mono/2.0/gmcs.exe
+%attr(755,root,root) /usr/lib/mono/1.0/mcs.exe*
+%attr(755,root,root) /usr/lib/mono/2.0/gmcs.exe*
 %{_mandir}/man1/mcs.1*
 
 %files basic
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mbas
-%attr(755,root,root) %{_libdir}/mono/1.0/mbas.exe
+%attr(755,root,root) /usr/lib/mono/1.0/mbas.exe*
 
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
+%attr(755,root,root) /usr/lib/mono/1.0/ilasm*
 %{_mandir}/man1/ilasm.1*
 
 %files static
