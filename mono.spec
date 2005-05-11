@@ -13,10 +13,9 @@ Group:		Development/Languages
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
 # Source0-md5:	f81c6b02ef0c5d5ef7ab827d28eb9731
 Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-amd64-i8-fix.patch
-Patch2:		%{name}-sonames.patch
-Patch3:		%{name}-alpha.patch
-Patch4:		%{name}-alpha-float.patch
+Patch1:		%{name}-sonames.patch
+Patch2:		%{name}-alpha.patch
+Patch3:		%{name}-alpha-float.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -161,10 +160,9 @@ oraz dotGNU.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p2
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
