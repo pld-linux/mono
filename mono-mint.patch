@@ -1,0 +1,22 @@
+--- mono-1.1.7/mono/interpreter/interp.c.orig	2005-02-01 02:02:53.000000000 +0100
++++ mono-1.1.7/mono/interpreter/interp.c	2005-05-11 22:24:16.000000000 +0200
+@@ -4122,7 +4122,6 @@
+ 		 "\n"
+ 		 "Runtime:\n"
+ 		 "   --config filename  load the specified config file instead of the default\n"
+-		 "   --workers n        maximum number of worker threads\n"
+ 		);
+ 	exit (1);
+ }
+@@ -4460,11 +4459,6 @@
+ 			mono_profiler_load (NULL);
+ 		if (strcmp (argv [i], "--config") == 0)
+ 			config_file = argv [++i];
+-		if (strcmp (argv [i], "--workers") == 0) {
+-			mono_max_worker_threads = atoi (argv [++i]);
+-			if (mono_max_worker_threads < 1)
+-				mono_max_worker_threads = 1;
+-		}
+ 		if (strcmp (argv [i], "--help") == 0)
+ 			usage ();
+ #if DEBUG_INTERP
