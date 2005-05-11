@@ -20,3 +20,14 @@
  		if (strcmp (argv [i], "--help") == 0)
  			usage ();
  #if DEBUG_INTERP
+--- mono-1.1.7/runtime/monodis-wrapper.in.orig	2005-04-28 05:06:48.000000000 +0200
++++ mono-1.1.7/runtime/monodis-wrapper.in	2005-05-12 00:31:09.000000000 +0200
+@@ -3,4 +3,8 @@
+ MONO_CFG_DIR='@mono_cfg_dir@'
+ MONO_SHARED_DIR=$r/runtime
+ export MONO_CFG_DIR MONO_SHARED_DIR
++if [ -f "$r/mono/mini/libmono.la" ]; then
+ exec "$r/libtool" --mode=execute -dlopen "$r/mono/mini/libmono.la" "$r/mono/dis/monodis" "$@"
++else
++exec "$r/libtool" --mode=execute "$r/mono/dis/monodis" "$@"
++fi
