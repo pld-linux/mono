@@ -6,7 +6,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.7
-Release:	0.1
+Release:	0.2
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
@@ -240,6 +240,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/setreg*
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
+%attr(755,root,root) %{_bindir}/mono-service
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %dir /usr/lib/mono
@@ -256,6 +257,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/lib/mono/1.0/signcode*
 %attr(755,root,root) /usr/lib/mono/1.0/sn*
 %attr(755,root,root) /usr/lib/mono/1.0/caspol*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-service*
 %{_mandir}/man1/cert*.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
@@ -263,6 +265,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mkbundle.1*
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
+%{_mandir}/man1/mono-service.1*
 %{_mandir}/man1/secutil.1*
 %{_mandir}/man1/setreg.1*
 %{_mandir}/man1/signcode.1*
