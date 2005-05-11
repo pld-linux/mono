@@ -16,6 +16,7 @@ Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-sonames.patch
 Patch2:		%{name}-alpha.patch
 Patch3:		%{name}-alpha-float.patch
+Patch4:		%{name}-mint.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -163,6 +164,7 @@ oraz dotGNU.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
