@@ -1,12 +1,8 @@
-#
-# Conditional build:
-%bcond_with	nptl		# enable support for NPTL
-#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.0.6
-Release:	1
+Release:	2
 License:	LGPL
 Group:		Development/Languages
 # Source0Download: http://www.mono-project.com/Downloads
@@ -30,7 +26,8 @@ BuildRequires:	icu
 BuildRequires:	libicu-devel >= 2.6.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-ExclusiveArch:	%{ix86} alpha amd64 arm hppa ppc s390 sparc sparcv9 sparc64
+BuildRequires:	rpmbuild(macros) >= 1.211
+ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ppc s390 sparc sparcv9 sparc64
 # mips/ia64/m68k disabled in configure
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -166,10 +163,9 @@ cp -f /usr/share/automake/config.sub libgc
 %{__autoconf}
 %{__automake}
 %configure \
-	%{?with_nptl:--with-tls=__thread} \
-	%{!?with_nptl:--with-tls=pthread} \
+	--with-tls=__thread \
 	--with-preview=yes \
-%ifarch amd64
+%ifarch %{x8664}
 	--with-sigaltstack=yes \
 	--with-gc=none
 %else
