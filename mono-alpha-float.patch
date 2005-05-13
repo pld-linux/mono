@@ -97,3 +97,14 @@
  	p = emit_epilog( p, STACK_SIZE );
  
  	if( p > buffer + BUFFER_SIZE )
+--- mono-1.0.6/mono/utils/strtod.c.orig	2004-11-14 01:28:03.000000000 +0100
++++ mono-1.0.6/mono/utils/strtod.c	2005-05-14 01:00:10.046985040 +0200
+@@ -143,7 +143,7 @@
+ #define IEEE_8087
+ #define Long long
+ 
+-#elif defined(__x86_64__)
++#elif defined(__x86_64__) || defined(__alpha__)
+ 
+ #define IEEE_8087
+ #define Long int
