@@ -184,6 +184,7 @@ cd libgc
 cd ..
 
 %configure \
+	--enable-fast-install \
 	%{?with_nptl:--with-tls=__thread} \
 	%{!?with_nptl:--with-tls=pthread} \
 	--with-preview=yes \
