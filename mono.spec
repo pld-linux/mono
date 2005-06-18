@@ -5,18 +5,16 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.7
-Release:	0.2
+Version:	1.1.8
+Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	f81c6b02ef0c5d5ef7ab827d28eb9731
+# Source0-md5:	c16afcb6e14cf542674284c8e83cc6d3
 Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-sonames.patch
-Patch2:		%{name}-alpha.patch
-Patch3:		%{name}-alpha-float.patch
-Patch4:		%{name}-mint.patch
+Patch1:		%{name}-alpha-float.patch
+Patch2:		%{name}-mint.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -164,8 +162,6 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
@@ -310,62 +306,65 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/cilc*
 %attr(755,root,root) %{_bindir}/disco*
+%attr(755,root,root) %{_bindir}/dtd2xsd
 %attr(755,root,root) %{_bindir}/genxs*
-%attr(755,root,root) %{_bindir}/mono-find*
+%attr(755,root,root) %{_bindir}/macpack
+%attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/mono-find*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monop*
-%attr(755,root,root) %{_bindir}/monoresgen*
+%attr(755,root,root) %{_bindir}/mono-shlib-cop*
 %attr(755,root,root) %{_bindir}/pedump
+%attr(755,root,root) %{_bindir}/permview
+%attr(755,root,root) %{_bindir}/prj2make
 %attr(755,root,root) %{_bindir}/soapsuds*
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/xsd*
-%attr(755,root,root) %{_bindir}/permview
-%attr(755,root,root) %{_bindir}/dtd2xsd
-%attr(755,root,root) %{_bindir}/macpack
-%attr(755,root,root) %{_bindir}/prj2make
-%attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) /usr/lib/mono/1.0/al*
+%attr(755,root,root) /usr/lib/mono/1.0/browsercaps-updater*
 %attr(755,root,root) /usr/lib/mono/1.0/cilc*
+%attr(755,root,root) /usr/lib/mono/1.0/CorCompare*
 %attr(755,root,root) /usr/lib/mono/1.0/disco*
+%attr(755,root,root) /usr/lib/mono/1.0/dtd2xsd*
 %attr(755,root,root) /usr/lib/mono/1.0/genxs*
-%attr(755,root,root) /usr/lib/mono/1.0/mono-find*
+%attr(755,root,root) /usr/lib/mono/1.0/ictool*
+%attr(755,root,root) /usr/lib/mono/1.0/macpack*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-api-*
 %attr(755,root,root) /usr/lib/mono/1.0/monop*
+%attr(755,root,root) /usr/lib/mono/1.0/mono-shlib-cop*
+%attr(755,root,root) /usr/lib/mono/1.0/permview*
+%attr(755,root,root) /usr/lib/mono/1.0/prj2make*
 %attr(755,root,root) /usr/lib/mono/1.0/resgen*
 %attr(755,root,root) /usr/lib/mono/1.0/soapsuds*
 %attr(755,root,root) /usr/lib/mono/1.0/sqlsharp*
 %attr(755,root,root) /usr/lib/mono/1.0/wsdl*
-%attr(755,root,root) /usr/lib/mono/2.0/wsdl*
 %attr(755,root,root) /usr/lib/mono/1.0/xsd*
-%attr(755,root,root) /usr/lib/mono/1.0/mono-api-*
-%attr(755,root,root) /usr/lib/mono/1.0/CorCompare*
-%attr(755,root,root) /usr/lib/mono/1.0/browsercaps-updater*
-%attr(755,root,root) /usr/lib/mono/1.0/ictool*
-%attr(755,root,root) /usr/lib/mono/1.0/permview*
-%attr(755,root,root) /usr/lib/mono/1.0/dtd2xsd*
-%attr(755,root,root) /usr/lib/mono/1.0/macpack*
-%attr(755,root,root) /usr/lib/mono/1.0/prj2make*
+%attr(755,root,root) /usr/lib/mono/2.0/mono-api-info*
+%attr(755,root,root) /usr/lib/mono/2.0/wsdl*
 /usr/lib/mono/*.*/*.dll.mdb
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
 %{_mandir}/man1/cilc.1*
+%{_mandir}/man1/disco.1*
+%{_mandir}/man1/dtd2xsd.1*
 %{_mandir}/man1/genxs.1*
+%{_mandir}/man1/macpack.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
+%{_mandir}/man1/monop.1*
+%{_mandir}/man1/mono-shlib-cop.1*
 %{_mandir}/man1/monostyle.1*
+%{_mandir}/man1/oldmono.1*
+%{_mandir}/man1/prj2make.1*
+%{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/sqlsharp.1*
 %{_mandir}/man1/wsdl.1*
-%{_mandir}/man1/soapsuds.1*
-%{_mandir}/man1/disco.1*
-%{_mandir}/man1/monop.1*
 %{_mandir}/man1/xsd.1*
-%{_mandir}/man1/dtd2xsd.1*
-%{_mandir}/man1/macpack.1*
-%{_mandir}/man1/prj2make.1*
 
 %files csharp
 %defattr(644,root,root,755)
