@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
+%bcond_without	static_libs	# don't build static libraries
 #
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
@@ -187,6 +188,7 @@ cd ..
 	--enable-fast-install \
 	%{?with_nptl:--with-tls=__thread} \
 	%{!?with_nptl:--with-tls=pthread} \
+	%{!?with_static_libs:--enable-static=no} \
 	--with-preview=yes \
 	--with-icu=no \
 	--with-jit=yes \
@@ -388,6 +390,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/lib/mono/1.0/ilasm*
 %{_mandir}/man1/ilasm.1*
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
+%endif
