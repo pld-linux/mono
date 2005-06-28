@@ -3,11 +3,12 @@
 %bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
 %bcond_without	static_libs	# don't build static libraries
 #
+%define		_glibver	2.4
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.8.1
-Release:	1
+Release:	2
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
@@ -21,7 +22,7 @@ URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
-BuildRequires:	glib2-devel >= 2.0.0
+BuildRequires:	glib2-devel >= %{_glibver}
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
@@ -65,6 +66,7 @@ Summary:	Development resources for mono
 Summary(pl):	Zasoby programisty do mono
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= %{_glibver}
 
 %description devel
 Development resources for mono.
@@ -247,6 +249,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-service
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libMonoPosixHelper.so
+%attr(755,root,root) %{_libdir}/libikvm-native.so
 %dir /usr/lib/mono
 %dir /usr/lib/mono/1.0
 %dir /usr/lib/mono/2.0
@@ -327,7 +331,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/wsdl*
 %attr(755,root,root) %{_bindir}/xsd*
-%attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/libmono.so
+%attr(755,root,root) %{_libdir}/libmono-profiler-cov.so
 %attr(755,root,root) /usr/lib/mono/1.0/al*
 %attr(755,root,root) /usr/lib/mono/1.0/browsercaps-updater*
 %attr(755,root,root) /usr/lib/mono/1.0/cilc*
