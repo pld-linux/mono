@@ -33,8 +33,8 @@ BuildRequires:	bison
 BuildRequires:	glib2-devel >= %{_glibver}
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	rpm-build >= 4.4.2-0.3
 BuildRequires:	rpmbuild(macros) >= 1.213
+BuildRequires:	rpmbuild(monoautodeps)
 %{!?with_bootstrap:BuildRequires:	mono-devel}
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken, mips/ia64/m68k disabled in configure
