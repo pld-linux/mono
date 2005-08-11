@@ -2,13 +2,20 @@
 # Conditional build:
 %bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
 %bcond_without	static_libs	# don't build static libraries
+%bcond_with	bootstrap	# don't require mono-devel to find req/prov
 #
 %define		_glibver	2.4
+#
+%if ! %{with bootstrap}
+%define	__mono_provides	/usr/bin/mono-find-provides
+%define	__mono_requires	/usr/bin/mono-find-requires
+%endif
+#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.8.3
-Release:	1
+Release:	2
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
@@ -26,7 +33,9 @@ BuildRequires:	bison
 BuildRequires:	glib2-devel >= %{_glibver}
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.4.2-0.3
 BuildRequires:	rpmbuild(macros) >= 1.213
+%{!?with_bootstrap:BuildRequires:	mono-devel}
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken, mips/ia64/m68k disabled in configure
 # note: plain i386 is not supported; mono uses cmpxchg/xadd which require i486
