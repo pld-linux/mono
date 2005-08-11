@@ -1,0 +1,18 @@
+diff -ruN mono-1.1.8.3./scripts/mono-find-provides.in mono-1.1.8.3/scripts/mono-find-provides.in
+--- mono-1.1.8.3./scripts/mono-find-provides.in	2005-06-06 20:52:08.000000000 +0200
++++ mono-1.1.8.3/scripts/mono-find-provides.in	2005-08-11 18:26:54.545621000 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # mono-find-provides
+ #
+diff -ruN mono-1.1.8.3./scripts/mono-find-requires.in mono-1.1.8.3/scripts/mono-find-requires.in
+--- mono-1.1.8.3./scripts/mono-find-requires.in	2005-06-06 20:52:08.000000000 +0200
++++ mono-1.1.8.3/scripts/mono-find-requires.in	2005-08-11 18:26:57.440180960 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # mono-find-requires
+ #
