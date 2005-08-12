@@ -41,6 +41,8 @@ ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x sparc sparcv9 sparc64
 # note: plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_rpmlibdir	/usr/lib/rpm
+
 %description
 The Common Language Infrastructure platform. Microsoft has created a
 new development platform. The highlights of this new development
@@ -218,6 +220,7 @@ cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -234,6 +237,8 @@ cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/libgc-mono
+
+mv -f $RPM_BUILD_ROOT%{_bindir}/mono-find* $RPM_BUILD_ROOT%{_rpmlibdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -331,7 +336,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/macpack
 %attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_bindir}/monodis
-%attr(755,root,root) %{_bindir}/mono-find*
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_bindir}/mono-shlib-cop*
@@ -366,6 +370,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /usr/lib/mono/2.0/mono-api-info*
 %attr(755,root,root) /usr/lib/mono/2.0/wsdl*
 /usr/lib/mono/*.*/*.dll.mdb
+%attr(755,root,root) %{_rpmlibdir}/mono-find*
 %{_libdir}/lib*.la
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
