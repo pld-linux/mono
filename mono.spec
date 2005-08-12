@@ -6,11 +6,6 @@
 #
 %define		_glibver	2.4
 #
-%if ! %{with bootstrap}
-%define	__mono_provides	/usr/bin/mono-find-provides
-%define	__mono_requires	/usr/bin/mono-find-requires
-%endif
-#
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
@@ -42,6 +37,11 @@ ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x sparc sparcv9 sparc64
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_rpmlibdir	/usr/lib/rpm
+
+%if ! %{with bootstrap}
+%define	__mono_provides	%{_rpmlibdir}/mono-find-provides
+%define	__mono_requires	%{_rpmlibdir}/mono-find-requires
+%endif
 
 %description
 The Common Language Infrastructure platform. Microsoft has created a
