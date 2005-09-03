@@ -1,3 +1,4 @@
+# NOTE: Makefiles are broken, build stops long time after first fatal error
 #
 # Conditional build:
 %bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
@@ -21,6 +22,7 @@ Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
 Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-bash.patch
+Patch5:		%{name}-alpha-atomic.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -180,6 +182,7 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
