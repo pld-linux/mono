@@ -24,6 +24,7 @@ Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-bash.patch
 Patch5:		%{name}-alpha-atomic.patch
 Patch6:		%{name}-sparc-exception.patch
+Patch7:		%{name}-gc-sparc.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -185,6 +186,7 @@ oraz dotGNU.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
