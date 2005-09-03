@@ -1,0 +1,12 @@
+diff -urN mono-1.1.8.3.org/mono/mini/exceptions-sparc.c mono-1.1.8.3/mono/mini/exceptions-sparc.c
+--- mono-1.1.8.3.org/mono/mini/exceptions-sparc.c	2005-01-28 14:54:11.000000000 +0000
++++ mono-1.1.8.3/mono/mini/exceptions-sparc.c	2005-09-03 19:50:20.738549000 +0000
+@@ -441,7 +441,7 @@
+ 	g_assert (!ctx->uc_mcontext.gwins);
+ #else
+ 	/* better, but doesn't work all the time.  need to rethink! */
+-	g_assert (!ctx->uc_mcontext.gregs);
++	g_assert (ctx->uc_mcontext.gregs);
+ #endif
+ 
+ 	mctx.ip = ctx->uc_mcontext.gregs [REG_PC];
