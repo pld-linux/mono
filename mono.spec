@@ -35,8 +35,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 %{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
-ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390
-# s390x sparc sparcv9 sparc64 not ported to linux (only solaris(?))
+ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x
+# sparc sparcv9 sparc64 not ported to linux (only solaris(?))
 # alpha still broken, mips/ia64/m68k disabled in configure
 # note: plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
