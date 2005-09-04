@@ -8,7 +8,7 @@
 #
 %ifnarch %{ix86} %{x8664} sparc sparcv9 sparc64 ppc s390 s390x
 # JIT not supported on alpha,arm,hppa
-%define		with_mint
+%define		with_mint	1
 %endif
 %define		_glibver	2.4
 #
