@@ -16,7 +16,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.8.3
-Release:	4
+Release:	5
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
@@ -212,6 +212,7 @@ cd libgc
 %{__automake}
 cd ..
 
+CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS"
 %configure \
 	%{!?with_static_libs:--disable-static} \
 	--enable-fast-install \
