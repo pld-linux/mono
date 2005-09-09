@@ -15,21 +15,19 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.8.3
-Release:	5
+Version:	1.1.9
+Release:	0.9
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://www.mono-project.com/Downloads
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	5aefdc915cbd6ed84834692f59b92080
+# Source0-md5:	de159531bc8f00c058fb5f4ee1d5ebe3
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
 Patch3:		%{name}-sonames.patch
-Patch4:		%{name}-bash.patch
-Patch5:		%{name}-alpha-atomic.patch
-Patch6:		%{name}-sparc-exception.patch
-Patch7:		%{name}-gc-sparc.patch
+Patch4:		%{name}-alpha-atomic.patch
+Patch5:		%{name}-sparc-exception.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -187,12 +185,10 @@ oraz dotGNU.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
 
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
@@ -280,6 +276,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/libMonoPosixHelper.so
+%attr(755,root,root) %{_libdir}/libMonoSupportW.so
 %attr(755,root,root) %{_libdir}/libikvm-native.so
 %dir %{_prefix}/lib/mono
 %dir %{_prefix}/lib/mono/1.0
@@ -288,7 +285,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/cert*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/chktrust*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/gacutil*
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/MakeCert*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mkbundle*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/secutil*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/setreg*
@@ -353,6 +349,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_bindir}/mono-shlib-cop*
+%attr(755,root,root) %{_bindir}/nunit-console
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/permview
 %attr(755,root,root) %{_bindir}/prj2make
@@ -376,9 +373,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/genxs*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ictool*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/macpack*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/makecert*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-api-*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monop*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-shlib-cop*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/nunit-console*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/permview*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/prj2make*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/resgen*
@@ -387,12 +386,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/wsdl*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/xsd*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-api-info*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/monop*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl*
 %{_prefix}/lib/mono/*.*/*.dll.mdb
 %attr(755,root,root) %{_rpmlibdir}/mono-find*
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
 %{_includedir}/%{name}
+%{_mandir}/man1/al.1*
 %{_mandir}/man1/cilc.1*
 %{_mandir}/man1/disco.1*
 %{_mandir}/man1/dtd2xsd.1*
