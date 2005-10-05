@@ -1,7 +1,7 @@
-# NOTE: Makefiles are broken, build stops long time after first fatal error
+# NOTE: Makefiles are broken, build could stop long time after first fatal error
 #
 # Conditional build:
-%bcond_without	nptl		# don't use TLS (which effectively requires NPTL libs)
+%bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
 %bcond_without	static_libs	# don't build static libraries
 %bcond_with	bootstrap	# don't require mono-devel to find req/prov
 %bcond_with	mint		# build mint instead of mono VM (JIT)
@@ -65,7 +65,7 @@ platform are:
   generate classes and code that can interoperate with other programming
   languages (The Common Language Specification: CLS).
 
-%{?with_nptl:This version was build with TLS __thread.}
+%{?with_tls:This version was build with TLS __thread.}
 
 %description -l pl
 Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
@@ -79,7 +79,7 @@ now± platformê developersk±. Zalety tej platformy to:
   wspó³pracuj±cy z innymi jêzykami programowania (The Common Language
   Specification: CLS).
 
-%{?with_nptl:Ta wersja zosta³a zbudowana z TLS __thread.}
+%{?with_tls:Ta wersja zosta³a zbudowana z TLS __thread.}
 
 %package devel
 Summary:	Development resources for mono
@@ -217,7 +217,7 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS"
 	--with-interp=%{?with_mint:yes}%{!?with_mint:no} \
 	--with-jit=%{?with_mint:no}%{!?with_mint:yes} \
 	--with-preview=yes \
-	--with-tls=%{?with_nptl:__thread}%{!?with_nptl:pthread}
+	--with-tls=%{?with_tls:__thread}%{!?with_tls:pthread}
 
 # mint uses heap to make trampolines, which need to be executable
 # there is mprotect(...,PROT_EXEC) for ppc/s390, but not used
