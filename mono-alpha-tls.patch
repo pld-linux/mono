@@ -1,0 +1,11 @@
+--- mono-1.1.9.1/mono/utils/mono-compiler.h.orig	2005-08-27 16:36:10.000000000 +0200
++++ mono-1.1.9.1/mono/utils/mono-compiler.h	2005-10-06 14:30:44.000000000 +0200
+@@ -9,7 +9,7 @@
+ #ifdef HAVE_KW_THREAD
+ #if HAVE_TLS_MODEL_ATTR
+ 
+-#if defined(PIC) && defined(__x86_64__)
++#if defined(PIC) && (defined(__x86_64__) || defined(__alpha__))
+ #define MONO_TLS_FAST 
+ #elif defined (__powerpc__)
+ #define MONO_TLS_FAST
