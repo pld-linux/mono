@@ -42,7 +42,8 @@ BuildRequires:	rpmbuild(monoautodeps)
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x
 # sparc sparcv9 sparc64 not ported to linux (only solaris(?))
 # alpha still broken, mips/ia64/m68k disabled in configure
-# note: plain i386 is not supported; mono uses cmpxchg/xadd which require i486
+# plain i386 is not supported; mono uses cmpxchg/xadd which require i486
+ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_rpmlibdir	/usr/lib/rpm
