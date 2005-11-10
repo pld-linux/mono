@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.9.2
+Version:	1.1.10
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	edc4adaa92594a8eea8018bb3701b639
+# Source0-md5:	8ca33cbe66b5bb52f320ad992304b951
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -266,17 +266,18 @@ rm -rf $RPM_BUILD_ROOT
 %else
 %attr(755,root,root) %{_bindir}/mono
 %endif
+%attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_bindir}/cert*
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/gacutil*
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/mkbundle*
+%attr(755,root,root) %{_bindir}/mono-service
+%attr(755,root,root) %{_bindir}/mozroots
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/setreg*
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
-%attr(755,root,root) %{_bindir}/mono-service
-%attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 %attr(755,root,root) %{_libdir}/libMonoPosixHelper.so
 %attr(755,root,root) %{_libdir}/libMonoSupportW.so
@@ -289,6 +290,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/chktrust*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/gacutil*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mkbundle*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/mozroots*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/secutil*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/setreg*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/signcode*
@@ -304,6 +306,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mint.1*
 %{_mandir}/man1/mono.1*
 %{_mandir}/man1/mono-service.1*
+%{_mandir}/man1/mozroots.1*
 %{_mandir}/man1/secutil.1*
 %{_mandir}/man1/setreg.1*
 %{_mandir}/man1/signcode.1*
