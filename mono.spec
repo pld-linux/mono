@@ -196,6 +196,9 @@ oraz dotGNU.
 # workaround for variable name disallowed by new pkgconfig
 echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
+sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-provides.in
+sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-requires.in
+
 %build
 cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
