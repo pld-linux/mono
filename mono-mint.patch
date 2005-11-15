@@ -19,3 +19,14 @@
 +else
 +exec "$r/libtool" --mode=execute "$r/mono/dis/monodis" "$@"
 +fi
+--- mono-1.1.10/mono/interpreter/transform.c.orig	2005-03-07 11:18:52.000000000 +0100
++++ mono-1.1.10/mono/interpreter/transform.c	2005-11-15 13:01:05.000000000 +0100
+@@ -2931,7 +2931,7 @@
+ 				m = mono_get_method_full (image, read32 (ip + 1), NULL, generic_context);
+ 				if (m == NULL) {
+ 					g_free (is_bb_start);
+-					return mono_get_exception_missing_method ();
++					return mono_get_exception_missing_method ("unknown", "unknown");
+ 				}
+ 				mono_class_init (m->klass);
+ 				if (!(m->klass->flags & TYPE_ATTRIBUTE_INTERFACE))
