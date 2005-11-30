@@ -16,7 +16,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.10
-Release:	2
+Release:	2.1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
@@ -57,7 +57,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The Common Language Infrastructure platform. Microsoft has created a
 new development platform. The highlights of this new development
 platform are:
-- A runtime environment that provides garbage collection, threading
+`- A runtime environment that provides garbage collection, threading
   and a virtual machine specification (The Virtual Execution System,
   VES),
 - A comprehensive class library,
