@@ -57,7 +57,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 The Common Language Infrastructure platform. Microsoft has created a
 new development platform. The highlights of this new development
 platform are:
-`- A runtime environment that provides garbage collection, threading
+- A runtime environment that provides garbage collection, threading
   and a virtual machine specification (The Virtual Execution System,
   VES),
 - A comprehensive class library,
