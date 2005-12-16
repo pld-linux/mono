@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.10
-Release:	3
+Version:	1.1.11
+Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	8ca33cbe66b5bb52f320ad992304b951
+# Source0-md5:	597f0e9e8b9d65422580e67c3df6538e
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -264,6 +264,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc AUTHORS ChangeLog NEWS README pld-doc/*
 %if %{with mint}
 %attr(755,root,root) %{_bindir}/mint
 %else
@@ -346,7 +347,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README pld-doc/*
 %attr(755,root,root) %{_bindir}/al*
 %attr(755,root,root) %{_bindir}/cilc*
 %attr(755,root,root) %{_bindir}/disco*
@@ -365,6 +365,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/soapsuds*
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/wsdl*
+%attr(755,root,root) %{_bindir}/xbuild
 %attr(755,root,root) %{_bindir}/xsd*
 %if %{with mint}
 %attr(755,root,root) %{_libdir}/libmint.so
@@ -398,7 +399,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/monop*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild*
 %{_prefix}/lib/mono/*.*/*.dll.mdb
+%{_prefix}/lib/mono/xbuild
 %attr(755,root,root) %{_rpmlibdir}/mono-find*
 %{_datadir}/%{name}
 %{_pkgconfigdir}/*.pc
@@ -438,6 +441,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ilasm*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm*
 %{_mandir}/man1/ilasm.1*
 
 %if %{with static_libs}
