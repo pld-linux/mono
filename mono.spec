@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.12.1
+Version:	1.1.13
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	1afd911a96a0032b5d1c13656a5d0369
+# Source0-md5:	37fe3f191321ab7c426d57d0e1581bfe
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -241,7 +241,6 @@ install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv -f $RPM_BUILD_ROOT%{_prefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
 # this way we can run rpmbuild -bi several times, and directories
@@ -327,6 +326,10 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/DefaultWsdlHelpGenerator.aspx
 
+%exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
+%exclude %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
+%exclude %{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
+
 %files jay
 %defattr(644,root,root,755)
 %doc mcs/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
@@ -335,11 +338,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/jay/skeleton*
 %{_mandir}/man1/jay.1*
 
-# TODO: probably Microsoft.JScript.dll & Co. should be here
 %files jscript
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mjs
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mjs*
+%{_prefix}/lib/mono/gac/Microsoft.JScript
+%{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
+%{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
 
 %files compat-links
 %defattr(644,root,root,755)
