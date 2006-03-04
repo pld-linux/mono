@@ -6,8 +6,8 @@
 %bcond_with	bootstrap	# don't require mono-devel to find req/prov
 %bcond_with	mint		# build mint instead of mono VM (JIT)
 #
-%ifnarch %{ix86} %{x8664} sparc sparcv9 sparc64 ppc s390 s390x
-# JIT not supported on alpha,arm,hppa
+%ifnarch %{ix86} %{x8664} arm ia64 ppc s390 s390x sparc sparcv9 sparc64
+# JIT not supported on alpha,hppa
 %define		with_mint	1
 %endif
 %define		_glibver	2.4
@@ -28,7 +28,6 @@ Patch2:		%{name}-mint.patch
 Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-alpha-atomic.patch
 Patch5:		%{name}-sparc-exception.patch
-Patch6:		%{name}-alpha-tls.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -39,9 +38,9 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 %{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
-ExclusiveArch:	%{ix86} %{x8664} arm hppa ppc s390 s390x
+ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x
 # sparc sparcv9 sparc64 not ported to linux (only solaris(?))
-# alpha still broken, mips/ia64/m68k disabled in configure
+# alpha still broken, mips disabled in configure
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -191,10 +190,6 @@ oraz dotGNU.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-#%patch6 -p1
-
-# workaround for variable name disallowed by new pkgconfig
-echo 'm4_pattern_allow(PKG_PATH)' > acinclude.m4
 
 sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-provides.in
 sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-requires.in
