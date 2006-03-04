@@ -34,10 +34,11 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= %{_glibver}
 BuildRequires:	libtool
+%{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
-%{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
+BuildRequires:	xorg-lib-libX11
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x
 # sparc sparcv9 sparc64 not ported to linux (only solaris(?))
 # alpha still broken, mips disabled in configure
