@@ -1,5 +1,6 @@
---- mono-1.1.8/data/config.in.orig	2005-06-13 16:00:53.000000000 +0200
-+++ mono-1.1.8/data/config.in	2005-06-18 23:02:34.474582304 +0200
+diff -ruN mono-1.1.13.6./data/config.in mono-1.1.13.6/data/config.in
+--- mono-1.1.13.6./data/config.in	2006-03-29 17:34:40.000000000 +0200
++++ mono-1.1.13.6/data/config.in	2006-03-29 17:46:04.827782344 +0200
 @@ -2,9 +2,9 @@
  	<dllmap dll="cygwin1.dll" target="@LIBC@" />
  	<dllmap dll="libc" target="@LIBC@" />
@@ -10,6 +11,6 @@
 +	<dllmap dll="libxslt.dll" target="libxslt.so.1" />
 +	<dllmap dll="libmySQL.dll" target="libmysqlclient.so.15" />
 +	<dllmap dll="odbc32.dll" target="libodbc.so.1" />
- 	<dllmap dll="oci" target="clntsh" />
+ 	<dllmap dll="oci" target="libclntsh@libsuffix@" />
  	<dllmap dll="db2cli" target="libdb2_36@libsuffix@"/>
  	<dllmap dll="msvcrt" target="@LIBC@"/>
