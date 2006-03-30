@@ -190,8 +190,8 @@ oraz dotGNU.
 %patch3 -p1
 %patch4 -p1
 
-sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-provides.in
-sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-requires.in
+sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-provides.in
+sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-requires.in
 
 %build
 cp -f /usr/share/automake/config.sub .
