@@ -27,7 +27,6 @@ Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
 Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-alpha-atomic.patch
-Patch5:		%{name}-sparc-exception.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -190,7 +189,6 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
 
 sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-provides.in
 sed -i -e 's@a=`which "$0"`@a="/usr/bin/dupa"@' scripts/mono-find-requires.in
