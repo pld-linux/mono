@@ -38,9 +38,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 BuildRequires:	xorg-lib-libX11
-ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x
-# sparc sparcv9 sparc64 not ported to linux (only solaris(?))
-# alpha still broken, mips disabled in configure
+ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
+# alpha still broken
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
