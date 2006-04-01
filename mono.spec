@@ -37,7 +37,7 @@ BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
-BuildRequires:	xorg-lib-libX11
+BuildRequires:	X11-libs
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x
 # sparc sparcv9 sparc64 not ported to linux (only solaris(?))
 # alpha still broken, mips disabled in configure
