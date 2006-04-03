@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.13.6
+Version:	1.1.14
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	330cc66c6a44525950daf10c4f17c10e
+# Source0-md5:	1692c806fd32ade06d97523e800716ed
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -38,7 +38,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 BuildRequires:	xorg-lib-libX11
-Requires:	libgdiplus = %{version}
+Requires:	libgdiplus >= %{version}
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
@@ -266,10 +266,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_bindir}/cert*
 %attr(755,root,root) %{_bindir}/chktrust*
+%attr(755,root,root) %{_bindir}/dtd2rng
 %attr(755,root,root) %{_bindir}/gacutil*
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/mkbundle*
 %attr(755,root,root) %{_bindir}/mono-service
+%attr(755,root,root) %{_bindir}/mono-service2
+%attr(755,root,root) %{_bindir}/mono-xmltool
 %attr(755,root,root) %{_bindir}/mozroots
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/setreg*
@@ -319,6 +322,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/mono/2.0
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/DefaultWsdlHelpGenerator.aspx
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/web.config
 
 %exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
 %exclude %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
@@ -358,6 +362,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_bindir}/mono-shlib-cop*
 %attr(755,root,root) %{_bindir}/nunit-console
+%attr(755,root,root) %{_bindir}/nunit-console2
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/permview
 %attr(755,root,root) %{_bindir}/prj2make
@@ -378,6 +383,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/cilc*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/CorCompare*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/disco*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/dtd2rng*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/dtd2xsd*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/genxs*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ictool*
@@ -386,6 +392,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-api-*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monop*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-shlib-cop*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-xmltool*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/nunit-console*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/permview*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/prj2make*
@@ -415,6 +422,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monop.1*
 %{_mandir}/man1/mono-shlib-cop.1*
+%{_mandir}/man1/mono-xmltool.1*
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/oldmono.1*
 %{_mandir}/man1/prj2make.1*
@@ -435,6 +443,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mbas
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mbas.exe*
+%{_mandir}/man1/mbas.1*
 
 %files ilasm
 %defattr(644,root,root,755)
