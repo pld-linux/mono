@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.14
+Version:	1.1.15
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
-Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	1692c806fd32ade06d97523e800716ed
+Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
+# Source0-md5:	48d93d805c2940e42bcf73d0d38d30fe
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -347,6 +347,7 @@ rm -rf $RPM_BUILD_ROOT
 %files compat-links
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/resgen
+%attr(755,root,root) %{_bindir}/resgen2
 
 %files devel
 %defattr(644,root,root,755)
@@ -404,6 +405,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-api-info*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/monop*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/resgen*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild*
 %{_prefix}/lib/mono/*.*/*.dll.mdb
