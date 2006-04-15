@@ -95,6 +95,18 @@ Development resources for mono.
 %description devel -l pl
 Zasoby programisty dla mono.
 
+%package debug
+Summary:	Mono libraries debugging resources
+Summary(pl):	Pliki umo¿liwiaj±ce debugowanie bibliotek mono
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description debug
+Mono libraries debugging resources.
+
+%description debug -l pl
+Pliki umo¿liwiaj±ce debugowanie bibliotek mono.
+
 %package basic
 Summary:	MonoBASIC compiler for mono
 Summary(pl):	Kompilator MonoBASIC dla mono
@@ -297,7 +309,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sn*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/caspol*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service*
+%exclude %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/gac
+%exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_mandir}/man1/cert*.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
@@ -340,9 +354,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mjs
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mjs*
+%exclude %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/gac/Microsoft.JScript
 %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
 %{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
+%exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %files compat-links
 %defattr(644,root,root,755)
@@ -408,7 +424,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/resgen*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild*
-%{_prefix}/lib/mono/*.*/*.dll.mdb
+%exclude %{_prefix}/lib/mono/1.0/*.mdb
+%exclude %{_prefix}/lib/mono/2.0/*.mdb
 %{_prefix}/lib/mono/xbuild
 %attr(755,root,root) %{_rpmlibdir}/mono-find*
 %{_datadir}/%{name}
@@ -439,12 +456,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gmcs
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mcs.exe*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe*
+%exclude %{_prefix}/lib/mono/1.0/*.mdb
+%exclude %{_prefix}/lib/mono/2.0/*.mdb
 %{_mandir}/man1/mcs.1*
 
 %files basic
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mbas
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mbas.exe*
+%exclude %{_prefix}/lib/mono/1.0/*.mdb
 %{_mandir}/man1/mbas.1*
 
 %files ilasm
@@ -452,7 +472,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ilasm*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ilasm*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm*
+%exclude %{_prefix}/lib/mono/1.0/*.mdb
+%exclude %{_prefix}/lib/mono/2.0/*.mdb
 %{_mandir}/man1/ilasm.1*
+
+%files debug
+%defattr(644,root,root,755)
+%{_prefix}/lib/mono/1.0/*.mdb
+%{_prefix}/lib/mono/2.0/*.mdb
+%{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %if %{with static_libs}
 %files static
