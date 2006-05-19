@@ -16,7 +16,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.15
-Release:	2
+Release:	3
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
@@ -298,6 +298,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/lib/mono
 %dir %{_prefix}/lib/mono/1.0
 %dir %{_prefix}/lib/mono/2.0
+%dir %{_prefix}/lib/mono/compat-1.0
+%dir %{_prefix}/lib/mono/compat-2.0
 %attr(755,root,root) %{_prefix}/lib/mono/*.*/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/cert*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/chktrust*
