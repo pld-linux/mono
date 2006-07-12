@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.16
+Version:	1.1.16.1
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	ecfac1ed8bed586b50d1a1820b74b16b
+# Source0-md5:	11556607ba74cae225d9c73aef09e5e3
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -40,6 +40,8 @@ BuildRequires:	rpmbuild(monoautodeps)
 BuildRequires:	xorg-lib-libX11
 Requires:	binfmt-detector
 Requires:	libgdiplus >= %{version}
+Provides:	mono(mscorlib) = 1.0.5000.0
+Provides:	mono(mscorlib) = 2.0.0.0
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
