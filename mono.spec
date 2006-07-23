@@ -16,7 +16,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.16.1
-Release:	1
+Release:	2
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
@@ -27,6 +27,7 @@ Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
 Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-alpha-atomic.patch
+Patch5:		%{name}-script_fixes.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -40,8 +41,6 @@ BuildRequires:	rpmbuild(monoautodeps)
 BuildRequires:	xorg-lib-libX11
 Requires:	binfmt-detector
 Requires:	libgdiplus >= %{version}
-Provides:	mono(mscorlib) = 1.0.5000.0
-Provides:	mono(mscorlib) = 2.0.0.0
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
@@ -204,9 +203,11 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
-sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-provides.in
-sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-requires.in
+# obsolted -> included in script_fixes patch
+#sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-provides.in
+#sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-requires.in
 
 %build
 cp -f /usr/share/automake/config.sub .
