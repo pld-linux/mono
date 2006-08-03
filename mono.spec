@@ -1,3 +1,4 @@
+#
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 #
 # Conditional build:
@@ -15,13 +16,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.13.6
+Version:	1.1.13.8
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono-1.1/%{name}-%{version}.tar.gz
-# Source0-md5:	330cc66c6a44525950daf10c4f17c10e
+# Source0-md5:	6461a4e90d47ca5d7e224381cce627cc
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
