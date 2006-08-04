@@ -17,7 +17,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.1.13.8
-Release:	2
+Release:	3
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
@@ -28,13 +28,14 @@ Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
 Patch3:		%{name}-sonames.patch
 Patch4:		%{name}-alpha-atomic.patch
+Patch5:		%{name}-script_fixes.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	glib2-devel >= %{_glibver}
 BuildRequires:	libtool
-%{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
+%{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.13.8-3}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
@@ -190,9 +191,7 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-
-sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-provides.in
-sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-requires.in
+%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
