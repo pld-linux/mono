@@ -1,19 +1,21 @@
---- mono-1.0.6/mono/arch/alpha/tramp.c.orig1	2005-05-02 04:04:42.000000000 +0200
-+++ mono-1.0.6/mono/arch/alpha/tramp.c	2005-05-07 13:48:41.000000000 +0200
-@@ -159,15 +159,50 @@
+--- mono-1.1.17/mono/arch/alpha/tramp.c.orig	2006-08-25 21:35:19.000000000 +0200
++++ mono-1.1.17/mono/arch/alpha/tramp.c	2006-08-30 12:00:25.805971000 +0200
+@@ -162,16 +162,54 @@
  }
  
- static inline guint8 *
--emit_store_return_default(guint8 *p, const gint SIZE )
-+emit_store_return_default(guint8 *p, const gint SIZE, MonoMethodSignature *sig)
+ static inline unsigned int *
+-emit_store_return_default(unsigned int *pi, const gint SIZE )
++emit_store_return_default(unsigned int *pi, const gint SIZE, MonoMethodSignature *sig )
  {
+-	// 2 instructions.
+         unsigned int *p = (unsigned int *)pi;
 +	guint32 simpletype;
- 	// 2 instructions.
++	// 2 instructions.
  	
--	/* TODO: This probably do different stuff based on the value.  
--	   you know, like stq/l/w. and s/f.
--	*/
- 	alpha_ldq( p, alpha_t0, alpha_fp, SIZE-8 );  // load void * retval
+ 	/* TODO: This probably do different stuff based on the value.  
+ 	   you know, like stq/l/w. and s/f.
+ 	*/
+ 	alpha_ldq( p, alpha_t0, alpha_fp, (SIZE-8) );  // load void * retval
 -	alpha_stq( p, alpha_v0, alpha_t0, 0 );       // store the result to *retval.
 +	/* XXX: may need more variants */
 +	if (sig->ret->byref) {
@@ -56,7 +58,7 @@
  	return p;
  }
  
-@@ -326,22 +361,22 @@
+@@ -332,22 +370,22 @@
  				break;
  			case MONO_TYPE_R4:
  			case MONO_TYPE_R8:
@@ -88,7 +90,7 @@
  			case MONO_TYPE_VALUETYPE:
  				g_error ("Not implemented: ValueType as parameter to delegate." );
  				break;
-@@ -354,7 +389,7 @@
+@@ -360,7 +398,7 @@
  	
  	// Now call the function and store the return parameter.
  	p = emit_call( p, STACK_SIZE );
