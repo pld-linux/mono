@@ -1,3 +1,4 @@
+# TODO: mono-basic.spec
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 #
 # Conditional build:
@@ -19,7 +20,7 @@ Version:	1.1.17
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
-#Source0Download: http://go-mono.com/sources/
+#Source0Download: http://go-mono.com/sources-latest/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
 # Source0-md5:	4cd4590d9d73a98a513077e93eaac828
 Patch0:		%{name}-nolibs.patch
