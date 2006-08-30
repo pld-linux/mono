@@ -6,7 +6,7 @@ diff -ruN mono-1.1.17./scripts/mono-find-provides.in mono-1.1.17/scripts/mono-fi
  # Disabled... see ChangeLog
  
 -a=`which "$0"`
-+a=`/usr/bin/whatever`
++a="/usr/bin/whatever"
  d=`dirname "$a"`
  
  # Set the prefix, unless it is overriden (used when building mono rpms)
