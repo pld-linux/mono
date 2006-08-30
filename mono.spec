@@ -186,15 +186,11 @@ oraz dotGNU.
 %prep
 %setup -q
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-
-# obsolted -> included in script_fixes patch
-#sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-provides.in
-#sed -i -e 's@a=`which "$0"`@a="/usr/bin/whatever"@' scripts/mono-find-requires.in
 
 %build
 cp -f /usr/share/automake/config.sub .
