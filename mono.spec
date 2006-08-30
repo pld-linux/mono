@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.16.1
-Release:	3
+Version:	1.1.17
+Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	11556607ba74cae225d9c73aef09e5e3
+# Source0-md5:	4cd4590d9d73a98a513077e93eaac828
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -108,18 +108,6 @@ Mono libraries debugging resources.
 %description debug -l pl
 Pliki umo¿liwiaj±ce debugowanie bibliotek mono.
 
-%package basic
-Summary:	MonoBASIC compiler for mono
-Summary(pl):	Kompilator MonoBASIC dla mono
-Group:		Development/Languages
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description basic
-MonoBASIC compiler for mono.
-
-%description basic -l pl
-Kompilator MonoBASIC dla mono.
-
 %package csharp
 Summary:	C# compiler for mono
 Summary(pl):	Kompilator C# dla mono
@@ -198,7 +186,7 @@ oraz dotGNU.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -464,13 +452,6 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_prefix}/lib/mono/1.0/*.mdb
 %exclude %{_prefix}/lib/mono/2.0/*.mdb
 %{_mandir}/man1/mcs.1*
-
-%files basic
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mbas
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/mbas.exe*
-%exclude %{_prefix}/lib/mono/1.0/*.mdb
-%{_mandir}/man1/mbas.1*
 
 %files ilasm
 %defattr(644,root,root,755)

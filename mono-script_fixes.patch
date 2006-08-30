@@ -1,15 +1,12 @@
-diff -aurN mono-1.1.16.1.orig/scripts/mono-find-provides.in mono-1.1.16.1/scripts/mono-find-provides.in
---- mono-1.1.16.1.orig/scripts/mono-find-provides.in	2006-05-11 00:31:47.000000000 +0200
-+++ mono-1.1.16.1/scripts/mono-find-provides.in	2006-07-23 23:14:18.642993609 +0200
-@@ -14,9 +14,9 @@
- 
- # Only include files with /gac/ in path
- #  (Allows packages to contain private assemblies that don't conflict with other packages)
--monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
-+#monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
+diff -ruN mono-1.1.17./scripts/mono-find-provides.in mono-1.1.17/scripts/mono-find-provides.in
+--- mono-1.1.17./scripts/mono-find-provides.in	2006-08-30 10:24:16.000000000 +0200
++++ mono-1.1.17/scripts/mono-find-provides.in	2006-08-30 10:28:18.780427000 +0200
+@@ -17,7 +17,7 @@
+ #monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
+ # Disabled... see ChangeLog
  
 -a=`which "$0"`
-+a="/usr/bin/whatever"
++a=`/usr/bin/whatever`
  d=`dirname "$a"`
  
  # Set the prefix, unless it is overriden (used when building mono rpms)
@@ -25,23 +22,3 @@ diff -aurN mono-1.1.16.1.orig/scripts/mono-find-requires.in mono-1.1.16.1/script
  d=`dirname "$a"`
  
  # Set the prefix, unless it is overriden (used when building mono rpms)
-@@ -38,12 +38,16 @@
- 				sub(/Version=/, "", $2);
- 				VERSION=$2
- 			}
--	
-+
- 			(START==1) && /^\tName=/ {
- 				sub(/Name=/, "", $1);
- 				LIBNAME=$1
--	
--				print "mono(" LIBNAME ") = " VERSION
-+				# Allow rpm deps to be resolved for 1.0 profile version
-+				if (VERSION=="1.0.3300.0")
-+					OP=">="
-+				else
-+					OP="="
-+				print "mono(" LIBNAME ") " OP " " VERSION
- 				START=0
- 			}
- 		    ') 2> /dev/null
