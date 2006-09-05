@@ -16,13 +16,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.17
+Version:	1.1.17.1
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources-latest/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	4cd4590d9d73a98a513077e93eaac828
+# Source0-md5:	072cb3de1f19cbebd6034f7a5cff1292
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -299,6 +299,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sn*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/caspol*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service*
 %exclude %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
