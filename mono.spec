@@ -1,4 +1,3 @@
-# TODO: mono-basic.spec
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 #
 # Conditional build:
@@ -16,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.1.17.1
+Version:	1.1.17.2
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
-#Source0Download: http://go-mono.com/sources-latest/
+#Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	072cb3de1f19cbebd6034f7a5cff1292
+# Source0-md5:	a7a9cf1a0f22b92e70a53759fb971e50
 Patch0:		%{name}-nolibs.patch
 Patch1:		%{name}-alpha-float.patch
 Patch2:		%{name}-mint.patch
@@ -41,6 +40,8 @@ BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 Requires:	binfmt-detector
 Requires:	libgdiplus >= 1.1.17
+# until there there is mono-basic usable with mono
+Obsoletes:	mono-basic
 ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
 # alpha still broken
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
