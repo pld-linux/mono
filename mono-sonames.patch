@@ -11,6 +11,6 @@ diff -ur mono-1.1.16/data/config.in mono-1.1.16-patch/data/config.in
 +	<dllmap dll="libxslt.dll" target="libxslt.so.1" />
 +	<dllmap dll="libmySQL.dll" target="libmysqlclient.so.15" />
 +	<dllmap dll="odbc32.dll" target="libodbc.so.1" />
+ 	<dllmap os="osx" dll="odbc32.dll" target="libiodbc.dylib" />
  	<dllmap dll="oci" target="libclntsh@libsuffix@" />
  	<dllmap dll="db2cli" target="libdb2_36@libsuffix@"/>
- 	<dllmap dll="msvcrt" target="@LIBC@"/>
