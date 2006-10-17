@@ -4,13 +4,13 @@
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
 %bcond_without	static_libs	# don't build static libraries
 %bcond_with	bootstrap	# don't require mono-devel to find req/prov
-%bcond_with	mint		# build mint instead of mono VM (JIT)
+%bcond_with	mint		# build mint instead of mono VM (JIT) [broken]
 #
-%ifnarch %{ix86} %{x8664} arm ia64 ppc s390 s390x sparc sparcv9 sparc64
-# JIT not supported on alpha,hppa
+%ifnarch %{ix86} %{x8664} alpha arm ia64 ppc s390 s390x sparc sparcv9 sparc64
+# JIT not supported on hppa
 %define		with_mint	1
 %endif
-%define		_glibver	2.4
+%define		_glibver	1:2.4
 #
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
@@ -38,11 +38,10 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 Requires:	binfmt-detector
-Requires:	libgdiplus >= 1.1.17
+Requires:	libgdiplus >= %{version}
 # until there there is mono-basic usable with mono
 Obsoletes:	mono-basic
-ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
-# alpha still broken
+ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
