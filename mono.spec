@@ -22,12 +22,11 @@ Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
 # Source0-md5:	ce7c16c15b938edb2f1ea781921ef3eb
-Patch0:		%{name}-nolibs.patch
-Patch1:		%{name}-alpha-float.patch
-Patch2:		%{name}-mint.patch
-Patch3:		%{name}-sonames.patch
-Patch4:		%{name}-alpha-atomic.patch
-Patch5:		%{name}-script_fixes.patch
+Patch0:		%{name}-alpha-float.patch
+Patch1:		%{name}-mint.patch
+Patch2:		%{name}-sonames.patch
+Patch3:		%{name}-alpha-atomic.patch
+Patch4:		%{name}-script_fixes.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -187,12 +186,11 @@ oraz dotGNU.
 
 %prep
 %setup -q
-#%patch0 -p1
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
