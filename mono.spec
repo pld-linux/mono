@@ -25,8 +25,7 @@ Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
-Patch3:		%{name}-alpha-atomic.patch
-Patch4:		%{name}-script_fixes.patch
+Patch3:		%{name}-script_fixes.patch
 URL:		http://www.mono-project.com/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -189,7 +188,6 @@ oraz dotGNU.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
