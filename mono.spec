@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.2
+Version:	1.2.1
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	eb75a8b3bedbaa60ff3c3410ef4b759b
+# Source0-md5:	47621f63126d6599356d28668fb5fea2
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -272,6 +272,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mozroots
 %attr(755,root,root) %{_bindir}/secutil*
 %attr(755,root,root) %{_bindir}/setreg*
+%attr(755,root,root) %{_bindir}/sgen
 %attr(755,root,root) %{_bindir}/signcode*
 %attr(755,root,root) %{_bindir}/sn*
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
@@ -297,6 +298,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mkbundle*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/sgen*
 %exclude %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
@@ -311,6 +313,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mozroots.1*
 %{_mandir}/man1/secutil.1*
 %{_mandir}/man1/setreg.1*
+%{_mandir}/man1/sgen.1*
 %{_mandir}/man1/signcode.1*
 %{_mandir}/man1/sn.1*
 %{_mandir}/man1/permview.1*
