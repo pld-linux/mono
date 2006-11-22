@@ -47,6 +47,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_rpmlibdir	/usr/lib/rpm
 
+# debugger doesn't work with stripped mono
+%define         _noautostrip    .*/mono
+
 %if ! %{with bootstrap}
 %define	__mono_provides	%{_rpmlibdir}/mono-find-provides
 %define	__mono_requires	%{_rpmlibdir}/mono-find-requires
