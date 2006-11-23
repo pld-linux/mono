@@ -234,6 +234,8 @@ install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
+
 rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
 # this way we can run rpmbuild -bi several times, and directories
