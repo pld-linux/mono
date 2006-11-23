@@ -40,7 +40,7 @@ Requires:	binfmt-detector
 Requires:	libgdiplus >= %{version}
 # until there there is mono-basic usable with mono
 Obsoletes:	mono-basic
-ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 ppc s390 s390x sparc sparcv9 sparc64
+ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9 sparc64
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
