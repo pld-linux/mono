@@ -193,6 +193,11 @@ oraz dotGNU.
 %patch3 -p1
 
 %build
+if [ ! -r /dev/random ]; then
+	echo "You need to have /dev/random accessible to build this package!"
+	exit 1
+fi
+
 cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
