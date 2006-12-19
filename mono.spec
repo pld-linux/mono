@@ -40,7 +40,8 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 Requires:	binfmt-detector
-Requires:	libgdiplus >= %{version}
+#Requires:	libgdiplus >= %{version}
+Requires:	libgdiplus >= 1.2.2
 # until there there is mono-basic usable with mono
 Obsoletes:	mono-basic
 ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9 sparc64
