@@ -1,0 +1,101 @@
+--- mono-1.1.17/mono/arch/alpha/tramp.c.orig	2006-08-25 21:35:19.000000000 +0200
++++ mono-1.1.17/mono/arch/alpha/tramp.c	2006-08-30 12:00:25.805971000 +0200
+@@ -162,16 +162,54 @@
+ }
+ 
+ static inline unsigned int *
+-emit_store_return_default(unsigned int *pi, const gint SIZE )
++emit_store_return_default(unsigned int *pi, const gint SIZE, MonoMethodSignature *sig )
+ {
+-	// 2 instructions.
+         unsigned int *p = (unsigned int *)pi;
++	guint32 simpletype;
++	// 2 instructions.
+ 	
+ 	/* TODO: This probably do different stuff based on the value.  
+ 	   you know, like stq/l/w. and s/f.
+ 	*/
+ 	alpha_ldq( p, alpha_t0, alpha_fp, (SIZE-8) );  // load void * retval
+-	alpha_stq( p, alpha_v0, alpha_t0, 0 );       // store the result to *retval.
++	/* XXX: may need more variants */
++	if (sig->ret->byref) {
++		alpha_stq( p, alpha_v0, alpha_t0, 0 );       // store the result to *retval.
++	} else {
++		simpletype = sig->ret->type;
++		if ((simpletype == MONO_TYPE_VALUETYPE) && sig->ret->data.klass->enumtype) {
++			simpletype = sig->ret->data.klass->enum_basetype->type;
++		}
++		switch(simpletype) {
++		case MONO_TYPE_BOOLEAN:
++		case MONO_TYPE_I1:
++		case MONO_TYPE_U1:
++		case MONO_TYPE_CHAR:
++		case MONO_TYPE_I2:
++		case MONO_TYPE_U2:
++		case MONO_TYPE_VOID:
++		case MONO_TYPE_I4:
++		case MONO_TYPE_U4:
++		case MONO_TYPE_I:
++		case MONO_TYPE_U:
++		case MONO_TYPE_I8:
++		case MONO_TYPE_U8:
++		case MONO_TYPE_CLASS:
++		case MONO_TYPE_OBJECT:
++		case MONO_TYPE_SZARRAY:
++		case MONO_TYPE_ARRAY:
++		case MONO_TYPE_STRING: 
++			alpha_stq( p, alpha_v0, alpha_t0, 0 );       // store the result to *retval.
++			break;
++		case MONO_TYPE_R4:
++		case MONO_TYPE_R8:
++			alpha_stt( p, alpha_fv0, alpha_t0, 0 );       // store the result to *retval.
++			break;
++		default:
++			g_error ("Can't handle as return value 0x%x", sig->ret->type);
++		}
++
++	}
+ 	return p;
+ }
+ 
+@@ -332,22 +370,22 @@
+ 				break;
+ 			case MONO_TYPE_R4:
+ 			case MONO_TYPE_R8:
+-				/*
+-				// floating point... Maybe this does the correct thing.
+-				if( i > alpharegs )
++				// floating point; both types use double C type in mono
++				if( i >= alpharegs )
+ 				{
+-					alpha_ldq( p, alpha_t1, alpha_t0, ARG_LOC( i ) );
+-					alpha_cpys( p, alpha_ft1, alpha_ft1, alpha_ft2 );
+-					alpha_stt( p, alpha_ft2, alpha_sp, pos );
++					// load into temp register, then store on the stack
++					alpha_ldt( p, alpha_ft1, alpha_t0, ARG_LOC( i ) );
++					alpha_stt( p, alpha_ft1, alpha_sp, pos );
+ 					pos -= 8;
+ 				}
+ 				else
+ 				{
+-					alpha_ldq( p, alpha_t1, alpha_t0, ARG_LOC(i) );
+-					alpha_cpys( p, alpha_ft1, alpha_ft1, alpha_fa0 + i + hasthis );
++					// load into register
++					// (float regs are numbered in the same way as integer ones,
++					// so we can abuse regbase)
++					alpha_ldt( p, regbase + i, alpha_t0, ARG_LOC(i) );
+ 				}
+ 				break;
+-				*/
+ 			case MONO_TYPE_VALUETYPE:
+ 				g_error ("Not implemented: ValueType as parameter to delegate." );
+ 				break;
+@@ -360,7 +398,7 @@
+ 	
+ 	// Now call the function and store the return parameter.
+ 	p = emit_call( p, STACK_SIZE );
+-	p = emit_store_return_default( p, STACK_SIZE );
++	p = emit_store_return_default( p, STACK_SIZE, sig );
+ 	p = emit_epilog( p, STACK_SIZE );
+ 
+ 	if( p > buffer + BUFFER_SIZE )

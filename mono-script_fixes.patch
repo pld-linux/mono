@@ -1,0 +1,24 @@
+diff -ruN mono-1.1.17./scripts/mono-find-provides.in mono-1.1.17/scripts/mono-find-provides.in
+--- mono-1.1.17./scripts/mono-find-provides.in	2006-08-30 10:24:16.000000000 +0200
++++ mono-1.1.17/scripts/mono-find-provides.in	2006-08-30 10:28:18.780427000 +0200
+@@ -17,7 +17,7 @@
+ #monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
+ # Disabled... see ChangeLog
+ 
+-a=`which "$0"`
++a="/usr/bin/whatever"
+ d=`dirname "$a"`
+ 
+ # Set the prefix, unless it is overriden (used when building mono rpms)
+diff -aurN mono-1.1.16.1.orig/scripts/mono-find-requires.in mono-1.1.16.1/scripts/mono-find-requires.in
+--- mono-1.1.16.1.orig/scripts/mono-find-requires.in	2006-05-11 00:31:47.000000000 +0200
++++ mono-1.1.16.1/scripts/mono-find-requires.in	2006-07-23 22:58:06.000000000 +0200
+@@ -12,7 +12,7 @@
+ filelist=($(grep -Ev '/usr/doc/|/usr/share/doc/'))
+ monolist=($(printf "%s\n" "${filelist[@]}" | egrep "\\.(exe|dll)\$"))
+ 
+-a=`which "$0"`
++a="/usr/bin/whatever"
+ d=`dirname "$a"`
+ 
+ # Set the prefix, unless it is overriden (used when building mono rpms)
