@@ -15,17 +15,18 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.2.2.1
-Release:	1
+Version:	1.2.3
+Release:	0.9
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	b67ef657b83ca26249d7b9e9c5e7da69
+# Source0-md5:	d7af3ebcf37967e3548a02f5d61a0ebc
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
 Patch3:		%{name}-script_fixes.patch
+Patch4:		%{name}-awk.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random ; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -40,8 +41,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 Requires:	binfmt-detector
-#Requires:	libgdiplus >= %{version}
-Requires:	libgdiplus >= 1.2.2
+Requires:	libgdiplus >= 1.2.3
 # until there there is mono-basic usable with mono
 Obsoletes:	mono-basic
 ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9 sparc64
@@ -195,6 +195,7 @@ oraz dotGNU.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -273,6 +274,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/dtd2rng
 %attr(755,root,root) %{_bindir}/gacutil*
+%attr(755,root,root) %{_bindir}/httpcfg
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/mkbundle*
 %attr(755,root,root) %{_bindir}/mono-service
@@ -314,6 +316,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/cert*.1*
 %{_mandir}/man1/chktrust.1*
 %{_mandir}/man1/gacutil.1*
+%{_mandir}/man1/httpcfg.1*
 %{_mandir}/man1/makecert.1*
 %{_mandir}/man1/mkbundle.1*
 %{_mandir}/man1/mint.1*
@@ -418,19 +421,23 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sqlsharp*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/wsdl*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/xsd*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/al*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-api-info*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/monop*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/resgen*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild*
+%{_prefix}/lib/mono/2.0/MSBuild
+%{_prefix}/lib/mono/2.0/*.xsd
+%{_prefix}/lib/mono/2.0/*.targets
+%{_prefix}/lib/mono/2.0/*.tasks
 %exclude %{_prefix}/lib/mono/1.0/*.mdb
 %exclude %{_prefix}/lib/mono/2.0/*.mdb
-%{_prefix}/lib/mono/xbuild
 %attr(755,root,root) %{_rpmlibdir}/mono-find*
-%{_datadir}/%{name}
+%{_datadir}/%{name}-1.0
 %{_pkgconfigdir}/*.pc
-%{_includedir}/%{name}
+%{_includedir}/%{name}-1.0
 %{_mandir}/man1/al.1*
 %{_mandir}/man1/cilc.1*
 %{_mandir}/man1/disco.1*
