@@ -229,14 +229,14 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS"
 # in fact the flag should be "-Wl,-z,execheap" for libmint, but:
 # -z execheap doesn't seem to do anything currently
 # -z execstack for library makes only stack executable, but not heap
-%{__make} \
+%{__make} -j1 \
 	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 
-%{__make} install \
+%{__make} -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
