@@ -1,16 +1,14 @@
-diff -ur mono-1.1.16/data/config.in mono-1.1.16-patch/data/config.in
---- mono-1.1.16/data/config.in	2006-07-05 23:55:55.000000000 +0200
-+++ mono-1.1.16-patch/data/config.in	2006-07-07 10:34:59.000000000 +0200
-@@ -3,9 +3,9 @@
- 	<dllmap dll="libc" target="@LIBC@" />
- 	<dllmap dll="intl" target="@INTL@" />
- 	<dllmap dll="libintl" target="@INTL@" />
--	<dllmap dll="libxslt.dll" target="libxslt@libsuffix@" />
--	<dllmap dll="libmySQL.dll" target="libmysqlclient@libsuffix@" />
--	<dllmap dll="odbc32.dll" target="libodbc@libsuffix@" />
-+	<dllmap dll="libxslt.dll" target="libxslt.so.1" />
-+	<dllmap dll="libmySQL.dll" target="libmysqlclient.so.15" />
-+	<dllmap dll="odbc32.dll" target="libodbc.so.1" />
+diff -ur mono-1.2.3/data/config.in mono-soname/data/config.in
+--- mono-1.2.3/data/config.in	2007-01-25 07:11:31.000000000 +0100
++++ mono-soname/data/config.in	2007-02-07 18:36:17.000000000 +0100
+@@ -3,8 +3,8 @@
+ 	<dllmap dll="libc" target="@LIBC@" os="!windows"/>
+ 	<dllmap dll="intl" target="@INTL@" os="!windows"/>
+ 	<dllmap dll="libintl" target="@INTL@" os="!windows"/>
+-	<dllmap dll="libxslt.dll" target="libxslt@libsuffix@" os="!windows"/>
+-	<dllmap dll="odbc32.dll" target="libodbc@libsuffix@" os="!windows"/>
++	<dllmap dll="libxslt.dll" target="libxslt.so.1" os="!windows"/>
++	<dllmap dll="odbc32.dll" target="libodbc.so.1" os="!windows"/>
  	<dllmap os="osx" dll="odbc32.dll" target="libiodbc.dylib" />
- 	<dllmap dll="oci" target="libclntsh@libsuffix@" />
- 	<dllmap dll="db2cli" target="libdb2_36@libsuffix@"/>
+ 	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
+ 	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
