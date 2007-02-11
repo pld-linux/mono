@@ -16,7 +16,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.2.3
-Release:	0.9
+Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources-stable/
@@ -42,8 +42,6 @@ BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 Requires:	binfmt-detector
 Requires:	libgdiplus >= 1.2.3
-# until there there is mono-basic usable with mono
-Obsoletes:	mono-basic
 ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9 sparc64
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
@@ -274,7 +272,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/dtd2rng
 %attr(755,root,root) %{_bindir}/gacutil*
-%attr(755,root,root) %{_bindir}/httpcfg
+#%attr(755,root,root) %{_bindir}/httpcfg
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/mkbundle*
 %attr(755,root,root) %{_bindir}/mono-service
