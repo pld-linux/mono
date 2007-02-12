@@ -13,7 +13,7 @@
 %define		_glibver	1:2.4
 #
 Summary:	Common Language Infrastructure implementation
-Summary(pl):	Implementacja Common Language Infrastructure
+Summary(pl.UTF-8):   Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.2.3
 Release:	1
@@ -73,23 +73,23 @@ platform are:
 
 %{?with_tls:This version was build with TLS __thread.}
 
-%description -l pl
-Platforma CLI (Common Language Infrastructure). Microsoft stworzy³
-now± platformê developersk±. Zalety tej platformy to:
-- ¶rodowisko, które dostarcza garbage collector, w±tki oraz
-  specyfikacjê maszyny wirtualnej (The Virtual Execution System, VES),
-- bibliotekê klas,
-- nowy jêzyk, C#. Bardzo podobny do Javy, C# pozwala programistom na
-  u¿ywanie wszystkich mo¿liwo¶ci dostarczanych przez platformê .NET,
-- specyfikacja dla kompilatorów, które chc± generowaæ kod
-  wspó³pracuj±cy z innymi jêzykami programowania (The Common Language
+%description -l pl.UTF-8
+Platforma CLI (Common Language Infrastructure). Microsoft stworzyÅ‚
+nowÄ… platformÄ™ developerskÄ…. Zalety tej platformy to:
+- Å›rodowisko, ktÃ³re dostarcza garbage collector, wÄ…tki oraz
+  specyfikacjÄ™ maszyny wirtualnej (The Virtual Execution System, VES),
+- bibliotekÄ™ klas,
+- nowy jÄ™zyk, C#. Bardzo podobny do Javy, C# pozwala programistom na
+  uÅ¼ywanie wszystkich moÅ¼liwoÅ›ci dostarczanych przez platformÄ™ .NET,
+- specyfikacja dla kompilatorÃ³w, ktÃ³re chcÄ… generowaÄ‡ kod
+  wspÃ³Å‚pracujÄ…cy z innymi jÄ™zykami programowania (The Common Language
   Specification: CLS).
 
-%{?with_tls:Ta wersja zosta³a zbudowana z TLS __thread.}
+%{?with_tls:Ta wersja zostaÅ‚a zbudowana z TLS __thread.}
 
 %package devel
 Summary:	Development resources for mono
-Summary(pl):	Zasoby programisty do mono
+Summary(pl.UTF-8):   Zasoby programisty do mono
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= %{_glibver}
@@ -97,36 +97,36 @@ Requires:	glib2-devel >= %{_glibver}
 %description devel
 Development resources for mono.
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Zasoby programisty dla mono.
 
 %package debug
 Summary:	Mono libraries debugging resources
-Summary(pl):	Pliki umo¿liwiaj±ce debugowanie bibliotek mono
+Summary(pl.UTF-8):   Pliki umoÅ¼liwiajÄ…ce debugowanie bibliotek mono
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description debug
 Mono libraries debugging resources.
 
-%description debug -l pl
-Pliki umo¿liwiaj±ce debugowanie bibliotek mono.
+%description debug -l pl.UTF-8
+Pliki umoÅ¼liwiajÄ…ce debugowanie bibliotek mono.
 
 %package csharp
 Summary:	C# compiler for mono
-Summary(pl):	Kompilator C# dla mono
+Summary(pl.UTF-8):   Kompilator C# dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description csharp
 C# compiler for mono.
 
-%description csharp -l pl
+%description csharp -l pl.UTF-8
 Kompilator C# dla mono.
 
 %package ilasm
 Summary:	ILasm compiler for mono
-Summary(pl):	Kompilator ILasm dla mono
+Summary(pl.UTF-8):   Kompilator ILasm dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	ilasm
@@ -135,47 +135,47 @@ Obsoletes:	pnet-compiler-ilasm
 %description ilasm
 ILasm compiler for mono.
 
-%description ilasm -l pl
+%description ilasm -l pl.UTF-8
 Kompilator ILasm dla mono.
 
 %package jscript
 Summary:	jscript compiler for mono
-Summary(pl):	Kompilator jscript dla mono
+Summary(pl.UTF-8):   Kompilator jscript dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description jscript
 jscript compiler for mono.
 
-%description jscript -l pl
+%description jscript -l pl.UTF-8
 Kompilator jscript dla mono.
 
 %package static
 Summary:	Static mono library
-Summary(pl):	Statyczna biblioteka mono
+Summary(pl.UTF-8):   Statyczna biblioteka mono
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static mono library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka mono.
 
 %package jay
 Summary:	Yacc-like parser generator for Java and C#
-Summary(pl):	Podobny do Yacca generator parserów dla Javy i C#
+Summary(pl.UTF-8):   Podobny do Yacca generator parserÃ³w dla Javy i C#
 Group:		Development/Tools
 
 %description jay
 Yacc-like parser generator for Java and C#.
 
-%description jay -l pl
-Podobny do Yacca generator parserów dla Javy i C#.
+%description jay -l pl.UTF-8
+Podobny do Yacca generator parserÃ³w dla Javy i C#.
 
 %package compat-links
 Summary:	Mono compatibility links
-Summary(pl):	Dowi±zania dla kompatybilno¶ci
+Summary(pl.UTF-8):   DowiÄ…zania dla kompatybilnoÅ›ci
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -183,8 +183,8 @@ Requires:	%{name}-devel = %{version}-%{release}
 This package contains links to binaries with names used in .NET and
 dotGNU.
 
-%description compat-links -l pl
-Pakiet ten zawiera dowi±zania do programów o nazwach u¿ywanych w .NET
+%description compat-links -l pl.UTF-8
+Pakiet ten zawiera dowiÄ…zania do programÃ³w o nazwach uÅ¼ywanych w .NET
 oraz dotGNU.
 
 %prep
