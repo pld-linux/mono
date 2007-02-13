@@ -13,7 +13,7 @@
 %define		_glibver	1:2.4
 #
 Summary:	Common Language Infrastructure implementation
-Summary(pl.UTF-8):   Implementacja Common Language Infrastructure
+Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.2.3
 Release:	1
@@ -89,7 +89,7 @@ nową platformę developerską. Zalety tej platformy to:
 
 %package devel
 Summary:	Development resources for mono
-Summary(pl.UTF-8):   Zasoby programisty do mono
+Summary(pl.UTF-8):	Zasoby programisty do mono
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	glib2-devel >= %{_glibver}
@@ -102,7 +102,7 @@ Zasoby programisty dla mono.
 
 %package debug
 Summary:	Mono libraries debugging resources
-Summary(pl.UTF-8):   Pliki umożliwiające debugowanie bibliotek mono
+Summary(pl.UTF-8):	Pliki umożliwiające debugowanie bibliotek mono
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -114,7 +114,7 @@ Pliki umożliwiające debugowanie bibliotek mono.
 
 %package csharp
 Summary:	C# compiler for mono
-Summary(pl.UTF-8):   Kompilator C# dla mono
+Summary(pl.UTF-8):	Kompilator C# dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -126,7 +126,7 @@ Kompilator C# dla mono.
 
 %package ilasm
 Summary:	ILasm compiler for mono
-Summary(pl.UTF-8):   Kompilator ILasm dla mono
+Summary(pl.UTF-8):	Kompilator ILasm dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	ilasm
@@ -140,7 +140,7 @@ Kompilator ILasm dla mono.
 
 %package jscript
 Summary:	jscript compiler for mono
-Summary(pl.UTF-8):   Kompilator jscript dla mono
+Summary(pl.UTF-8):	Kompilator jscript dla mono
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -152,7 +152,7 @@ Kompilator jscript dla mono.
 
 %package static
 Summary:	Static mono library
-Summary(pl.UTF-8):   Statyczna biblioteka mono
+Summary(pl.UTF-8):	Statyczna biblioteka mono
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -164,7 +164,7 @@ Statyczna biblioteka mono.
 
 %package jay
 Summary:	Yacc-like parser generator for Java and C#
-Summary(pl.UTF-8):   Podobny do Yacca generator parserów dla Javy i C#
+Summary(pl.UTF-8):	Podobny do Yacca generator parserów dla Javy i C#
 Group:		Development/Tools
 
 %description jay
@@ -175,7 +175,7 @@ Podobny do Yacca generator parserów dla Javy i C#.
 
 %package compat-links
 Summary:	Mono compatibility links
-Summary(pl.UTF-8):   Dowiązania dla kompatybilności
+Summary(pl.UTF-8):	Dowiązania dla kompatybilności
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
