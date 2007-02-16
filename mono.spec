@@ -15,13 +15,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.2.3
+Version:	1.2.3.1
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 #Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	d7af3ebcf37967e3548a02f5d61a0ebc
+# Source0-md5:	4e4cdb6f98f1ea62bb1900f214c55e58
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
