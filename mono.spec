@@ -455,6 +455,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/wsdl.1*
 %{_mandir}/man1/xsd.1*
 
+%files debug
+%defattr(644,root,root,755)
+%{_prefix}/lib/mono/1.0/*.mdb
+%{_prefix}/lib/mono/2.0/*.mdb
+%{_prefix}/lib/mono/gac/*/*/*.mdb
+
 %files csharp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mcs
@@ -473,12 +479,6 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_prefix}/lib/mono/1.0/*.mdb
 %exclude %{_prefix}/lib/mono/2.0/*.mdb
 %{_mandir}/man1/ilasm.1*
-
-%files debug
-%defattr(644,root,root,755)
-%{_prefix}/lib/mono/1.0/*.mdb
-%{_prefix}/lib/mono/2.0/*.mdb
-%{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %if %{with static_libs}
 %files static
