@@ -1,3 +1,11 @@
+# TODO
+# - sanitize .pc files paths:
+# $ head /usr/lib64/pkgconfig/mono.pc
+# prefix=${pcfiledir}/../..
+# exec_prefix=${pcfiledir}/../..
+# libdir=${prefix}/lib64
+# includedir=${prefix}/include/mono-1.0
+#
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 #
 # Conditional build:
@@ -19,7 +27,7 @@ Version:	1.2.3.1
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
-#Source0Download: http://go-mono.com/sources-stable/
+# Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
 # Source0-md5:	4e4cdb6f98f1ea62bb1900f214c55e58
 Patch0:		%{name}-alpha-float.patch
@@ -28,7 +36,7 @@ Patch2:		%{name}-sonames.patch
 Patch3:		%{name}-script_fixes.patch
 Patch4:		%{name}-awk.patch
 URL:		http://www.mono-project.com/
-%if %(test -r /dev/random ; echo $?)
+%if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
 %endif
 BuildRequires:	autoconf
@@ -52,7 +60,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # debugger doesn't work with stripped mono
 %define         _noautostrip    .*/mono
 
-%if ! %{with bootstrap}
+%if %{without bootstrap}
 %define	__mono_provides	%{_rpmlibdir}/mono-find-provides
 %define	__mono_requires	%{_rpmlibdir}/mono-find-requires
 %endif
@@ -71,7 +79,7 @@ platform are:
   generate classes and code that can interoperate with other programming
   languages (The Common Language Specification: CLS).
 
-%{?with_tls:This version was build with TLS __thread.}
+%{?with_tls:This version was built with TLS __thread.}
 
 %description -l pl.UTF-8
 Platforma CLI (Common Language Infrastructure). Microsoft stworzył
