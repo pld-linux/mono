@@ -23,13 +23,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.2.3.1
+Version:	1.2.4
 Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
-Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.gz
-# Source0-md5:	4e4cdb6f98f1ea62bb1900f214c55e58
+Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
+# Source0-md5:	1d106acef8e3af3593c779f281541a0b
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -280,7 +280,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/chktrust*
 %attr(755,root,root) %{_bindir}/dtd2rng
 %attr(755,root,root) %{_bindir}/gacutil*
-#%attr(755,root,root) %{_bindir}/httpcfg
+%attr(755,root,root) %{_bindir}/httpcfg
+%attr(755,root,root) %{_bindir}/installvst
 %attr(755,root,root) %{_bindir}/makecert*
 %attr(755,root,root) %{_bindir}/mkbundle*
 %attr(755,root,root) %{_bindir}/mono-service
@@ -304,7 +305,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/*.*/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/cert*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/chktrust*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/culevel*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/gacutil*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/installvst*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mkbundle*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mozroots*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/secutil*
@@ -313,6 +316,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sn*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/caspol*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service*
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/httpcfg*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mkbundle*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service*
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/sgen*
