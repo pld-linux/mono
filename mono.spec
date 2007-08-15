@@ -24,7 +24,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.2.4
-Release:	1
+Release:	2
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
@@ -35,6 +35,10 @@ Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
 Patch3:		%{name}-script_fixes.patch
 Patch4:		%{name}-awk.patch
+Patch5:		%{name}-console-no-utf8-bom.patch
+Patch6:		%{name}-fix_delegate_memory_leak_r79001.patch
+Patch7:		%{name}-g_thread_init.patch
+Patch8:		%{name}-ppc_fix_memory_corruption_r81413.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -202,6 +206,10 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
