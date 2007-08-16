@@ -23,22 +23,21 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.2.4
-Release:	2
+Version:	1.2.5
+Release:	0.1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
-Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	1d106acef8e3af3593c779f281541a0b
+#Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
+Source0:	http://mono.ximian.com/monobuild/preview/sources/mono/%{name}-%{version}.tar.bz2
+# Source0-md5:	78df1118ed764a256e8322143b6f7596
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
-Patch3:		%{name}-script_fixes.patch
+#Patch3:		%{name}-script_fixes.patch
 Patch4:		%{name}-awk.patch
 Patch5:		%{name}-console-no-utf8-bom.patch
-Patch6:		%{name}-fix_delegate_memory_leak_r79001.patch
-Patch7:		%{name}-g_thread_init.patch
-Patch8:		%{name}-ppc_fix_memory_corruption_r81413.patch
+Patch6:		%{name}-g_thread_init.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -204,12 +203,10 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
-%patch8 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
@@ -394,9 +391,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/dtd2xsd
 %attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/macpack
-%attr(755,root,root) %{_bindir}/monodiet
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
+%attr(755,root,root) %{_bindir}/monolinker
 %attr(755,root,root) %{_bindir}/monop*
 %attr(755,root,root) %{_bindir}/mono-shlib-cop*
 %attr(755,root,root) %{_bindir}/nunit-console
@@ -404,6 +401,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/permview
 %attr(755,root,root) %{_bindir}/prj2make
+%attr(755,root,root) %{_bindir}/smcs
 %attr(755,root,root) %{_bindir}/soapsuds*
 %attr(755,root,root) %{_bindir}/sqlsharp*
 %attr(755,root,root) %{_bindir}/wsdl*
@@ -428,6 +426,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/macpack*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/makecert*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-api-*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/monolinker*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monop*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-shlib-cop*
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-xmltool*
@@ -464,12 +463,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/macpack.1*
 %{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
+%{_mandir}/man1/monolinker.1*
 %{_mandir}/man1/monop.1*
 %{_mandir}/man1/mono-shlib-cop.1*
-%{_mandir}/man1/mono-xmltool.1*
 %{_mandir}/man1/monostyle.1*
+%{_mandir}/man1/mono-xmltool.1*
 %{_mandir}/man1/oldmono.1*
 %{_mandir}/man1/prj2make.1*
+%{_mandir}/man1/resgen.1*
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/sqlsharp.1*
 %{_mandir}/man1/wsdl.1*
