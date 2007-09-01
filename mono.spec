@@ -24,7 +24,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	1.2.5
-Release:	0.1
+Release:	1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
