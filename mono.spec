@@ -28,9 +28,8 @@ Release:	0.1
 License:	GPL/LGPL/MIT
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
-#Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
-Source0:	http://mono.ximian.com/monobuild/preview/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	78df1118ed764a256e8322143b6f7596
+Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
+# Source0-md5:	03a6d15fbf447a7807cc402dc8f64036
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
