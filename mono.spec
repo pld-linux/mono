@@ -388,6 +388,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/dtd2xsd
 %attr(755,root,root) %{_bindir}/genxs*
 %attr(755,root,root) %{_bindir}/macpack
+%attr(755,root,root) %{_bindir}/mono-api-diff
+%attr(755,root,root) %{_bindir}/mono-api-info
+%attr(755,root,root) %{_bindir}/mono-api-info2
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
