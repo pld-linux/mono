@@ -33,10 +33,9 @@ Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
-#Patch3:		%{name}-script_fixes.patch
-Patch4:		%{name}-awk.patch
-Patch5:		%{name}-console-no-utf8-bom.patch
-Patch6:		%{name}-g_thread_init.patch
+Patch3:		%{name}-awk.patch
+Patch4:		%{name}-console-no-utf8-bom.patch
+Patch5:		%{name}-g_thread_init.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -202,10 +201,9 @@ oraz dotGNU.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-#%patch3 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 cp -f /usr/share/automake/config.sub .
