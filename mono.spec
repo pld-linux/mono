@@ -40,8 +40,8 @@ BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
-Suggests:	binfmt-detector
 Requires:	libgdiplus >= 1.2.3
+Suggests:	binfmt-detector
 ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9 sparc64
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
@@ -244,7 +244,7 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
 rm -rf pld-doc
-mkdir -p pld-doc/{webpage,notes}
+install -d pld-doc/{webpage,notes}
 cp -a web/* pld-doc/webpage
 cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
