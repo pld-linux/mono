@@ -1,0 +1,38 @@
+--- mono-1.2.6/data/mint.pc.in.orig	2007-11-08 23:07:46.000000000 +0100
++++ mono-1.2.6/data/mint.pc.in	2007-12-15 12:57:48.152531214 +0100
+@@ -1,5 +1,5 @@
+-prefix=${pcfiledir}/../..
+-exec_prefix=${pcfiledir}/../..
++prefix=@prefix@
++exec_prefix=@prefix@
+ libdir=${prefix}/lib
+ includedir=${prefix}/include/mono-@API_VER@
+ 
+--- mono-1.2.6/data/mono-cairo.pc.in.orig	2007-11-08 23:07:46.000000000 +0100
++++ mono-1.2.6/data/mono-cairo.pc.in	2007-12-15 12:58:01.213275504 +0100
+@@ -1,5 +1,5 @@
+-prefix=${pcfiledir}/../..
+-exec_prefix=${pcfiledir}/../..
++prefix=@prefix@
++exec_prefix=@prefix@
+ libdir=${prefix}/@reloc_libdir@
+ includedir=${prefix}/include
+ 
+--- mono-1.2.6/data/mono.pc.in.orig	2007-11-08 23:07:46.000000000 +0100
++++ mono-1.2.6/data/mono.pc.in	2007-12-15 12:58:16.526148135 +0100
+@@ -1,5 +1,5 @@
+-prefix=${pcfiledir}/../..
+-exec_prefix=${pcfiledir}/../..
++prefix=@prefix@
++exec_prefix=@prefix@
+ libdir=${prefix}/@reloc_libdir@
+ includedir=${prefix}/include/mono-@API_VER@
+ sysconfdir=@sysconfdir@
+--- mono-1.2.6/scripts/mono-nunit.pc.in.orig	2007-11-08 23:07:03.000000000 +0100
++++ mono-1.2.6/scripts/mono-nunit.pc.in	2007-12-15 14:35:52.543863565 +0100
+@@ -1,4 +1,4 @@
+-prefix=${pcfiledir}/../..
++prefix=@prefix@
+ exec_prefix=${prefix}
+ libdir=${exec_prefix}/lib
+ 
