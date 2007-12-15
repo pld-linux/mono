@@ -21,7 +21,7 @@ Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
-Source0:	http://www.go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
+Source0:	http://go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
 # Source0-md5:	391f85b4f962269e044ceac2b5235310
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
