@@ -16,13 +16,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.2.6
+Version:	1.9
 Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # Source0Download: http://go-mono.com/sources-stable/
 Source0:	http://go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	391f85b4f962269e044ceac2b5235310
+# Source0-md5:	371158ca0bbd9d6fb391d9c0f9834529
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -305,6 +305,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mkbundle2
 %attr(755,root,root) %{_bindir}/mono-service
 %attr(755,root,root) %{_bindir}/mono-service2
+%attr(755,root,root) %{_bindir}/mono-test-install
 %attr(755,root,root) %{_bindir}/mono-xmltool
 %attr(755,root,root) %{_bindir}/mozroots
 %attr(755,root,root) %{_bindir}/secutil
@@ -335,6 +336,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/chktrust.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/culevel.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/gacutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/installutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/installvst.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service.exe
@@ -347,10 +349,16 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/lib/mono/2.0
 %{_prefix}/lib/mono/2.0/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/httpcfg.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/installutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mconfig.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/sgen.exe
+%dir %{_prefix}/lib/mono/2.1
+%{_prefix}/lib/mono/2.1/*.dll
+%attr(755,root,root) %{_prefix}/lib/mono/2.1/smcs.exe
+%dir %{_prefix}/lib/mono/3.5
+%{_prefix}/lib/mono/3.5/*.dll
 %dir %{_prefix}/lib/mono/compat-1.0
 %{_prefix}/lib/mono/compat-1.0/*.dll
 %dir %{_prefix}/lib/mono/compat-2.0
@@ -376,16 +384,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/sn.1*
 %{_mandir}/man5/mono-config.5*
 %dir %{_sysconfdir}/mono
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/browscap.ini
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/config
 %dir %{_sysconfdir}/mono/mconfig
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/mconfig/config.xml
 %dir %{_sysconfdir}/mono/1.0
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/1.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/1.0/DefaultWsdlHelpGenerator.aspx
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/1.0/machine.config
 %dir %{_sysconfdir}/mono/2.0
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/DefaultWsdlHelpGenerator.aspx
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/machine.config
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/web.config
 
 %exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
@@ -536,6 +545,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/2.0/*.mdb
+%{_prefix}/lib/mono/2.1/*.mdb
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %files csharp
