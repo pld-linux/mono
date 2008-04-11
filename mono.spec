@@ -45,7 +45,7 @@ BuildRequires:	rpmbuild(monoautodeps)
 Suggests:	binfmt-detector
 # for System.Drawing
 Suggests:	libgdiplus >= 1.2.6
-ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc
+ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
