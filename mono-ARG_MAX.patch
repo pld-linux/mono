@@ -1,0 +1,16 @@
+--- mono-1.9.1/mono/io-layer/wapi_glob.c.orig	2007-11-08 23:07:22.000000000 +0100
++++ mono-1.9.1/mono/io-layer/wapi_glob.c	2008-06-18 21:55:40.512789881 +0200
+@@ -54,6 +54,13 @@
+ 
+ #include "wapi_glob.h"
+ 
++#if defined(_SC_ARG_MAX)
++# if defined(ARG_MAX)
++#    undef ARG_MAX
++# endif
++# define ARG_MAX sysconf (_SC_ARG_MAX)
++#endif
++
+ #define	EOS		'\0'
+ #define	NOT		'!'
+ #define	QUESTION	'?'
