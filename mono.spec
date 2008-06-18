@@ -16,19 +16,20 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.9
+Version:	1.9.1
 Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
-# Source0Download: http://go-mono.com/sources-stable/
-Source0:	http://go-mono.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	371158ca0bbd9d6fb391d9c0f9834529
+# latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
+Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
+# Source0-md5:	6610c3b999d791553a9dc21059ca9d35
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
 Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
+Patch6:		%{name}-ARG_MAX.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -207,6 +208,7 @@ oraz dotGNU.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 # for jay
 cat >>mcs/build/config-default.make <<EOF
