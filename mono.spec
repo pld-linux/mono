@@ -16,13 +16,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	1.9.1
+Version:	2.0
 Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	6610c3b999d791553a9dc21059ca9d35
+# Source0-md5:	d8fb1b2bab0066b82289b8a5856b9705
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -45,7 +45,7 @@ BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 Suggests:	binfmt-detector
 # for System.Drawing
-Suggests:	libgdiplus >= 1.2.6
+Suggests:	libgdiplus >= 2.0
 ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
@@ -299,11 +299,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/chktrust
 %attr(755,root,root) %{_bindir}/dtd2rng
 %attr(755,root,root) %{_bindir}/gacutil
+%attr(755,root,root) %{_bindir}/gacutil2
 %attr(755,root,root) %{_bindir}/httpcfg
 %attr(755,root,root) %{_bindir}/installvst
 %attr(755,root,root) %{_bindir}/makecert
 %attr(755,root,root) %{_bindir}/mconfig
 %attr(755,root,root) %{_bindir}/mkbundle
+%attr(755,root,root) %{_bindir}/mkbundle1
 %attr(755,root,root) %{_bindir}/mkbundle2
 %attr(755,root,root) %{_bindir}/mono-service
 %attr(755,root,root) %{_bindir}/mono-service2
@@ -325,6 +327,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-aot.so.0
 %attr(755,root,root) %{_libdir}/libmono-profiler-cov.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-cov.so.0
+%attr(755,root,root) %{_libdir}/libmono-profiler-logging.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-logging.so.0
 %endif
 %attr(755,root,root) %{_libdir}/libMonoPosixHelper.so
 %attr(755,root,root) %{_libdir}/libMonoSupportW.so
@@ -350,12 +354,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/transform.exe
 %dir %{_prefix}/lib/mono/2.0
 %{_prefix}/lib/mono/2.0/*.dll
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/gacutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/httpcfg.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/installutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mconfig.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/sgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/xsd.exe
 %dir %{_prefix}/lib/mono/2.1
 %{_prefix}/lib/mono/2.1/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/2.1/smcs.exe
@@ -398,6 +404,8 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/web.config
+%dir %{_sysconfdir}/mono/2.0/Browsers
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/Browsers/Compat.browser
 
 %exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
 %exclude %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
@@ -423,24 +431,30 @@ rm -rf $RPM_BUILD_ROOT
 %files compat-links
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/resgen
+%attr(755,root,root) %{_bindir}/resgen1
 %attr(755,root,root) %{_bindir}/resgen2
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/al
+%attr(755,root,root) %{_bindir}/al1
 %attr(755,root,root) %{_bindir}/al2
 %attr(755,root,root) %{_bindir}/cilc
 %attr(755,root,root) %{_bindir}/disco
 %attr(755,root,root) %{_bindir}/dtd2xsd
 %attr(755,root,root) %{_bindir}/genxs
+%attr(755,root,root) %{_bindir}/genxs1
+%attr(755,root,root) %{_bindir}/genxs2
 %attr(755,root,root) %{_bindir}/macpack
 %attr(755,root,root) %{_bindir}/mono-api-diff
 %attr(755,root,root) %{_bindir}/mono-api-info
+%attr(755,root,root) %{_bindir}/mono-api-info1
 %attr(755,root,root) %{_bindir}/mono-api-info2
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
 %attr(755,root,root) %{_bindir}/monop
+%attr(755,root,root) %{_bindir}/monop1
 %attr(755,root,root) %{_bindir}/monop2
 %attr(755,root,root) %{_bindir}/mono-shlib-cop
 %attr(755,root,root) %{_bindir}/nunit-console
@@ -452,9 +466,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/soapsuds
 %attr(755,root,root) %{_bindir}/sqlsharp
 %attr(755,root,root) %{_bindir}/wsdl
+%attr(755,root,root) %{_bindir}/wsdl1
 %attr(755,root,root) %{_bindir}/wsdl2
 %attr(755,root,root) %{_bindir}/xbuild
 %attr(755,root,root) %{_bindir}/xsd
+%attr(755,root,root) %{_bindir}/xsd2
 %if %{with mint}
 %attr(755,root,root) %{_libdir}/libmint.so
 %{_libdir}/libmint.la
@@ -462,9 +478,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmono.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-cov.so
+%attr(755,root,root) %{_libdir}/libmono-profiler-logging.so
 %{_libdir}/libmono.la
 %{_libdir}/libmono-profiler-aot.la
 %{_libdir}/libmono-profiler-cov.la
+%{_libdir}/libmono-profiler-logging.la
 %endif
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/CorCompare.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/al.exe
@@ -513,6 +531,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/%{name}-1.0
 %{_pkgconfigdir}/cecil.pc
 %{_pkgconfigdir}/dotnet.pc
+%{_pkgconfigdir}/dotnet35.pc
 %{_pkgconfigdir}/mono-cairo.pc
 %{_pkgconfigdir}/mono-nunit.pc
 %if %{with mint}
@@ -520,6 +539,7 @@ rm -rf $RPM_BUILD_ROOT
 %else
 %{_pkgconfigdir}/mono.pc
 %endif
+%{_pkgconfigdir}/smcs.pc
 %{_includedir}/%{name}-1.0
 %{_mandir}/man1/al.1*
 %{_mandir}/man1/cilc.1*
@@ -540,6 +560,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/resgen.1*
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/sqlsharp.1*
+%{_mandir}/man1/vbnc.1*
 %{_mandir}/man1/wsdl.1*
 %{_mandir}/man1/xsd.1*
 
@@ -553,6 +574,7 @@ rm -rf $RPM_BUILD_ROOT
 %files csharp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mcs
+%attr(755,root,root) %{_bindir}/mcs1
 %attr(755,root,root) %{_bindir}/gmcs
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mcs.exe
 %{_prefix}/lib/mono/1.0/mcs.exe.config
@@ -563,6 +585,7 @@ rm -rf $RPM_BUILD_ROOT
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm
+%attr(755,root,root) %{_bindir}/ilasm1
 %attr(755,root,root) %{_bindir}/ilasm2
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ilasm.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm.exe
@@ -577,5 +600,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmono.a
 %{_libdir}/libmono-profiler-aot.a
 %{_libdir}/libmono-profiler-cov.a
+%{_libdir}/libmono-profiler-logging.a
 %endif
 %endif
