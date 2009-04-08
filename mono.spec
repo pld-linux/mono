@@ -351,7 +351,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/setreg.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/signcode.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sn.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/transform.exe
 %dir %{_prefix}/lib/mono/2.0
 %{_prefix}/lib/mono/2.0/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gacutil.exe
@@ -444,12 +443,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/dtd2xsd
 %attr(755,root,root) %{_bindir}/genxs
 %attr(755,root,root) %{_bindir}/genxs1
-%attr(755,root,root) %{_bindir}/genxs2
 %attr(755,root,root) %{_bindir}/macpack
-%attr(755,root,root) %{_bindir}/mono-api-diff
 %attr(755,root,root) %{_bindir}/mono-api-info
-%attr(755,root,root) %{_bindir}/mono-api-info1
-%attr(755,root,root) %{_bindir}/mono-api-info2
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
@@ -484,7 +479,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmono-profiler-cov.la
 %{_libdir}/libmono-profiler-logging.la
 %endif
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/CorCompare.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/browsercaps-updater.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/cilc.exe
@@ -495,10 +489,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ictool.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/macpack.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/makecert.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-api-diff.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-api-info.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-shlib-cop.exe
-%{_prefix}/lib/mono/1.0/mono-shlib-cop.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-xmltool.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monolinker.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monop.exe
@@ -508,7 +498,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/prj2make.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/resgen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/soapsuds.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/sqlsharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/wsdl.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/xsd.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/al.exe
@@ -547,7 +536,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/dtd2xsd.1*
 %{_mandir}/man1/genxs.1*
 %{_mandir}/man1/macpack.1*
-%{_mandir}/man1/monoburg.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monolinker.1*
 %{_mandir}/man1/monop.1*
@@ -560,7 +548,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/resgen.1*
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/sqlsharp.1*
-%{_mandir}/man1/vbnc.1*
 %{_mandir}/man1/wsdl.1*
 %{_mandir}/man1/xsd.1*
 
