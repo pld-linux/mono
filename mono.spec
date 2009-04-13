@@ -410,6 +410,7 @@ rm -rf $RPM_BUILD_ROOT
 %exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
 %exclude %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
+%exclude %{_prefix}/lib/mono/gac/monodoc
 
 %files jay
 %defattr(644,root,root,755)
