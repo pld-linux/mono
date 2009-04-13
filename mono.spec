@@ -17,7 +17,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.4
-Release:	0.1
+Release:	0.9
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -267,7 +267,7 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
 rm -rf pld-doc
-mkdir -p pld-doc/{webpage,notes}
+install -d pld-doc/{webpage,notes}
 cp -a web/* pld-doc/webpage
 cp -a docs/* pld-doc/notes
 rm -f pld-doc/*/Makefile*
@@ -298,6 +298,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/certmgr
 %attr(755,root,root) %{_bindir}/chktrust
 %attr(755,root,root) %{_bindir}/dtd2rng
+%attr(755,root,root) %{_bindir}/gacutil1
 %attr(755,root,root) %{_bindir}/gacutil
 %attr(755,root,root) %{_bindir}/gacutil2
 %attr(755,root,root) %{_bindir}/httpcfg
@@ -445,6 +446,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/genxs1
 %attr(755,root,root) %{_bindir}/macpack
 %attr(755,root,root) %{_bindir}/mono-api-info
+%attr(755,root,root) %{_bindir}/mono-cil-strip
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
@@ -489,6 +491,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ictool.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/macpack.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/makecert.exe
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-cil-strip.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-xmltool.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monolinker.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monop.exe
@@ -502,10 +505,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/xsd.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-api-info.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-shlib-cop.exe
+%{_prefix}/lib/mono/2.0/mono-shlib-cop.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/monop.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console.exe
 %{_prefix}/lib/mono/2.0/nunit-console.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/resgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlsharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild.exe
 %{_prefix}/lib/mono/2.0/xbuild.rsp
@@ -560,6 +566,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files csharp
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/csharp
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_bindir}/mcs1
 %attr(755,root,root) %{_bindir}/gmcs
@@ -567,7 +574,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/1.0/mcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
 %{_prefix}/lib/mono/2.0/gmcs.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
 %{_mandir}/man1/mcs.1*
+%{_mandir}/man1/csharp.1*
 
 %files ilasm
 %defattr(644,root,root,755)
