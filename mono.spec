@@ -166,6 +166,7 @@ Summary(pl.UTF-8):	Dokumentacja klas Mono wraz z narzędziami do jej generowania
 License:	LGPL
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
+Provides:	monodoc
 Obsoletes:	monodoc
 
 %description monodoc
