@@ -1,0 +1,28 @@
+--- mono-2.4/mono/metadata/Makefile.am~	2009-02-14 00:33:05.000000000 +0100
++++ mono-2.4/mono/metadata/Makefile.am	2009-05-23 14:32:22.283042882 +0200
+@@ -14,7 +14,7 @@
+ # optimisation is required to actually inline them
+ AM_CFLAGS = -O
+ else
+-assembliesdir = $(exec_prefix)/lib
++assembliesdir = $(libdir)
+ confdir = $(sysconfdir)
+ endif
+ 
+@@ -26,7 +26,7 @@
+ #
+ noinst_LTLIBRARIES = libmonoruntime.la libmonoruntime-static.la
+ 
+-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/mono $(LIBGC_CFLAGS) $(GLIB_CFLAGS) -DMONO_BINDIR=\"$(bindir)/\" -DMONO_ASSEMBLIES=\"$(assembliesdir)\" -DMONO_CFG_DIR=\"$(confdir)\"
++INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/mono $(LIBGC_CFLAGS) $(GLIB_CFLAGS) $(GMODULE_CFLAGS) -DMONO_BINDIR=\"$(bindir)/\" -DMONO_ASSEMBLIES=\"$(assembliesdir)\" -DMONO_RELOC_LIBDIR=\"$(reloc_libdir)\" -DMONO_CFG_DIR=\"$(confdir)\"
+ 
+ #
+ # Make sure any prefix changes are updated in the binaries too.
+@@ -171,7 +171,6 @@
+ 	object.h	\
+ 	exception.h	\
+ 	profiler.h	\
+-	appdomain.h	\
+ 	mono-config.h	\
+ 	debug-helpers.h	\
+ 	mempool.h
