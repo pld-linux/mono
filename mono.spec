@@ -17,7 +17,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.4
-Release:	0.9
+Release:	0.11
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -30,6 +30,7 @@ Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
+Patch7:		%{name}-metadata-makefile.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -159,6 +160,23 @@ jscript compiler for mono.
 %description jscript -l pl.UTF-8
 Kompilator jscript dla mono.
 
+%package monodoc
+Summary:	Documentation for Mono class libraries and tools to produce and edit the documentation
+Summary(pl.UTF-8):	Dokumentacja klas Mono wraz z narzędziami do jej generowania i przeglądania
+License:	LGPL
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Obsoletes:	monodoc
+
+%description monodoc
+This package contains the documentation for the Mono class libraries,
+tools to produce and edit the documentation, and a documentation
+browser.
+
+%description monodoc -l pl.UTF-8
+Ten pakiet zawiera dokumentację klas Mono wraz z narzędziami do jej
+generowania i przeglądania.
+
 %package static
 Summary:	Static mono library
 Summary(pl.UTF-8):	Statyczna biblioteka mono
@@ -209,6 +227,7 @@ oraz dotGNU.
 %patch4 -p1
 #%patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # for jay
 cat >>mcs/build/config-default.make <<EOF
@@ -546,6 +565,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monolinker.1*
 %{_mandir}/man1/monop.1*
+%{_mandir}/man1/mono-cil-strip.1*
 %{_mandir}/man1/mono-shlib-cop.1*
 %{_mandir}/man1/monostyle.1*
 %{_mandir}/man1/mono-xmltool.1*
@@ -587,6 +607,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ilasm.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm.exe
 %{_mandir}/man1/ilasm.1*
+
+%files monodoc
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/mdassembler
+%attr(755,root,root) %{_bindir}/mdoc*
+%attr(755,root,root) %{_bindir}/mod
+%attr(755,root,root) %{_bindir}/monodocer
+%attr(755,root,root) %{_bindir}/monodocs2html
+%attr(755,root,root) %{_bindir}/monodocs2slashdoc
+%attr(755,root,root) %{_bindir}/mdvalidater
+%attr(755,root,root) %{_libdir}/mono/1.0/mod.exe
+%attr(755,root,root) %{_libdir}/mono/2.0/mdoc.exe
+%dir %{_libdir}/monodoc
+%{_libdir}/monodoc/*
+%{_prefix}/lib/mono/gac/monodoc
+%{_prefix}/lib/mono/monodoc
+%{_pkgconfigdir}/monodoc.pc
+%{_mandir}/man1/mdassembler.1*
+%{_mandir}/man1/mdoc*.1*
+%{_mandir}/man1/monodocer.1*
+%{_mandir}/man1/monodocs2html.1*
+%{_mandir}/man1/mdvalidater.1*
+%{_mandir}/man5/mdoc.5*
 
 %if %{with static_libs}
 %files static
