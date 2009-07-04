@@ -16,13 +16,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.4
-Release:	0.11
+Version:	2.4.2
+Release:	0.1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	da2bf1c0aba2958d26c5e8a9a49fd9d1
+# Source0-md5:	f086227f3cd4cecb5c1fe0f566760f81
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -618,12 +618,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monodocs2html
 %attr(755,root,root) %{_bindir}/monodocs2slashdoc
 %attr(755,root,root) %{_bindir}/mdvalidater
-%attr(755,root,root) %{_libdir}/mono/1.0/mod.exe
-%attr(755,root,root) %{_libdir}/mono/2.0/mdoc.exe
-%dir %{_libdir}/monodoc
-%{_libdir}/monodoc/*
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/mod.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/mdoc.exe
 %{_prefix}/lib/mono/gac/monodoc
-%{_prefix}/lib/mono/monodoc
+%dir %{_prefix}/lib/mono/monodoc
+%{_prefix}/lib/monodoc/*
 %{_pkgconfigdir}/monodoc.pc
 %{_mandir}/man1/mdassembler.1*
 %{_mandir}/man1/mdoc*.1*
