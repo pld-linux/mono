@@ -1,5 +1,14 @@
 #
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
+# TODO:
+#   /usr/lib/mono-source-libs/Options.cs
+#   /usr/lib/mono-source-libs/getline.cs
+#   /usr/lib64/pkgconfig/mono-lineeditor.pc
+#   /usr/lib64/pkgconfig/mono-options.pc
+#   /usr/lib64/pkgconfig/mono.web.pc
+#   /usr/lib64/pkgconfig/system.web.extensions.design_1.0.pc
+#   /usr/lib64/pkgconfig/system.web.extensions_1.0.pc
+#   /usr/lib64/pkgconfig/wcf.pc
 #
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
@@ -16,13 +25,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.4.2.2
-Release:	0.2
+Version:	2.4.2.3
+Release:	0.1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	54aac9b914c5a4dc81c2bfd058df1c93
+# Source0-md5:	696f25afc8453cd0d1c78de6e905dcf2
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -297,7 +306,10 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/libgc-mono
 mv -f $RPM_BUILD_ROOT%{_bindir}/mono-find-* $RPM_BUILD_ROOT%{_rpmlibdir}
 
 # loadable modules
-rm $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.{la,a}
+rm $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.la
+%if %{with static_libs}
+rm $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.a
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
