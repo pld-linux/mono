@@ -9,6 +9,9 @@
 #   /usr/lib64/pkgconfig/system.web.extensions.design_1.0.pc
 #   /usr/lib64/pkgconfig/system.web.extensions_1.0.pc
 #   /usr/lib64/pkgconfig/wcf.pc
+# - x86_64 searches .dll from %{_libdir}, not %{_prefix}/lib:
+#   The assembly mscorlib.dll was not found or could not be loaded.
+#   It should have been installed in the `/usr/lib64/mono/2.0/mscorlib.dll' directory.
 #
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
@@ -26,7 +29,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.4.2.3
-Release:	0.1
+Release:	0.2
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
