@@ -29,7 +29,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.4.2.3
-Release:	0.2
+Release:	0.3
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -638,6 +638,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/monodoc/monodoc.dll
 %{_prefix}/lib/mono/gac/monodoc
 %dir %{_prefix}/lib/mono/monodoc
+%dir %{_prefix}/lib/monodoc
 %{_prefix}/lib/monodoc/*
 %{_pkgconfigdir}/monodoc.pc
 %{_mandir}/man1/mdassembler.1*
