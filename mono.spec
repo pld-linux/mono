@@ -29,7 +29,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.4.2.3
-Release:	0.3
+Release:	0.4
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -178,7 +178,7 @@ Summary(pl.UTF-8):	Dokumentacja klas Mono wraz z narzędziami do jej generowania
 License:	LGPL
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Provides:	monodoc
+Provides:	monodoc = %{version}-%{release}
 Obsoletes:	monodoc
 
 %description monodoc
