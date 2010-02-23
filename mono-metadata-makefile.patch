@@ -1,15 +1,15 @@
 --- mono-2.4/mono/metadata/Makefile.am~	2009-02-14 00:33:05.000000000 +0100
 +++ mono-2.4/mono/metadata/Makefile.am	2009-05-23 14:32:22.283042882 +0200
-@@ -14,7 +14,7 @@
- # optimisation is required to actually inline them
+@@ -20,7 +20,7 @@
  AM_CFLAGS = -O
  else
+ 
 -assembliesdir = $(exec_prefix)/lib
 +assembliesdir = $(libdir)
  confdir = $(sysconfdir)
- endif
- 
-@@ -26,7 +26,7 @@
+ unix_sources = \
+ 	console-unix.c
+@@ -36,7 +36,7 @@
  #
  noinst_LTLIBRARIES = libmonoruntime.la libmonoruntime-static.la
  
@@ -19,10 +19,10 @@
  #
  # Make sure any prefix changes are updated in the binaries too.
 @@ -171,7 +171,6 @@
- 	object.h	\
- 	exception.h	\
- 	profiler.h	\
--	appdomain.h	\
- 	mono-config.h	\
- 	debug-helpers.h	\
- 	mempool.h
+ libmonoruntimeinclude_HEADERS = \
+ 	assembly.h		\
+ 	attrdefs.h		\
+-	appdomain.h		\
+ 	blob.h			\
+ 	class.h			\
+ 	debug-helpers.h		\
