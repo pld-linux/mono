@@ -13,6 +13,7 @@
 #   The assembly mscorlib.dll was not found or could not be loaded.
 #   It should have been installed in the `/usr/lib64/mono/2.0/mscorlib.dll' directory.
 #
+# - C# 4.0 (--with-profile4=yes)
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
 %bcond_without	static_libs	# don't build static libraries
@@ -28,13 +29,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.4.2.3
-Release:	0.4
+Version:	2.6.1
+Release:	0.1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	696f25afc8453cd0d1c78de6e905dcf2
+# Source0-md5:	4cd2157c9eabbe9f49232d5ee3a2a57e
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -398,9 +399,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/sgen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xsd.exe
-%dir %{_prefix}/lib/mono/2.1
-%{_prefix}/lib/mono/2.1/*.dll
-%attr(755,root,root) %{_prefix}/lib/mono/2.1/smcs.exe
 %dir %{_prefix}/lib/mono/3.5
 %{_prefix}/lib/mono/3.5/*.dll
 %dir %{_prefix}/lib/mono/compat-1.0
@@ -491,12 +489,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monop1
 %attr(755,root,root) %{_bindir}/monop2
 %attr(755,root,root) %{_bindir}/mono-shlib-cop
+%attr(755,root,root) %{_bindir}/lc
 %attr(755,root,root) %{_bindir}/nunit-console
 %attr(755,root,root) %{_bindir}/nunit-console2
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/permview
 %attr(755,root,root) %{_bindir}/prj2make
-%attr(755,root,root) %{_bindir}/smcs
 %attr(755,root,root) %{_bindir}/soapsuds
 %attr(755,root,root) %{_bindir}/sqlsharp
 %attr(755,root,root) %{_bindir}/wsdl
@@ -529,8 +527,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/macpack.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/makecert.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-cil-strip.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-xmltool.exe
-%attr(755,root,root) %{_prefix}/lib/mono/1.0/monolinker.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/monop.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/nunit-console.exe
 %{_prefix}/lib/mono/1.0/nunit-console.exe.config
@@ -541,8 +537,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/wsdl.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/xsd.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/al.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/lc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/monolinker.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-api-info.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-shlib-cop.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-xmltool.exe
 %{_prefix}/lib/mono/2.0/mono-shlib-cop.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/monop.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console.exe
@@ -571,13 +570,13 @@ rm -rf $RPM_BUILD_ROOT
 %else
 %{_pkgconfigdir}/mono.pc
 %endif
-%{_pkgconfigdir}/smcs.pc
 %{_includedir}/%{name}-1.0
 %{_mandir}/man1/al.1*
 %{_mandir}/man1/cilc.1*
 %{_mandir}/man1/disco.1*
 %{_mandir}/man1/dtd2xsd.1*
 %{_mandir}/man1/genxs.1*
+%{_mandir}/man1/lc.1*
 %{_mandir}/man1/macpack.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monolinker.1*
@@ -599,7 +598,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/2.0/*.mdb
-%{_prefix}/lib/mono/2.1/*.mdb
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %files csharp
