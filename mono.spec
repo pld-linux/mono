@@ -30,7 +30,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.6.1
-Release:	0.1
+Release:	0.5
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -284,14 +284,14 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 # in fact the flag should be "-Wl,-z,execheap" for libmint, but:
 # -z execheap doesn't seem to do anything currently
 # -z execstack for library makes only stack executable, but not heap
-%{__make} -j1 \
+%{__make} \
 	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 
-%{__make} -j1 install \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
@@ -350,11 +350,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-test-install
 %attr(755,root,root) %{_bindir}/mono-xmltool
 %attr(755,root,root) %{_bindir}/mozroots
+%attr(755,root,root) %{_bindir}/pdb2mdb
 %attr(755,root,root) %{_bindir}/secutil
 %attr(755,root,root) %{_bindir}/setreg
 %attr(755,root,root) %{_bindir}/sgen
 %attr(755,root,root) %{_bindir}/signcode
 %attr(755,root,root) %{_bindir}/sn
+%attr(755,root,root) %{_bindir}/sqlmetal
+%attr(755,root,root) %{_bindir}/svcutil
 %if %{with mint}
 %attr(755,root,root) %{_libdir}/libmint.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmint.so.0
@@ -385,10 +388,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mozroots.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/pdb2mdb.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/svcutil.exe
+
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/secutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/setreg.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/signcode.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sn.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe.config
 %dir %{_prefix}/lib/mono/2.0
 %{_prefix}/lib/mono/2.0/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gacutil.exe
@@ -419,6 +427,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mono.1*
 %{_mandir}/man1/mono-service.1*
 %{_mandir}/man1/mozroots.1*
+%{_mandir}/man1/pdb2mdb.1*
 %{_mandir}/man1/secutil.1*
 %{_mandir}/man1/setreg.1*
 %{_mandir}/man1/sgen.1*
@@ -489,6 +498,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monop1
 %attr(755,root,root) %{_bindir}/monop2
 %attr(755,root,root) %{_bindir}/mono-shlib-cop
+%attr(755,root,root) %{_bindir}/mono-gdb.py
 %attr(755,root,root) %{_bindir}/lc
 %attr(755,root,root) %{_bindir}/nunit-console
 %attr(755,root,root) %{_bindir}/nunit-console2
@@ -570,6 +580,13 @@ rm -rf $RPM_BUILD_ROOT
 %else
 %{_pkgconfigdir}/mono.pc
 %endif
+%{_pkgconfigdir}/mono-lineeditor.pc
+%{_pkgconfigdir}/mono-options.pc
+%{_pkgconfigdir}/mono.web.pc
+%{_pkgconfigdir}/system.web.extensions.design_1.0.pc
+%{_pkgconfigdir}/system.web.extensions_1.0.pc
+%{_pkgconfigdir}/system.web.mvc.pc
+%{_pkgconfigdir}/wcf.pc
 %{_includedir}/%{name}-1.0
 %{_mandir}/man1/al.1*
 %{_mandir}/man1/cilc.1*
@@ -592,6 +609,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/soapsuds.1*
 %{_mandir}/man1/sqlsharp.1*
 %{_mandir}/man1/wsdl.1*
+%{_mandir}/man1/xbuild.1*
 %{_mandir}/man1/xsd.1*
 
 %files debug
