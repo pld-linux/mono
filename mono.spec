@@ -1,14 +1,6 @@
 #
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 # TODO:
-#   /usr/lib/mono-source-libs/Options.cs
-#   /usr/lib/mono-source-libs/getline.cs
-#   /usr/lib64/pkgconfig/mono-lineeditor.pc
-#   /usr/lib64/pkgconfig/mono-options.pc
-#   /usr/lib64/pkgconfig/mono.web.pc
-#   /usr/lib64/pkgconfig/system.web.extensions.design_1.0.pc
-#   /usr/lib64/pkgconfig/system.web.extensions_1.0.pc
-#   /usr/lib64/pkgconfig/wcf.pc
 # - x86_64 searches .dll from %{_libdir}, not %{_prefix}/lib:
 #   The assembly mscorlib.dll was not found or could not be loaded.
 #   It should have been installed in the `/usr/lib64/mono/2.0/mscorlib.dll' directory.
@@ -30,7 +22,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.6.1
-Release:	0.5
+Release:	0.6
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -43,7 +35,6 @@ Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
-Patch7:		%{name}-metadata-makefile.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -58,9 +49,10 @@ BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
+BuildRequires:	zlib-devel
 Suggests:	binfmt-detector
 # for System.Drawing
-Suggests:	libgdiplus >= 2.0
+Suggests:	libgdiplus >= 2.6
 ExclusiveArch:	%{ix86} %{x8664} alpha arm hppa ia64 mips ppc s390 s390x sparc sparcv9
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
@@ -240,9 +232,8 @@ oraz dotGNU.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p1
+%patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 # for jay
 cat >>mcs/build/config-default.make <<EOF
@@ -284,7 +275,7 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 # in fact the flag should be "-Wl,-z,execheap" for libmint, but:
 # -z execheap doesn't seem to do anything currently
 # -z execstack for library makes only stack executable, but not heap
-%{__make} \
+%{__make} -j1 \
 	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
 %install
@@ -415,6 +406,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/compat-2.0/*.dll
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
+%{_prefix}/lib/mono-source-libs
 %{_mandir}/man1/cert2spc.1*
 %{_mandir}/man1/certmgr.1*
 %{_mandir}/man1/chktrust.1*
@@ -567,6 +559,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/2.0/Microsoft.Common.targets
 %{_prefix}/lib/mono/2.0/Microsoft.VisualBasic.targets
 %{_prefix}/lib/mono/2.0/Microsoft.Common.tasks
+%{_prefix}/lib/mono/xbuild
 %attr(755,root,root) %{_rpmlibdir}/mono-find-provides
 %attr(755,root,root) %{_rpmlibdir}/mono-find-requires
 %{_datadir}/%{name}-1.0
