@@ -19,7 +19,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.6.1
-Release:	1
+Release:	2
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
