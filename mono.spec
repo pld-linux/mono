@@ -47,6 +47,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
 BuildRequires:	zlib-devel
+BuildConflicts:	mono < 2.4
 Suggests:	binfmt-detector
 # for System.Drawing
 Suggests:	libgdiplus >= 2.6
