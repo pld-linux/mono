@@ -1,11 +1,8 @@
 #
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 # TODO:
-# - x86_64 searches .dll from %{_libdir}, not %{_prefix}/lib:
-#   The assembly mscorlib.dll was not found or could not be loaded.
-#   It should have been installed in the `/usr/lib64/mono/2.0/mscorlib.dll' directory.
-#
 # - C# 4.0 (--with-profile4=yes)
+#
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
 %bcond_without	static_libs	# don't build static libraries
@@ -22,7 +19,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.6.1
-Release:	0.6
+Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
