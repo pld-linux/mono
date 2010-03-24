@@ -18,13 +18,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.6.1
-Release:	2
+Version:	2.6.3
+Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	4cd2157c9eabbe9f49232d5ee3a2a57e
+# Source0-md5:	b1dc21bac2c7c75814a9f32246eadadd
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -366,6 +366,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/lib/mono
 %dir %{_prefix}/lib/mono/1.0
 %{_prefix}/lib/mono/1.0/*.dll
+%attr(755,root,root) %{_prefix}/lib/mono/1.0/RabbitMQ.Client.Apigen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/caspol.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/cert2spc.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/certmgr.exe
@@ -388,6 +389,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe.config
 %dir %{_prefix}/lib/mono/2.0
 %{_prefix}/lib/mono/2.0/*.dll
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/RabbitMQ.Client.Apigen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gacutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/httpcfg.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/installutil.exe
