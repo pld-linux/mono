@@ -42,6 +42,7 @@ BuildRequires:	bison
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= %{glib_ver}
 BuildRequires:	libtool
+%{!?with_bootstrap:BuildRequires:	mono-csharp}
 %{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
