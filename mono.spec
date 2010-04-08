@@ -23,7 +23,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.6.3
-Release:	1
+Release:	1.1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -387,17 +387,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mozroots.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/pdb2mdb.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/svcutil.exe
-
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/secutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/setreg.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/signcode.exe
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/sn.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe.config
 %dir %{_prefix}/lib/mono/2.0
-%{_prefix}/lib/mono/2.0/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/RabbitMQ.Client.Apigen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gacutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/httpcfg.exe
@@ -405,11 +399,29 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mconfig.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/pdb2mdb.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/sgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/sqlmetal.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/svcutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xsd.exe
+%{_prefix}/lib/mono/2.0/*.dll
 %dir %{_prefix}/lib/mono/3.5
 %{_prefix}/lib/mono/3.5/*.dll
 %dir %{_prefix}/lib/mono/4.0
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/RabbitMQ.Client.Apigen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/gacutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/httpcfg.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/installutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mconfig.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mkbundle.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-service.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/pdb2mdb.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/sgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlmetal.exe
+%{_prefix}/lib/mono/4.0/sqlmetal.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/svcutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/xsd.exe
 %{_prefix}/lib/mono/4.0/*.dll
 %dir %{_prefix}/lib/mono/compat-1.0
 %{_prefix}/lib/mono/compat-1.0/*.dll
@@ -578,21 +590,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/2.0/Microsoft.Common.targets
 %{_prefix}/lib/mono/2.0/Microsoft.VisualBasic.targets
 %{_prefix}/lib/mono/2.0/Microsoft.Common.tasks
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/RabbitMQ.Client.Apigen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/al.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
-%{_prefix}/lib/mono/4.0/dmcs.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/gacutil.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/httpcfg.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/ilasm.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/installutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/lc.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mconfig.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mdoc.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-api-info.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-shlib-cop.exe
 %{_prefix}/lib/mono/4.0/mono-shlib-cop.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-xmltool.exe
@@ -600,16 +600,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/monop.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/nunit-console.exe
 %{_prefix}/lib/mono/4.0/nunit-console.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/pdb2mdb.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/resgen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/sgen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlmetal.exe
-%{_prefix}/lib/mono/4.0/sqlmetal.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlsharp.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/svcutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/wsdl.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/xbuild.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/xsd.exe
 %{_prefix}/lib/mono/xbuild
 %attr(755,root,root) %{_rpmlibdir}/mono-find-provides
 %attr(755,root,root) %{_rpmlibdir}/mono-find-requires
@@ -661,7 +655,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/2.0/*.mdb
 %{_prefix}/lib/mono/4.0/*.mdb
-
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %files csharp
@@ -676,6 +669,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
 %{_prefix}/lib/mono/2.0/gmcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
+%{_prefix}/lib/mono/4.0/dmcs.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
 %{_mandir}/man1/mcs.1*
 %{_mandir}/man1/csharp.1*
 
@@ -686,6 +682,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ilasm2
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/ilasm.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/ilasm.exe
 %{_mandir}/man1/ilasm.1*
 
 %files monodoc
@@ -699,6 +696,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mdvalidater
 %attr(755,root,root) %{_prefix}/lib/mono/1.0/mod.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mdoc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mdoc.exe
 %attr(755,root,root) %{_prefix}/lib/mono/monodoc/monodoc.dll
 %{_prefix}/lib/mono/gac/monodoc
 %dir %{_prefix}/lib/mono/monodoc
