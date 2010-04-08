@@ -1,7 +1,11 @@
 #
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 # TODO:
-# - C# 4.0 (--with-profile4=yes)
+#   - cleanup %%doc ./notes from dll/zip/sh/etc.
+#   - pack: 
+#   /usr/share/locale/de/LC_MESSAGES/mcs.mo
+#   /usr/share/locale/es/LC_MESSAGES/mcs.mo
+#   /usr/share/locale/ja/LC_MESSAGES/mcs.mo
 #
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
@@ -266,6 +270,10 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 	--with-interp=%{?with_mint:yes}%{!?with_mint:no} \
 	--with-jit=%{?with_mint:no}%{!?with_mint:yes} \
 	--with-preview=yes \
+	--with-profile2=yes \
+	--with-profile4=yes \
+	--with-moonlight=yes \
+	--with-monotouch=no \
 	--with-tls=%{?with_tls:__thread}%{!?with_tls:pthread}
 
 # mint uses heap to make trampolines, which need to be executable
@@ -401,10 +409,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xsd.exe
 %dir %{_prefix}/lib/mono/3.5
 %{_prefix}/lib/mono/3.5/*.dll
+%dir %{_prefix}/lib/mono/4.0
+%{_prefix}/lib/mono/4.0/*.dll
 %dir %{_prefix}/lib/mono/compat-1.0
 %{_prefix}/lib/mono/compat-1.0/*.dll
 %dir %{_prefix}/lib/mono/compat-2.0
 %{_prefix}/lib/mono/compat-2.0/*.dll
+%dir %{_prefix}/lib/mono/compat-4.0
+%{_prefix}/lib/mono/compat-4.0/*.dll
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_prefix}/lib/mono-source-libs
@@ -442,10 +454,15 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/web.config
 %dir %{_sysconfdir}/mono/2.0/Browsers
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/2.0/Browsers/Compat.browser
+%dir %{_sysconfdir}/mono/4.0
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/machine.config
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/settings.map
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/web.config
 
 %exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
 %exclude %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
+%exclude %{_prefix}/lib/mono/4.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/gac/monodoc
 
 %files jay
@@ -463,6 +480,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/gac/Microsoft.JScript
 %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
 %{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
+%{_prefix}/lib/mono/4.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %files compat-links
@@ -560,6 +578,38 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/2.0/Microsoft.Common.targets
 %{_prefix}/lib/mono/2.0/Microsoft.VisualBasic.targets
 %{_prefix}/lib/mono/2.0/Microsoft.Common.tasks
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/RabbitMQ.Client.Apigen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/al.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
+%{_prefix}/lib/mono/4.0/dmcs.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/gacutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/httpcfg.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/ilasm.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/installutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/lc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mconfig.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mdoc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mkbundle.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-api-info.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-service.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-shlib-cop.exe
+%{_prefix}/lib/mono/4.0/mono-shlib-cop.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-xmltool.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/monolinker.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/monop.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/nunit-console.exe
+%{_prefix}/lib/mono/4.0/nunit-console.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/pdb2mdb.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/resgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/sgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlmetal.exe
+%{_prefix}/lib/mono/4.0/sqlmetal.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlsharp.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/svcutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/wsdl.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/xbuild.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.0/xsd.exe
 %{_prefix}/lib/mono/xbuild
 %attr(755,root,root) %{_rpmlibdir}/mono-find-provides
 %attr(755,root,root) %{_rpmlibdir}/mono-find-requires
@@ -610,11 +660,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_prefix}/lib/mono/1.0/*.mdb
 %{_prefix}/lib/mono/2.0/*.mdb
+%{_prefix}/lib/mono/4.0/*.mdb
+
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 
 %files csharp
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/csharp
+%attr(755,root,root) %{_bindir}/dmcs
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_bindir}/mcs1
 %attr(755,root,root) %{_bindir}/gmcs
