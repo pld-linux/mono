@@ -6,6 +6,8 @@
 #   /usr/share/locale/de/LC_MESSAGES/mcs.mo
 #   /usr/share/locale/es/LC_MESSAGES/mcs.mo
 #   /usr/share/locale/ja/LC_MESSAGES/mcs.mo
+#   - some C# 4.0 features don't work due to lack of
+#   /usr/lib/mono/gac/Microsoft.CSharp/4.0.0.0__b03f5f7f11d50a3a/dmcs.dll
 #
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
