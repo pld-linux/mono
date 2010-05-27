@@ -24,13 +24,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.6.3
-Release:	2
+Version:	2.6.4
+Release:	1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	b1dc21bac2c7c75814a9f32246eadadd
+# Source0-md5:	342a7ca3bea3cbec0c8ac48b9322fcb4
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -268,6 +268,7 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 	%{!?with_static_libs:--disable-static} \
 	--enable-fast-install \
 	--with-gc=included \
+	--enable-parallel-mark=yes \
 	--with-icu=no \
 	--with-interp=%{?with_mint:yes}%{!?with_mint:no} \
 	--with-jit=%{?with_mint:no}%{!?with_mint:yes} \
