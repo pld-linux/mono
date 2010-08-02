@@ -14,18 +14,18 @@
 %bcond_without	static_libs	# don't build static libraries
 %bcond_with	bootstrap	# don't require mono-devel to find req/prov
 %bcond_with	mint		# build mint instead of mono VM (JIT) [broken]
-#
+
 %ifnarch %{ix86} %{x8664} alpha arm ia64 ppc s390 s390x sparc sparcv9 sparc64
 # JIT not supported on hppa
 %define		with_mint	1
 %endif
+
 %define		glib_ver	1:2.4
-#
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.6.4
-Release:	1
+Release:	2
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -241,7 +241,7 @@ oraz dotGNU.
 %patch6 -p1
 
 # for jay
-cat >>mcs/build/config-default.make <<EOF
+cat >> mcs/build/config-default.make <<'EOF'
 CC = %{__cc}
 CFLAGS = %{rpmcflags}
 EOF
@@ -474,11 +474,16 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/web.config
 
+# -jscript
 %exclude %{_prefix}/lib/mono/gac/Microsoft.JScript
 %exclude %{_prefix}/lib/mono/1.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/2.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/4.0/Microsoft.JScript.dll
 %exclude %{_prefix}/lib/mono/gac/monodoc
+
+# -csharp
+%exclude %{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
+%exclude %{_prefix}/lib/mono/gac/Microsoft.CSharp
 
 %files jay
 %defattr(644,root,root,755)
@@ -675,6 +680,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
 %{_prefix}/lib/mono/4.0/dmcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
+%{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
+%{_prefix}/lib/mono/gac/Microsoft.CSharp
 %{_mandir}/man1/mcs.1*
 %{_mandir}/man1/csharp.1*
 
