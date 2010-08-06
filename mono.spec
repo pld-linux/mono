@@ -3,6 +3,24 @@
 # TODO:
 #   - cleanup %%doc ./notes from dll/zip/sh/etc.
 #   - pack: 
+#   /usr/lib/mono/3.5/MSBuild/Microsoft.Build.CommonTypes.xsd
+#   /usr/lib/mono/3.5/MSBuild/Microsoft.Build.Core.xsd
+#   /usr/lib/mono/3.5/Microsoft.Build.xsd
+#   /usr/lib/mono/3.5/Microsoft.CSharp.targets
+#   /usr/lib/mono/3.5/Microsoft.Common.targets
+#   /usr/lib/mono/3.5/Microsoft.Common.tasks
+#   /usr/lib/mono/3.5/Microsoft.VisualBasic.targets
+#   /usr/lib/mono/3.5/xbuild.exe
+#   /usr/lib/mono/3.5/xbuild.exe.mdb
+#   /usr/lib/mono/3.5/xbuild.rsp
+#   /usr/lib/mono/4.0/MSBuild/Microsoft.Build.CommonTypes.xsd
+#   /usr/lib/mono/4.0/MSBuild/Microsoft.Build.Core.xsd
+#   /usr/lib/mono/4.0/Microsoft.Build.xsd
+#   /usr/lib/mono/4.0/Microsoft.CSharp.targets
+#   /usr/lib/mono/4.0/Microsoft.Common.targets
+#   /usr/lib/mono/4.0/Microsoft.Common.tasks
+#   /usr/lib/mono/4.0/Microsoft.VisualBasic.targets
+#   /usr/lib/mono/4.0/xbuild.rsp
 #   /usr/share/locale/de/LC_MESSAGES/mcs.mo
 #   /usr/share/locale/es/LC_MESSAGES/mcs.mo
 #   /usr/share/locale/ja/LC_MESSAGES/mcs.mo
@@ -24,13 +42,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.6.4
-Release:	2
+Version:	2.6.7
+Release:	0.1
 License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	342a7ca3bea3cbec0c8ac48b9322fcb4
+# Source0-md5:	cc8b7bf061bd11fbd0fcc1c95eb79d34
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
