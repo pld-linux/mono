@@ -246,11 +246,14 @@ CC = %{__cc}
 CFLAGS = %{rpmcflags}
 EOF
 
+mkdir m4
+ln -sf ../{nls,po,progtest}.m4 m4
+
 %build
 cp -f /usr/share/automake/config.sub .
 cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__autoheader}
 %{__autoconf}
 %{__automake}
@@ -283,9 +286,9 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 # there is mprotect(...,PROT_EXEC) for ppc/s390, but not used
 # (ifdef NEED_MPROTECT, which is never defined)
 # in fact the flag should be "-Wl,-z,execheap" for libmint, but:
-# -z execheap doesn't seem to do anything currently
-# -z execstack for library makes only stack executable, but not heap
-# V=1 because --disable-silent-rules doesn't work
+# -z execheap doesn't seem to do anything currently;
+# -z execstack for library makes only stack executable, but not heap.
+# V=1 because --disable-silent-rules doesn't work.
 %{__make} -j1 \
 	V=1 \
 	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
@@ -299,7 +302,7 @@ install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 
 strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
 
-rm -f $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/jay/[A-Z]*
 
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
@@ -314,9 +317,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/libgc-mono
 mv -f $RPM_BUILD_ROOT%{_bindir}/mono-find-* $RPM_BUILD_ROOT%{_rpmlibdir}
 
 # loadable modules
-rm $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.la
 %if %{with static_libs}
-rm $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.a
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.a
 %endif
 
 %clean
