@@ -285,7 +285,9 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 # in fact the flag should be "-Wl,-z,execheap" for libmint, but:
 # -z execheap doesn't seem to do anything currently
 # -z execstack for library makes only stack executable, but not heap
+# V=1 because --disable-silent-rules doesn't work
 %{__make} -j1 \
+	V=1 \
 	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
 
 %install
