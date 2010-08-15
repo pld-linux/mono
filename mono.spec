@@ -322,6 +322,8 @@ mv -f $RPM_BUILD_ROOT%{_bindir}/mono-find-* $RPM_BUILD_ROOT%{_rpmlibdir}
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.a
 %endif
 
+%find_lang mcs
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -686,7 +688,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/4.0/*.mdb
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 
-%files csharp
+%files csharp -f mcs.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/csharp
 %attr(755,root,root) %{_bindir}/dmcs
