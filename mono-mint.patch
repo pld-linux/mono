@@ -15,7 +15,7 @@
  MONO_SHARED_DIR=$r/runtime
  export MONO_CFG_DIR MONO_SHARED_DIR
 +if [ -f "$r/mono/mini/libmono.la" ]; then
- exec "$r/libtool" --mode=execute -dlopen "$r/mono/mini/libmono.la" "$r/mono/dis/monodis" "$@"
+ exec "$r/libtool" --mode=execute -dlopen "$r/mono/mini/libmono-2.0.la" "$r/mono/dis/monodis" "$@"
 +else
 +exec "$r/libtool" --mode=execute "$r/mono/dis/monodis" "$@"
 +fi
