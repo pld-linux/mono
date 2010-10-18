@@ -31,6 +31,7 @@ Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
+Patch7:		%{name}-fix-moonlight-side-effects.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -61,7 +62,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # debugger doesn't work with stripped mono
 %define         _noautostrip    .*/mono
 
-%define		skip_post_check_so	'.+libmonosgen.+\.so.+'
+%define		skip_post_check_so	'.+(libmonosgen|libmono-profiler).+\.so.+'
 
 %if %{without bootstrap}
 %define	__mono_provides	%{_rpmlibdir}/mono-find-provides
@@ -220,6 +221,7 @@ oraz dotGNU.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p0
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'

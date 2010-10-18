@@ -1,0 +1,15 @@
+Currently "--with-moonlight" does not mean "Add Moonlight into the Mix", it
+means "build Mono as required by Moonlight" which cuts a lot of extra cruft
+from the build process that is not required by the Moonlight team.
+
+--- mono/Makefile.am.old	2010-10-10 19:51:15.000000000 +1300
++++ mono/Makefile.am	2010-10-10 19:54:07.000000000 +1300
+@@ -2,7 +2,7 @@
+ SUBDIRS = utils io-layer cil metadata arch $(interpreter_dir) mini dis
+ else
+ if MOONLIGHT
+-SUBDIRS = utils io-layer     metadata arch $(interpreter_dir) mini
++SUBDIRS = utils io-layer cil metadata arch $(interpreter_dir) mini dis monograph tests benchmark profiler
+ else
+ SUBDIRS = utils io-layer cil metadata arch $(interpreter_dir) mini dis monograph tests benchmark profiler
+ endif
