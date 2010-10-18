@@ -233,8 +233,6 @@ mkdir m4
 ln -sf ../{nls,po,progtest}.m4 m4
 
 %build
-#cp -f /usr/share/automake/config.sub .
-#cp -f /usr/share/automake/config.sub libgc
 %{__libtoolize}
 %{__aclocal} -I m4
 %{__autoheader}
@@ -256,6 +254,8 @@ cd ..
 # -DUSE_COMPILER_TLS is passed to libgc by main configure, but our
 # CPPFLAGS override that CPPFLAGS
 CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
+# note: don't enable moonlight here (yet) - it doesn't add anything to package
+# but disables some utils (it's meant for stripped mono build for moonlight)
 %configure \
 	%{!?with_static_libs:--disable-static} \
 	--enable-fast-install \
@@ -265,7 +265,6 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 	--with-interp%{!?with_mint:=no} \
 	--with-jit%{?with_mint:=no} \
 	--with-profile4 \
-	--with-moonlight \
 	--without-monotouch \
 	--with-tls=%{?with_tls:__thread}%{!?with_tls:pthread}
 
@@ -363,6 +362,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmonosgen-2.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmonosgen-2.0.so.0
 %endif
+%attr(755,root,root) %{_libdir}/libmono-profiler-aot.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-aot.so.0
+%attr(755,root,root) %{_libdir}/libmono-profiler-cov.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-cov.so.0
+%attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-iomap.so.0
+%attr(755,root,root) %{_libdir}/libmono-profiler-logging.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-logging.so.0
 %attr(755,root,root) %{_libdir}/libMonoPosixHelper.so
 %attr(755,root,root) %{_libdir}/libMonoSupportW.so
 %attr(755,root,root) %{_libdir}/libikvm-native.so
@@ -484,6 +491,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-cil-strip
 %attr(755,root,root) %{_bindir}/mono-heapviz
 %attr(755,root,root) %{_bindir}/mono-sgen
+%attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
 %attr(755,root,root) %{_bindir}/monop
 %attr(755,root,root) %{_bindir}/monop2
@@ -511,6 +520,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmono-2.0.la
 %{_libdir}/libmonosgen-2.0.la
 %endif
+%attr(755,root,root) %{_libdir}/libmono-profiler-aot.so
+%attr(755,root,root) %{_libdir}/libmono-profiler-cov.so
+%attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so
+%attr(755,root,root) %{_libdir}/libmono-profiler-logging.so
+%{_libdir}/libmono-profiler-aot.la
+%{_libdir}/libmono-profiler-cov.la
+%{_libdir}/libmono-profiler-iomap.la
+%{_libdir}/libmono-profiler-logging.la
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/culevel.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/genxs.exe
@@ -568,6 +585,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/4.0/Microsoft.Common.tasks
 %{_prefix}/lib/mono/4.0/Microsoft.VisualBasic.targets
 %{_prefix}/lib/mono/xbuild
+%{_datadir}/mono-2.0
 %attr(755,root,root) %{_rpmlibdir}/mono-find-provides
 %attr(755,root,root) %{_rpmlibdir}/mono-find-requires
 %{_pkgconfigdir}/cecil.pc
@@ -598,12 +616,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/genxs.1*
 %{_mandir}/man1/lc.1*
 %{_mandir}/man1/macpack.1*
-%{_mandir}/man1/monolinker.1*
-%{_mandir}/man1/monop.1*
 %{_mandir}/man1/mono-api-info.1*
 %{_mandir}/man1/mono-cil-strip.1*
 %{_mandir}/man1/mono-shlib-cop.1*
 %{_mandir}/man1/mono-xmltool.1*
+%{_mandir}/man1/monodis.1*
+%{_mandir}/man1/monolinker.1*
+%{_mandir}/man1/monop.1*
 %{_mandir}/man1/permview.1*
 %{_mandir}/man1/prj2make.1*
 %{_mandir}/man1/resgen.1*
@@ -682,4 +701,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmono-2.0.a
 %{_libdir}/libmonosgen-2.0.a
 %endif
+%{_libdir}/libmono-profiler-aot.a
+%{_libdir}/libmono-profiler-cov.a
+%{_libdir}/libmono-profiler-iomap.a
+%{_libdir}/libmono-profiler-logging.a
 %endif
