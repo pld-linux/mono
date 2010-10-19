@@ -19,7 +19,7 @@ Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.8
 Release:	2
-License:	LGPL (VM), GPL (C# compilers), MIT X11 with GPL additions (classes, tools)
+License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
@@ -127,7 +127,7 @@ Pliki umożliwiające debugowanie bibliotek mono.
 %package csharp
 Summary:	C# compiler for mono
 Summary(pl.UTF-8):	Kompilator C# dla mono
-License:	GPL
+License:	MIT or GPL v2
 Group:		Development/Languages
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -156,7 +156,7 @@ Kompilator ILasm dla mono.
 %package monodoc
 Summary:	Documentation for Mono class libraries and tools to produce and edit the documentation
 Summary(pl.UTF-8):	Dokumentacja klas Mono wraz z narzędziami do jej generowania i przeglądania
-License:	LGPL
+License:	LGPL v2
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Provides:	monodoc = %{version}-%{release}
@@ -174,7 +174,7 @@ generowania i przeglądania.
 %package static
 Summary:	Static mono library
 Summary(pl.UTF-8):	Statyczna biblioteka mono
-License:	LGPL
+License:	LGPL v2
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -321,7 +321,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README pld-doc/*
+%doc AUTHORS ChangeLog LICENSE NEWS README pld-doc/*
 %if %{with mint}
 %attr(755,root,root) %{_bindir}/mint
 %else
@@ -645,16 +645,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/csharp
 %attr(755,root,root) %{_bindir}/csharp2
 %attr(755,root,root) %{_bindir}/dmcs
-%attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_bindir}/gmcs
+%attr(755,root,root) %{_bindir}/mcs
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe.so
 %{_prefix}/lib/mono/2.0/gmcs.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
-%{_prefix}/lib/mono/4.0/dmcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe.so
+%{_prefix}/lib/mono/4.0/dmcs.exe.config
 %{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
 %{_prefix}/lib/mono/gac/Microsoft.CSharp
 %{_mandir}/man1/mcs.1*
