@@ -1,0 +1,12 @@
+diff -uNr mono-2.8.1.orig//mcs/class/System.Web/System.Web.Configuration_2.0/MachineKeyRegistryStorage.cs mono-2.8.1/mcs/class/System.Web/System.Web.Configuration_2.0/MachineKeyRegistryStorage.cs
+--- mono-2.8.1.orig//mcs/class/System.Web/System.Web.Configuration_2.0/MachineKeyRegistryStorage.cs	2010-11-12 11:24:41.000000000 +0100
++++ mono-2.8.1/mcs/class/System.Web/System.Web.Configuration_2.0/MachineKeyRegistryStorage.cs	2010-12-23 22:55:23.076771217 +0100
+@@ -146,7 +146,7 @@
+ 					rk.Flush (); // we want it synchronous
+ 				}
+ 			} catch (Exception ex) {
+-				throw new ApplicationException ("Failed to store encryption key in the registry.", ex);
++				Console.Error.WriteLine ("(info) Auto generated encryption keys not saved: {0}", ex);
+ 			}
+ 		}
+ 	}
