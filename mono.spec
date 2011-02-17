@@ -18,7 +18,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.10
-Release:	1
+Release:	2
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -648,7 +648,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
-%attr(755,root,root) %{_prefix}/lib/2.0/mcs.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/mcs.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/mcs.exe.so
 %{_prefix}/lib/mono/2.0/gmcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
