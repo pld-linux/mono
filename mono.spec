@@ -648,8 +648,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
-%attr(755,root,root) %{_libdir}/mono/2.0/mcs.exe
-%attr(755,root,root) %{_libdir}/mono/2.0/mcs.exe.so
+#%%attr(755,root,root) %{_libdir}/mono/2.0/mcs.exe
+#%%attr(755,root,root) %{_libdir}/mono/2.0/mcs.exe.so
 %{_prefix}/lib/mono/2.0/gmcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
