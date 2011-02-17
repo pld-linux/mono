@@ -17,13 +17,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.8.2
+Version:	2.10
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	7ae9055a378b1b1579e4a1997d3ed4c2
+# Source0-md5:	9a64da4915ac06c781f5b4f66167d930
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -31,7 +31,6 @@ Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
-Patch7:		%{name}-fix-moonlight-side-effects.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -221,7 +220,6 @@ oraz dotGNU.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p0
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
@@ -296,10 +294,11 @@ strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
 rm -rf pld-doc
-install -d pld-doc/{webpage,notes}
-cp -a web/* pld-doc/webpage
+#install -d pld-doc/{webpage,notes}
+install -d pld-doc/notes
+#cp -a web/* pld-doc/webpage
 cp -a docs/* pld-doc/notes
-rm -f pld-doc/*/Makefile*
+%{__rm} pld-doc/*/Makefile*
 
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/libgc-mono
 
@@ -345,6 +344,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-test-install
 %attr(755,root,root) %{_bindir}/mono-xmltool
 %attr(755,root,root) %{_bindir}/mozroots
+%attr(755,root,root) %{_bindir}/mprof-report
 %attr(755,root,root) %{_bindir}/pdb2mdb
 %attr(755,root,root) %{_bindir}/secutil
 %attr(755,root,root) %{_bindir}/setreg
@@ -368,8 +368,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-cov.so.0
 %attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-iomap.so.0
-%attr(755,root,root) %{_libdir}/libmono-profiler-logging.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-logging.so.0
+%attr(755,root,root) %{_libdir}/libmono-profiler-log.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-log.so.0
 %attr(755,root,root) %{_libdir}/libMonoPosixHelper.so
 %attr(755,root,root) %{_libdir}/libMonoSupportW.so
 %attr(755,root,root) %{_libdir}/libikvm-native.so
@@ -412,11 +412,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/svcutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/xsd.exe
 %{_prefix}/lib/mono/4.0/*.dll
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mscorlib.dll.so
 %dir %{_prefix}/lib/mono/compat-2.0
 %{_prefix}/lib/mono/compat-2.0/*.dll
-%dir %{_prefix}/lib/mono/compat-4.0
-%{_prefix}/lib/mono/compat-4.0/*.dll
 %dir %{_prefix}/lib/mono/mono-configuration-crypto
 %dir %{_prefix}/lib/mono/mono-configuration-crypto/4.0
 %{_prefix}/lib/mono/mono-configuration-crypto/4.0/Mono.Configuration.Crypto.dll
@@ -436,6 +433,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mono-configuration-crypto.1*
 %{_mandir}/man1/mono-service.1*
 %{_mandir}/man1/mozroots.1*
+%{_mandir}/man1/mprof-report.1*
 %{_mandir}/man1/pdb2mdb.1*
 %{_mandir}/man1/secutil.1*
 %{_mandir}/man1/setreg.1*
@@ -523,11 +521,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-cov.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so
-%attr(755,root,root) %{_libdir}/libmono-profiler-logging.so
+%attr(755,root,root) %{_libdir}/libmono-profiler-log.so
 %{_libdir}/libmono-profiler-aot.la
 %{_libdir}/libmono-profiler-cov.la
 %{_libdir}/libmono-profiler-iomap.la
-%{_libdir}/libmono-profiler-logging.la
+%{_libdir}/libmono-profiler-log.la
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/culevel.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/genxs.exe
@@ -602,6 +600,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mono-lineeditor.pc
 %{_pkgconfigdir}/mono-options.pc
 %{_pkgconfigdir}/mono.web.pc
+%{_pkgconfigdir}/monosgen-2.pc
 %{_pkgconfigdir}/system.web.extensions.design_1.0.pc
 %{_pkgconfigdir}/system.web.extensions_1.0.pc
 %{_pkgconfigdir}/system.web.mvc.pc
@@ -649,11 +648,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe.so
+%attr(755,root,root) %{_libdir}/mono/2.0/mcs.exe
+%attr(755,root,root) %{_libdir}/mono/2.0/mcs.exe.so
 %{_prefix}/lib/mono/2.0/gmcs.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe.so
 %{_prefix}/lib/mono/4.0/dmcs.exe.config
 %{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
 %{_prefix}/lib/mono/gac/Microsoft.CSharp
@@ -676,7 +675,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monodocs2html
 %attr(755,root,root) %{_bindir}/monodocs2slashdoc
 %attr(755,root,root) %{_bindir}/mdvalidater
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mdoc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/2.0/mdoc.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/mod.exe
 %attr(755,root,root) %{_prefix}/lib/mono/monodoc/monodoc.dll
 %{_prefix}/lib/mono/gac/monodoc
@@ -704,5 +703,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmono-profiler-aot.a
 %{_libdir}/libmono-profiler-cov.a
 %{_libdir}/libmono-profiler-iomap.a
-%{_libdir}/libmono-profiler-logging.a
+%{_libdir}/libmono-profiler-log.a
 %endif
