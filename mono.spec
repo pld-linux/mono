@@ -17,13 +17,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.10
-Release:	2
+Version:	2.10.1
+Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
 Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	9a64da4915ac06c781f5b4f66167d930
+# Source0-md5:	ae8d1875447527599e68dd6c1d82bc11
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -293,7 +293,7 @@ strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
 
 # this way we can run rpmbuild -bi several times, and directories
 # have more meaningful name.
-rm -rf pld-doc
+%{__rm} -rf pld-doc
 #install -d pld-doc/{webpage,notes}
 install -d pld-doc/notes
 #cp -a web/* pld-doc/webpage
