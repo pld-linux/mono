@@ -18,7 +18,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.10.1
-Release:	1
+Release:	2
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -281,12 +281,12 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_rpmlibdir}
 
-%{__make} install \
+%{__make} -j 1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 strip --strip-debug $RPM_BUILD_ROOT%{_bindir}/mono
 
-%{__make} -C mcs/jay install \
+%{__make} -C mcs/jay -j 1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 # leave only skeleton
 %{__rm} $RPM_BUILD_ROOT%{_datadir}/jay/[ANR]*
