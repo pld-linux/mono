@@ -18,7 +18,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.10.1
-Release:	2
+Release:	3
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
@@ -229,6 +229,9 @@ EOF
 
 mkdir m4
 ln -sf ../{nls,po,progtest}.m4 m4
+
+# spurious-executable-perm on source files
+find -name '*.[ch]' | xargs chmod a-x
 
 %build
 %{__libtoolize}
