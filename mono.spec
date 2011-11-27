@@ -17,13 +17,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.10.2
-Release:	2
+Version:	2.10.6
+Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
-# latest downloads summary at http://ftp.novell.com/pub/mono/sources-stable/
-Source0:	http://ftp.novell.com/pub/mono/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	bff057dc3e56b8841bbb1abe053858bb
+# latest downloads summary at http://download.mono-project.com/sources-stable/
+Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
+# Source0-md5:	c442cef4cd6668b0a1391a661f6815a9
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -45,8 +45,9 @@ BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
-BuildRequires:	zlib-devel
+BuildRequires:	zlib-devel >= 1.2.3
 BuildConflicts:	mono-csharp < 2.4
+Requires:	zlib >= 1.2.3
 Suggests:	binfmt-detector
 # for System.Drawing
 Suggests:	libgdiplus >= 2.6
