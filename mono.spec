@@ -17,13 +17,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.10.9
-Release:	1
+Version:	2.11.1
+Release:	0.1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	bbbff9d3d0c36b904437ada36a27eb9e
+# Source0-md5:	fdced23903b627c95ca03ab842e15bff
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -228,9 +228,6 @@ CC = %{__cc}
 CFLAGS = %{rpmcflags}
 EOF
 
-mkdir m4
-ln -sf ../{nls,po,progtest}.m4 m4
-
 # spurious-executable-perm on source files
 find -name '*.[ch]' | xargs chmod a-x
 
@@ -262,7 +259,12 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 	%{!?with_static_libs:--disable-static} \
 	--enable-fast-install \
 	--with-gc=included \
+	--with-sgen=yes \
 	--enable-parallel-mark \
+%ifarch %{x8664} ppc64 s390x sparc64
+	--with-large-heap=yes \
+	--enable-big-arrays \
+%endif
 	--without-icu \
 	--with-interp%{!?with_mint:=no} \
 	--with-jit%{?with_mint:=no} \
@@ -334,6 +336,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/cert2spc
 %attr(755,root,root) %{_bindir}/certmgr
 %attr(755,root,root) %{_bindir}/chktrust
+%attr(755,root,root) %{_bindir}/crlupdate
 %attr(755,root,root) %{_bindir}/dtd2rng
 %attr(755,root,root) %{_bindir}/gacutil
 %attr(755,root,root) %{_bindir}/gacutil2
@@ -390,44 +393,50 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/3.5/*.dll
 %dir %{_prefix}/lib/mono/4.0
 %attr(755,root,root) %{_prefix}/lib/mono/4.0/RabbitMQ.Client.Apigen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/browsercaps-updater.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/caspol.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/cert2spc.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/certmgr.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/chktrust.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/dtd2rng.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/dtd2xsd.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/gacutil.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/httpcfg.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/installutil.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/makecert.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mconfig.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mkbundle.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-service.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mozroots.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/pdb2mdb.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/secutil.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/setreg.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/sgen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/signcode.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/sn.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlmetal.exe
-%{_prefix}/lib/mono/4.0/sqlmetal.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/svcutil.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/xsd.exe
 %{_prefix}/lib/mono/4.0/*.dll
+%dir %{_prefix}/lib/mono/4.5
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/RabbitMQ.Client.Apigen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/browsercaps-updater.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/caspol.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/cert2spc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/certmgr.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/chktrust.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/crlupdate.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/dtd2rng.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/dtd2xsd.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/gacutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/httpcfg.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/installutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/makecert.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mconfig.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mkbundle.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-service.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mozroots.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/pdb2mdb.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/secutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/setreg.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/sgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/signcode.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/sn.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/sqlmetal.exe
+%{_prefix}/lib/mono/4.5/sqlmetal.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/svcutil.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/xsd.exe
+%{_prefix}/lib/mono/4.5/*.dll
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mscorlib.dll.so
 %dir %{_prefix}/lib/mono/compat-2.0
 %{_prefix}/lib/mono/compat-2.0/*.dll
 %dir %{_prefix}/lib/mono/mono-configuration-crypto
-%dir %{_prefix}/lib/mono/mono-configuration-crypto/4.0
-%{_prefix}/lib/mono/mono-configuration-crypto/4.0/Mono.Configuration.Crypto.dll
-%attr(755,root,root) %{_prefix}/lib/mono/mono-configuration-crypto/4.0/mono-configuration-crypto.exe
+%dir %{_prefix}/lib/mono/mono-configuration-crypto/4.5
+%{_prefix}/lib/mono/mono-configuration-crypto/4.5/Mono.Configuration.Crypto.dll
+%attr(755,root,root) %{_prefix}/lib/mono/mono-configuration-crypto/4.5/mono-configuration-crypto.exe
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_prefix}/lib/mono-source-libs
 %{_mandir}/man1/cert2spc.1*
 %{_mandir}/man1/certmgr.1*
 %{_mandir}/man1/chktrust.1*
+%{_mandir}/man1/crlupdate.1*
 %{_mandir}/man1/gacutil.1*
 %{_mandir}/man1/httpcfg.1*
 %{_mandir}/man1/makecert.1*
@@ -462,6 +471,11 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/web.config
+%dir %{_sysconfdir}/mono/4.5
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/DefaultWsdlHelpGenerator.aspx
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/machine.config
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/settings.map
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/web.config
 
 # -csharp
 %exclude %{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
@@ -484,6 +498,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/al
 %attr(755,root,root) %{_bindir}/al2
+%attr(755,root,root) %{_bindir}/cccheck
 %attr(755,root,root) %{_bindir}/ccrewrite
 %attr(755,root,root) %{_bindir}/disco
 %attr(755,root,root) %{_bindir}/dtd2xsd
@@ -504,6 +519,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/lc
 %attr(755,root,root) %{_bindir}/nunit-console
 %attr(755,root,root) %{_bindir}/nunit-console2
+%attr(755,root,root) %{_bindir}/nunit-console4
 %attr(755,root,root) %{_bindir}/pedump
 %attr(755,root,root) %{_bindir}/peverify
 %attr(755,root,root) %{_bindir}/permview
@@ -556,37 +572,41 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/3.5/Microsoft.Common.targets
 %{_prefix}/lib/mono/3.5/Microsoft.Common.tasks
 %{_prefix}/lib/mono/3.5/Microsoft.VisualBasic.targets
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/al.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/ccrewrite.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/culevel.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/disco.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/dtd2xsd.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/genxs.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/ictool.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/installvst.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/lc.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/macpack.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-api-info.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-cil-strip.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-shlib-cop.exe
-%{_prefix}/lib/mono/4.0/mono-shlib-cop.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mono-xmltool.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/monolinker.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/monop.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/nunit-console.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/permview.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/resgen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/soapsuds.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/sqlsharp.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/wsdl.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/xbuild.exe
-%{_prefix}/lib/mono/4.0/xbuild.rsp
 %{_prefix}/lib/mono/4.0/MSBuild
 %{_prefix}/lib/mono/4.0/Microsoft.Build.xsd
 %{_prefix}/lib/mono/4.0/Microsoft.CSharp.targets
 %{_prefix}/lib/mono/4.0/Microsoft.Common.targets
 %{_prefix}/lib/mono/4.0/Microsoft.Common.tasks
 %{_prefix}/lib/mono/4.0/Microsoft.VisualBasic.targets
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/al.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/cccheck.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/ccrewrite.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/culevel.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/disco.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/dtd2xsd.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/genxs.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/ictool.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/installvst.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/lc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/macpack.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mcs.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mcs.exe.so
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-api-info.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-cil-strip.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-shlib-cop.exe
+%{_prefix}/lib/mono/4.5/mono-shlib-cop.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-xmltool.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/monolinker.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/monop.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/nunit-console.exe
+%{_prefix}/lib/mono/4.5/nunit-console.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/permview.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/resgen.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/soapsuds.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/sqlsharp.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/wsdl.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/xbuild.exe
+%{_prefix}/lib/mono/4.5/xbuild.rsp
 %{_prefix}/lib/mono/xbuild
 %{_prefix}/lib/mono/xbuild-frameworks
 %{_datadir}/mono-2.0
@@ -614,6 +634,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/wcf.pc
 %{_includedir}/%{name}-2.0
 %{_mandir}/man1/al.1*
+%{_mandir}/man1/cccheck.1*
 %{_mandir}/man1/ccrewrite.1*
 %{_mandir}/man1/cilc.1*
 %{_mandir}/man1/disco.1*
@@ -641,25 +662,17 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_prefix}/lib/mono/2.0/*.mdb
 %{_prefix}/lib/mono/3.5/*.mdb
-%{_prefix}/lib/mono/4.0/*.mdb
+%{_prefix}/lib/mono/4.5/*.mdb
 %{_prefix}/lib/mono/gac/*/*/*.mdb
-%{_prefix}/lib/mono/mono-configuration-crypto/4.0/*.mdb
+%{_prefix}/lib/mono/mono-configuration-crypto/4.5/*.mdb
 
 %files csharp -f mcs.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/csharp
-%attr(755,root,root) %{_bindir}/csharp2
 %attr(755,root,root) %{_bindir}/dmcs
 %attr(755,root,root) %{_bindir}/gmcs
 %attr(755,root,root) %{_bindir}/mcs
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/csharp.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/gmcs.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/mcs.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/mcs.exe.so
-%{_prefix}/lib/mono/2.0/gmcs.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/csharp.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/dmcs.exe
-%{_prefix}/lib/mono/4.0/dmcs.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/csharp.exe
 %{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
 %{_prefix}/lib/mono/gac/Microsoft.CSharp
 %{_mandir}/man1/mcs.1*
@@ -669,7 +682,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/ilasm.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/ilasm.exe
 %{_mandir}/man1/ilasm.1*
 
 %files monodoc
@@ -681,8 +694,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/monodocs2html
 %attr(755,root,root) %{_bindir}/monodocs2slashdoc
 %attr(755,root,root) %{_bindir}/mdvalidater
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/mdoc.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/mod.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mdoc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mod.exe
 %attr(755,root,root) %{_prefix}/lib/mono/monodoc/monodoc.dll
 %{_prefix}/lib/mono/gac/monodoc
 %dir %{_prefix}/lib/mono/monodoc
