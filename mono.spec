@@ -285,7 +285,7 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_rpmlibdir}
+install -d $RPM_BUILD_ROOT{%{_rpmlibdir},%{_datadir}/.mono/keypairs}
 
 %{__make} -j 1 install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -433,6 +433,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_prefix}/lib/mono-source-libs
+%dir %{_datadir}/.mono
+%dir %{_datadir}/.mono/keypairs
 %{_mandir}/man1/cert2spc.1*
 %{_mandir}/man1/certmgr.1*
 %{_mandir}/man1/chktrust.1*
