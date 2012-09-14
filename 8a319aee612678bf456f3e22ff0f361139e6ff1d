@@ -1,0 +1,5 @@
+- rel.2.
+- fixed: https://github.com/mono/mono/commit/d326d51789cf39012b55bc31dc6945249ac442c6
+
+Changed files:
+    mono.spec -> 1.275
