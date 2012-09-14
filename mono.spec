@@ -17,13 +17,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	2.11.1
+Version:	2.11.4
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	fdced23903b627c95ca03ab842e15bff
+# Source0-md5:	5e295d670a0f71902cd26c45e7a5b1f3
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -31,7 +31,6 @@ Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
-Patch7:		%{name}-concurrent-sweep.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -222,7 +221,6 @@ oraz dotGNU.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
@@ -614,6 +612,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mono-2.0
 %attr(755,root,root) %{_rpmlibdir}/mono-find-provides
 %attr(755,root,root) %{_rpmlibdir}/mono-find-requires
+%{_pkgconfigdir}/aspnetwebstack.pc
 %{_pkgconfigdir}/cecil.pc
 %{_pkgconfigdir}/dotnet.pc
 %{_pkgconfigdir}/dotnet35.pc
@@ -633,6 +632,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/system.web.extensions_1.0.pc
 %{_pkgconfigdir}/system.web.mvc.pc
 %{_pkgconfigdir}/system.web.mvc2.pc
+%{_pkgconfigdir}/system.web.mvc3.pc
 %{_pkgconfigdir}/wcf.pc
 %{_includedir}/%{name}-2.0
 %{_mandir}/man1/al.1*
