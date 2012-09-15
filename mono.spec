@@ -479,10 +479,6 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/web.config
 
-# -csharp
-%exclude %{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
-%exclude %{_prefix}/lib/mono/gac/Microsoft.CSharp
-
 %files jay
 %defattr(644,root,root,755)
 %doc mcs/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
@@ -677,8 +673,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gmcs
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/csharp.exe
-%{_prefix}/lib/mono/4.0/Microsoft.CSharp.dll
-%{_prefix}/lib/mono/gac/Microsoft.CSharp
 %{_mandir}/man1/mcs.1*
 %{_mandir}/man1/csharp.1*
 
