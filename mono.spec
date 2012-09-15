@@ -8,6 +8,7 @@
 %bcond_without	static_libs	# don't build static libraries
 %bcond_with	bootstrap	# don't require mono-devel to find req/prov
 %bcond_with	mint		# build mint instead of mono VM (JIT) [broken]
+%bcond_with	llvm		# LLVM backend [unfinished, needs unreleased mono-llvm version]
 
 %ifnarch %{ix86} %{x8664} alpha arm ia64 ppc s390 s390x sparc sparcv9 sparc64
 # JIT not supported on hppa
@@ -42,6 +43,7 @@ BuildRequires:	gettext-devel
 BuildRequires:	libtool
 %{!?with_bootstrap:BuildRequires:	mono-csharp}
 %{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
+%{?with_llvm:BuildRequires:	mono-llvm >= 2.11}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
@@ -250,6 +252,7 @@ cd ../eglib
 %{__automake}
 cd ..
 
+%{?with_llvm:PATH=%{_libdir}/mono-llvm/bin:$PATH}
 # -DUSE_COMPILER_TLS is passed to libgc by main configure, but our
 # CPPFLAGS override that CPPFLAGS
 CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
@@ -258,18 +261,22 @@ CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 %configure \
 	%{!?with_static_libs:--disable-static} \
 	--enable-fast-install \
-	--with-gc=included \
-	--with-sgen=yes \
+%if %{with llvm}
+	--enable-llvm \
+	--enable-loadedllvm \
+%endif
 	--enable-parallel-mark \
 %ifarch %{x8664} ppc64 s390x sparc64
-	--with-large-heap=yes \
 	--enable-big-arrays \
+	--with-large-heap \
 %endif
+	--with-gc=included \
 	--without-icu \
 	--with-interp%{!?with_mint:=no} \
 	--with-jit%{?with_mint:=no} \
-	--with-profile4 \
 	--without-monotouch \
+	--with-profile4 \
+	--with-sgen \
 	--with-tls=%{?with_tls:__thread}%{!?with_tls:pthread}
 
 # mint uses heap to make trampolines, which need to be executable
