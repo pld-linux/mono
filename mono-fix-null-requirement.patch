@@ -1,0 +1,8 @@
+--- mono-2.11.4/scripts/mono-find-requires.in.old	2012-09-29 23:20:34.968693110 +0200
++++ mono-2.11.4/scripts/mono-find-requires.in	2012-09-29 23:20:11.525486763 +0200
+@@ -187,4 +187,4 @@ $REQUIRES" | sort | uniq -u)
+ # Of those, only choose the ones that are in REQUIRES
+ #
+ echo "$UNIQ
+-$REQUIRES" | sort | uniq -d
++$REQUIRES" | sort | uniq -d | sed 's/[ \t]*$//'
