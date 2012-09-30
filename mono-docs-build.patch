@@ -1,0 +1,16 @@
+--- mono-2.11.4/docs/sources/mono-api-metadata.html.links	2012-09-06 22:57:42.000000000 +0200
++++ mono-2.11.4/docs/sources/mono-api-metadata.html	2012-09-30 07:34:58.000000000 +0200
+@@ -10,11 +10,8 @@
+ 	like <a href="http://www.mono-project.com/Cecil">Cecil</a>.
+ 
+ 	<p>To start using the Metadata API it is necessary
+-	to <a href="mono-api-assembly.html#cil_assembly_load">open an
+-	assembly</a> or a CIL image (a .dll or .exe file) using one of
+-	the
+-	<a href="mono-api-image.html#cil_image_open">CIL image
+-	opening</a> API calls.
++	to open an assembly or a CIL image (a .dll or .exe file) using one of
++	the CIL image opening API calls.
+ 
+ <h2>Metadata Heaps</h2>
+ 
