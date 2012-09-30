@@ -1,0 +1,11 @@
+--- mono-2.11.4/support/syslog.c.format	2012-09-30 07:43:34.007137644 +0200
++++ mono-2.11.4/support/syslog.c	2012-09-30 07:43:43.137547773 +0200
+@@ -34,7 +34,7 @@ Mono_Posix_Syscall_closelog (void)
+ int
+ Mono_Posix_Syscall_syslog (int priority, const char* message)
+ {
+-	syslog (priority, message);
++	syslog (priority, "%s", message);
+ 	return 0;
+ }
+ 

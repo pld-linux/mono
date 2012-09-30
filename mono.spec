@@ -34,6 +34,7 @@ Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
 Patch7:		%{name}-fix-null-requirement.patch
 Patch8:		%{name}-docs-build.patch
+Patch9:		%{name}-format-security.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -227,6 +228,7 @@ oraz dotGNU.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
