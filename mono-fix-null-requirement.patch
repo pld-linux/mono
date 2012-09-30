@@ -5,4 +5,4 @@
  #
  echo "$UNIQ
 -$REQUIRES" | sort | uniq -d
-+$REQUIRES" | sort | uniq -d | sed 's/[ \t]*$//'
++$REQUIRES" | sort | uniq -d | sed 's/[ \t]*$//;/^$/d'
