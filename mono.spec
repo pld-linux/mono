@@ -19,7 +19,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	2.11.4
-Release:	3
+Release:	4
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
@@ -69,7 +69,10 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		skip_post_check_so	'.+(libmonosgen|libmono-profiler).+\.so.+'
 
-%if %{without bootstrap}
+%if %{with bootstrap}
+%define	__mono_provides /bin/true
+%define	__mono_requires /bin/true
+%else
 %define	__mono_provides	%{_rpmlibdir}/mono-find-provides
 %define	__mono_requires	%{_rpmlibdir}/mono-find-requires
 %endif
@@ -416,7 +419,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/chktrust.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/crlupdate.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/dtd2rng.exe
-%attr(755,root,root) %{_prefix}/lib/mono/4.5/dtd2xsd.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/gacutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/httpcfg.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/installutil.exe
@@ -443,6 +445,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_prefix}/lib/mono/mono-configuration-crypto/4.5
 %{_prefix}/lib/mono/mono-configuration-crypto/4.5/Mono.Configuration.Crypto.dll
 %attr(755,root,root) %{_prefix}/lib/mono/mono-configuration-crypto/4.5/mono-configuration-crypto.exe
+%exclude %{_prefix}/lib/mono/gac/monodoc
 %{_prefix}/lib/mono/gac
 %exclude %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_prefix}/lib/mono-source-libs
@@ -708,6 +711,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mdoc.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mod.exe
 %attr(755,root,root) %{_prefix}/lib/mono/monodoc/monodoc.dll
+%exclude %{_prefix}/lib/mono/gac/monodoc/*/*.mdb
 %{_prefix}/lib/mono/gac/monodoc
 %dir %{_prefix}/lib/mono/monodoc
 %dir %{_prefix}/lib/monodoc
