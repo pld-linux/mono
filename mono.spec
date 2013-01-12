@@ -18,13 +18,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.0.2
+Version:	3.0.3
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	c8a14c8c0a6013d865f81324830e0eec
+# Source0-md5:	c1e9fb125f620597a9bc1cdc1fee9288
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -35,12 +35,13 @@ Patch6:		%{name}-ARG_MAX.patch
 Patch7:		%{name}-fix-null-requirement.patch
 Patch8:		%{name}-docs-build.patch
 Patch9:		%{name}-format-security.patch
+Patch10:	%{name}-am.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
 %endif
 BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 BuildRequires:	gettext-devel
 BuildRequires:	libtool
@@ -232,6 +233,7 @@ oraz dotGNU.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
@@ -642,6 +644,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mono-options.pc
 %{_pkgconfigdir}/mono.web.pc
 %{_pkgconfigdir}/monosgen-2.pc
+%{_pkgconfigdir}/reactive.pc
 %{_pkgconfigdir}/system.web.extensions.design_1.0.pc
 %{_pkgconfigdir}/system.web.extensions_1.0.pc
 %{_pkgconfigdir}/system.web.mvc.pc
