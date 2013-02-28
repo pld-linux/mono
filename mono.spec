@@ -18,13 +18,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.0.3
+Version:	3.0.5
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	c1e9fb125f620597a9bc1cdc1fee9288
+# Source0-md5:	6016eb76f5b7661df53201d016acf977
 Patch0:		%{name}-alpha-float.patch
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
@@ -35,7 +35,6 @@ Patch6:		%{name}-ARG_MAX.patch
 Patch7:		%{name}-fix-null-requirement.patch
 Patch8:		%{name}-docs-build.patch
 Patch9:		%{name}-format-security.patch
-Patch10:	%{name}-am.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -233,7 +232,6 @@ oraz dotGNU.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
@@ -362,6 +360,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/installvst
 %attr(755,root,root) %{_bindir}/makecert
 %attr(755,root,root) %{_bindir}/mconfig
+%attr(755,root,root) %{_bindir}/mdbrebase
 %attr(755,root,root) %{_bindir}/mkbundle
 %attr(755,root,root) %{_bindir}/mono-configuration-crypto
 %attr(755,root,root) %{_bindir}/mono-service
@@ -426,6 +425,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/installutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/makecert.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mconfig.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mdbrebase.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mkbundle.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-service.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mozroots.exe
