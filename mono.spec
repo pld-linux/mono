@@ -18,13 +18,13 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.1.2
+Version:	3.2.1
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	6df8ead3d6e3bd47d2af132d2f706ce1
+# Source0-md5:	bb613f9c93f57c29abcb7270f3215eb2
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
 Patch3:		%{name}-awk.patch
@@ -600,7 +600,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/4.0/Microsoft.CSharp.targets
 %{_prefix}/lib/mono/4.0/Microsoft.Common.targets
 %{_prefix}/lib/mono/4.0/Microsoft.Common.tasks
-%{_prefix}/lib/mono/4.0/Microsoft.Portable.CSharp.targets
 %{_prefix}/lib/mono/4.0/Microsoft.VisualBasic.targets
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/cccheck.exe
