@@ -18,23 +18,21 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.2.1
+Version:	3.2.3
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	bb613f9c93f57c29abcb7270f3215eb2
+# Source0-md5:	a66c6309fad071e21f77f4c6b67a0f10
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
-Patch3:		%{name}-awk.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
 Patch6:		%{name}-ARG_MAX.patch
 Patch7:		%{name}-fix-null-requirement.patch
 Patch8:		%{name}-docs-build.patch
 Patch9:		%{name}-format-security.patch
-Patch10:	%{name}-destdir.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -224,14 +222,12 @@ oraz dotGNU.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
@@ -600,6 +596,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/4.0/Microsoft.CSharp.targets
 %{_prefix}/lib/mono/4.0/Microsoft.Common.targets
 %{_prefix}/lib/mono/4.0/Microsoft.Common.tasks
+%{_prefix}/lib/mono/4.0/Microsoft.Portable.CSharp.targets
 %{_prefix}/lib/mono/4.0/Microsoft.VisualBasic.targets
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/cccheck.exe
