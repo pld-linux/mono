@@ -260,7 +260,11 @@ cd ..
 %{?with_llvm:PATH=%{_libdir}/mono-llvm/bin:$PATH}
 # -DUSE_COMPILER_TLS is passed to libgc by main configure, but our
 # CPPFLAGS override that CPPFLAGS
-CPPFLAGS="-DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
+%ifarch i486
+CPPFLAGS="%{rpmcppflags} -DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS -DBROKEN_64BIT_ATOMICS_INTRINSIC"
+%else
+CPPFLAGS="%{rpmcppflags} -DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
+%endif
 # note: don't enable moonlight here (yet) - it doesn't add anything to package
 # but disables some utils (it's meant for stripped mono build for moonlight)
 %configure \
