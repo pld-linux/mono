@@ -12,3 +12,12 @@ diff -ur mono-1.2.4/data/config.in mono-sonames/data/config.in
  	<dllmap dll="i:odbc32.dll" target="libiodbc.dylib" os="osx"/>
  	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
  	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
+@@ -27,6 +27,6 @@
+ 		<dllentry dll="__Internal" name="MoveMemory" target="mono_win32_compat_MoveMemory"/>
+ 		<dllentry dll="__Internal" name="ZeroMemory" target="mono_win32_compat_ZeroMemory"/>
+ 	</dllmap>
+-	<dllmap dll="gdiplus" target="@prefix@/lib/libgdiplus@libsuffix@" />
+-	<dllmap dll="gdiplus.dll" target="@prefix@/lib/libgdiplus@libsuffix@" />
++	<dllmap dll="gdiplus" target="libgdiplus.so.0" />
++	<dllmap dll="gdiplus.dll" target="libgdiplus.so.0" />
+ </configuration>
