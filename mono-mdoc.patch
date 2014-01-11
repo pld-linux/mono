@@ -1,0 +1,12 @@
+From commit ba222d4eb939ef097dd2b77b1fea5c3b8a60b310:
+[monodoc] Ensure we don't try to use <Parameters> when it might be null. Fixes Gendarme doc generation.
+--- mono-3.2.5/mcs/class/monodoc/Monodoc/providers/EcmaDoc.cs.orig	2014-01-10 22:50:32.232754015 +0100
++++ mono-3.2.5/mcs/class/monodoc/Monodoc/providers/EcmaDoc.cs	2014-01-10 22:49:58.674597265 +0100
+@@ -551,6 +551,7 @@
+ 				break;
+ 			// binary operators: overloading is possible [ECMA-335 §10.3.2]
+ 			default:
++				if (member.Element ("Parameters") != null)
+ 				memberSignature =
+ 					nicename + "("
+ 					+ string.Join (",", member.Element ("Parameters").Elements ("Parameter").Select (p => (string)p.Attribute ("Type")))
