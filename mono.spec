@@ -10,22 +10,16 @@
 %bcond_with	mint		# build mint instead of mono VM (JIT) [broken]
 %bcond_with	llvm		# LLVM backend [unfinished, needs unreleased mono-llvm version]
 
-%ifnarch %{ix86} %{x8664} arm ia64 ppc s390 s390x sparc sparcv9 sparc64
-# JIT not supported on hppa
-%define		with_mint	1
-%endif
-
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.2.6
+Version:	3.2.8
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 # latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	076e815090f9807f273b06a98e76e274
-Patch0:		%{name}-missing.patch
+# Source0-md5:	1075f99bd8a69890af9e30309728e684
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
@@ -34,7 +28,6 @@ Patch6:		%{name}-ARG_MAX.patch
 Patch7:		%{name}-fix-null-requirement.patch
 Patch8:		%{name}-docs-build.patch
 Patch9:		%{name}-format-security.patch
-Patch10:	%{name}-mdoc.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -57,7 +50,7 @@ Suggests:	binfmt-detector
 # for System.Drawing
 Suggests:	libgdiplus >= 2.6
 Obsoletes:	mono-jscript
-ExclusiveArch:	%{ix86} %{x8664} arm hppa ia64 mips ppc s390 s390x sparc sparcv9
+ExclusiveArch:	%{ix86} %{x8664} arm ia64 mips ppc s390 s390x sparc sparcv9
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -222,7 +215,6 @@ oraz dotGNU.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
@@ -231,7 +223,6 @@ oraz dotGNU.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
@@ -346,7 +337,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE NEWS README pld-doc/*
+%doc AUTHORS ChangeLog LICENSE NEWS README.md pld-doc/*
 %if %{with mint}
 %attr(755,root,root) %{_bindir}/mint
 %else
@@ -500,11 +491,15 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/web.config
+%dir %{_sysconfdir}/mono/4.0/Browsers
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.0/Browsers/Compat.browser
 %dir %{_sysconfdir}/mono/4.5
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/DefaultWsdlHelpGenerator.aspx
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/machine.config
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/settings.map
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/web.config
+%dir %{_sysconfdir}/mono/4.5/Browsers
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/mono/4.5/Browsers/Compat.browser
 
 %files jay
 %defattr(644,root,root,755)
@@ -584,6 +579,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/resgen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl.exe
 %attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild.exe
+%{_prefix}/lib/mono/2.0/xbuild.exe.config
 %{_prefix}/lib/mono/2.0/xbuild.rsp
 %{_prefix}/lib/mono/2.0/MSBuild
 %{_prefix}/lib/mono/2.0/Microsoft.Build.xsd
@@ -592,6 +588,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/2.0/Microsoft.Common.tasks
 %{_prefix}/lib/mono/2.0/Microsoft.VisualBasic.targets
 %attr(755,root,root) %{_prefix}/lib/mono/3.5/xbuild.exe
+%{_prefix}/lib/mono/3.5/xbuild.exe.config
 %{_prefix}/lib/mono/3.5/xbuild.rsp
 %{_prefix}/lib/mono/3.5/MSBuild
 %{_prefix}/lib/mono/3.5/Microsoft.Build.xsd
@@ -599,13 +596,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/3.5/Microsoft.Common.targets
 %{_prefix}/lib/mono/3.5/Microsoft.Common.tasks
 %{_prefix}/lib/mono/3.5/Microsoft.VisualBasic.targets
-%{_prefix}/lib/mono/4.0/MSBuild
-%{_prefix}/lib/mono/4.0/Microsoft.Build.xsd
-%{_prefix}/lib/mono/4.0/Microsoft.CSharp.targets
-%{_prefix}/lib/mono/4.0/Microsoft.Common.targets
-%{_prefix}/lib/mono/4.0/Microsoft.Common.tasks
-%{_prefix}/lib/mono/4.0/Microsoft.Portable.CSharp.targets
-%{_prefix}/lib/mono/4.0/Microsoft.VisualBasic.targets
+%{_prefix}/lib/mono/4.5/MSBuild
+%{_prefix}/lib/mono/4.5/Microsoft.Build.xsd
+%{_prefix}/lib/mono/4.5/Microsoft.CSharp.targets
+%{_prefix}/lib/mono/4.5/Microsoft.Common.targets
+%{_prefix}/lib/mono/4.5/Microsoft.Common.tasks
+%{_prefix}/lib/mono/4.5/Microsoft.VisualBasic.targets
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/al.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/cccheck.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/ccrewrite.exe
@@ -634,6 +630,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/sqlsharp.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/wsdl.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/xbuild.exe
+%{_prefix}/lib/mono/4.5/xbuild.exe.config
 %{_prefix}/lib/mono/4.5/xbuild.rsp
 %{_prefix}/lib/mono/xbuild
 %{_prefix}/lib/mono/xbuild-frameworks
@@ -663,6 +660,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/system.web.mvc2.pc
 %{_pkgconfigdir}/system.web.mvc3.pc
 %{_pkgconfigdir}/wcf.pc
+%{_pkgconfigdir}/xbuild12.pc
 %{_includedir}/%{name}-2.0
 %{_mandir}/man1/al.1*
 %{_mandir}/man1/cccheck.1*
