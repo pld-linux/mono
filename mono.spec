@@ -13,14 +13,12 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.4.0
+Version:	3.6.0
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
-# latest downloads summary at http://download.mono-project.com/sources-stable/
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	698024a40ee0721c2a24c45be2e39f28
-Patch0:		%{name}-missing.patch
+# Source0-md5:	4564e5f68629f6261f4453ab93b9af17
 Patch1:		%{name}-mint.patch
 Patch2:		%{name}-sonames.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
@@ -33,14 +31,14 @@ URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
 %endif
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
 BuildRequires:	gettext-devel
 BuildRequires:	libtool
 %{!?with_bootstrap:BuildRequires:	mono-csharp}
 %{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
-%{?with_llvm:BuildRequires:	mono-llvm >= 2.11}
+%{?with_llvm:BuildRequires:	mono-llvm >= 3.4}
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	rpmbuild(monoautodeps)
@@ -49,9 +47,9 @@ BuildConflicts:	mono-csharp < 2.4
 Requires:	zlib >= 1.2.3
 Suggests:	binfmt-detector
 # for System.Drawing
-Suggests:	libgdiplus >= 2.6
+Suggests:	libgdiplus >= 3.6
 Obsoletes:	mono-jscript
-ExclusiveArch:	%{ix86} %{x8664} arm ia64 mips ppc s390 s390x sparc sparcv9
+ExclusiveArch:	%{ix86} %{x8664} arm ia64 mips ppc ppc64 s390x sparc sparcv9 sparc64
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -216,7 +214,6 @@ oraz dotGNU.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
@@ -525,6 +522,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/disco
 %attr(755,root,root) %{_bindir}/dtd2xsd
 %attr(755,root,root) %{_bindir}/genxs
+%attr(755,root,root) %{_bindir}/ikdasm
 %attr(755,root,root) %{_bindir}/macpack
 %attr(755,root,root) %{_bindir}/mono-api-info
 %attr(755,root,root) %{_bindir}/mono-cil-strip
@@ -612,6 +610,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/dtd2xsd.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/genxs.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/ictool.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/ikdasm.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/installvst.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/lc.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/macpack.exe
@@ -653,7 +652,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/mono-nunit.pc
 %{_pkgconfigdir}/mono-lineeditor.pc
 %{_pkgconfigdir}/mono-options.pc
-%{_pkgconfigdir}/mono.web.pc
 %{_pkgconfigdir}/monosgen-2.pc
 %{_pkgconfigdir}/reactive.pc
 %{_pkgconfigdir}/system.web.extensions.design_1.0.pc
