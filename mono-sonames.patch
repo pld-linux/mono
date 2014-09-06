@@ -1,5 +1,5 @@
---- mono-3.4.0/data/config.in.orig	2014-03-31 22:25:07.000000000 +0200
-+++ mono-3.4.0/data/config.in	2014-04-03 20:03:02.227596535 +0200
+--- mono-3.8.0/data/config.in.orig	2014-08-28 18:22:10.000000000 +0200
++++ mono-3.8.0/data/config.in	2014-09-06 16:12:15.928307992 +0200
 @@ -5,8 +5,8 @@
  	<dllmap dll="intl" name="bind_textdomain_codeset" target="@LIBC@" os="solaris"/>
  	<dllmap dll="libintl" name="bind_textdomain_codeset" target="@LIBC@" os="solaris"/>
@@ -11,14 +11,14 @@
  	<dllmap dll="i:odbc32.dll" target="libiodbc.dylib" os="osx"/>
  	<dllmap dll="oci" target="libclntsh@libsuffix@" os="!windows"/>
  	<dllmap dll="db2cli" target="libdb2_36@libsuffix@" os="!windows"/>
-@@ -26,8 +26,8 @@
+@@ -29,8 +29,8 @@
  		<dllentry dll="__Internal" name="MoveMemory" target="mono_win32_compat_MoveMemory"/>
  		<dllentry dll="__Internal" name="ZeroMemory" target="mono_win32_compat_ZeroMemory"/>
  	</dllmap>
--	<dllmap dll="gdiplus" target="@prefix@/lib/libgdiplus@libsuffix@" os="!windows"/>
--	<dllmap dll="gdiplus.dll" target="@prefix@/lib/libgdiplus@libsuffix@"  os="!windows"/>
--	<dllmap dll="gdi32" target="@prefix@/lib/libgdiplus@libsuffix@" os="!windows"/>
--	<dllmap dll="gdi32.dll" target="@prefix@/lib/libgdiplus@libsuffix@" os="!windows"/>
+-	<dllmap dll="gdiplus" target="@libgdiplus_install_loc@" os="!windows"/>
+-	<dllmap dll="gdiplus.dll" target="@libgdiplus_install_loc@"  os="!windows"/>
+-	<dllmap dll="gdi32" target="@libgdiplus_install_loc@" os="!windows"/>
+-	<dllmap dll="gdi32.dll" target="@libgdiplus_install_loc@" os="!windows"/>
 +	<dllmap dll="gdiplus" target="libgdiplus.so.0" os="!windows"/>
 +	<dllmap dll="gdiplus.dll" target="libgdiplus.so.0"  os="!windows"/>
 +	<dllmap dll="gdi32" target="libgdiplus.so.0" os="!windows"/>
