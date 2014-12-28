@@ -34,7 +34,7 @@ BuildRequires:	ACCESSIBLE_/dev/random
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	bison
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libtool
 %{!?with_bootstrap:BuildRequires:	mono-csharp}
 %{!?with_bootstrap:BuildRequires:	mono-devel >= 1.1.8.3-2}
