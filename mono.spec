@@ -7,19 +7,17 @@
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
 %bcond_without	static_libs	# don't build static libraries
 %bcond_with	bootstrap	# don't require mono-devel to find req/prov
-%bcond_with	mint		# build mint instead of mono VM (JIT) [broken]
 %bcond_with	llvm		# LLVM backend [unfinished, needs unreleased mono-llvm version]
 
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.10.0
+Version:	3.12.0
 Release:	1
 License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
 Group:		Development/Languages
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	8c79f38bcab3ad0cf65728ca4c76b3c6
-Patch1:		%{name}-mint.patch
+# Source0-md5:	0fbca17e5bfce5124d4bc915faa697d7
 Patch2:		%{name}-sonames.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
@@ -214,7 +212,6 @@ oraz dotGNU.
 
 %prep
 %setup -q
-%patch1 -p1
 %patch2 -p1
 %patch4 -p1
 %patch5 -p1
@@ -275,23 +272,14 @@ CPPFLAGS="%{rpmcppflags} -DUSE_LIBC_PRIVATE_SYMBOLS -DUSE_COMPILER_TLS"
 %endif
 	--with-gc=included \
 	--without-icu \
-	--with-interp%{!?with_mint:=no} \
-	--with-jit%{?with_mint:=no} \
 	--without-monotouch \
 	--with-profile4 \
 	--with-sgen \
 	--with-tls=%{?with_tls:__thread}%{!?with_tls:pthread}
 
-# mint uses heap to make trampolines, which need to be executable
-# there is mprotect(...,PROT_EXEC) for ppc/s390, but not used
-# (ifdef NEED_MPROTECT, which is never defined)
-# in fact the flag should be "-Wl,-z,execheap" for libmint, but:
-# -z execheap doesn't seem to do anything currently;
-# -z execstack for library makes only stack executable, but not heap.
 # V=1 because --disable-silent-rules doesn't work.
 %{__make} -j1 \
-	V=1 \
-	mint_LDFLAGS="-Wl,-z,execheap -Wl,-z,execstack"
+	V=1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -337,12 +325,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog LICENSE NEWS README.md pld-doc/*
-%if %{with mint}
-%attr(755,root,root) %{_bindir}/mint
-%else
 %attr(755,root,root) %{_bindir}/mono
-%endif
 %attr(755,root,root) %{_bindir}/caspol
+%attr(755,root,root) %{_bindir}/cert-sync
 %attr(755,root,root) %{_bindir}/cert2spc
 %attr(755,root,root) %{_bindir}/certmgr
 %attr(755,root,root) %{_bindir}/chktrust
@@ -360,6 +345,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-configuration-crypto
 %attr(755,root,root) %{_bindir}/mono-service
 %attr(755,root,root) %{_bindir}/mono-service2
+%attr(755,root,root) %{_bindir}/mono-sgen
 %attr(755,root,root) %{_bindir}/mono-test-install
 %attr(755,root,root) %{_bindir}/mono-xmltool
 %attr(755,root,root) %{_bindir}/mozroots
@@ -372,17 +358,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/sn
 %attr(755,root,root) %{_bindir}/sqlmetal
 %attr(755,root,root) %{_bindir}/svcutil
-%if %{with mint}
-%attr(755,root,root) %{_libdir}/libmint.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmint.so.0
-%else
 %attr(755,root,root) %{_libdir}/libmono-2.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmono-2.0.so.1
 %attr(755,root,root) %{_libdir}/libmonoboehm-2.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmonoboehm-2.0.so.1
 %attr(755,root,root) %{_libdir}/libmonosgen-2.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmonosgen-2.0.so.1
-%endif
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-aot.so.0
 %attr(755,root,root) %{_libdir}/libmono-profiler-cov.so.*.*.*
@@ -412,6 +393,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/RabbitMQ.Client.Apigen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/browsercaps-updater.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/caspol.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/cert-sync.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/cert2spc.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/certmgr.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/chktrust.exe
@@ -527,7 +509,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-api-info
 %attr(755,root,root) %{_bindir}/mono-cil-strip
 %attr(755,root,root) %{_bindir}/mono-heapviz
-%attr(755,root,root) %{_bindir}/mono-sgen
 %attr(755,root,root) %{_bindir}/monodis
 %attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
@@ -550,21 +531,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/wsdl2
 %attr(755,root,root) %{_bindir}/xbuild
 %attr(755,root,root) %{_bindir}/xsd
-%if %{with mint}
-%attr(755,root,root) %{_libdir}/libmint.so
-%{_libdir}/libmint.la
-%else
 %attr(755,root,root) %{_libdir}/libmono-2.0.so
 %attr(755,root,root) %{_libdir}/libmonoboehm-2.0.so
 %attr(755,root,root) %{_libdir}/libmonosgen-2.0.so
-%{_libdir}/libmono-2.0.la
-%{_libdir}/libmonoboehm-2.0.la
-%{_libdir}/libmonosgen-2.0.la
-%endif
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-cov.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-log.so
+%{_libdir}/libmono-2.0.la
+%{_libdir}/libmonoboehm-2.0.la
+%{_libdir}/libmonosgen-2.0.la
 %{_libdir}/libmono-profiler-aot.la
 %{_libdir}/libmono-profiler-cov.la
 %{_libdir}/libmono-profiler-iomap.la
@@ -642,11 +618,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/cecil.pc
 %{_pkgconfigdir}/dotnet.pc
 %{_pkgconfigdir}/dotnet35.pc
-%if %{with mint}
-%{_pkgconfigdir}/mint.pc
-%else
 %{_pkgconfigdir}/mono.pc
-%endif
 %{_pkgconfigdir}/mono-2.pc
 %{_pkgconfigdir}/mono-cairo.pc
 %{_pkgconfigdir}/mono-nunit.pc
@@ -741,13 +713,9 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
-%if %{with mint}
-%{_libdir}/libmint.a
-%else
 %{_libdir}/libmono-2.0.a
 %{_libdir}/libmonoboehm-2.0.a
 %{_libdir}/libmonosgen-2.0.a
-%endif
 %{_libdir}/libmono-profiler-aot.a
 %{_libdir}/libmono-profiler-cov.a
 %{_libdir}/libmono-profiler-iomap.a
