@@ -45,9 +45,9 @@ BuildConflicts:	mono-csharp < 2.4
 Requires:	zlib >= 1.2.3
 Suggests:	binfmt-detector
 # for System.Drawing
-Suggests:	libgdiplus >= 3.8
+Suggests:	libgdiplus >= 3.12
 Obsoletes:	mono-jscript
-ExclusiveArch:	%{ix86} %{x8664} arm ia64 mips ppc ppc64 s390x sparc sparcv9 sparc64
+ExclusiveArch:	%{ix86} %{x8664} arm aarch64 ia64 mips ppc ppc64 s390x sparc sparcv9 sparc64
 # plain i386 is not supported; mono uses cmpxchg/xadd which require i486
 ExcludeArch:	i386
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
