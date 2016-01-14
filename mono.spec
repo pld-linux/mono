@@ -2,6 +2,7 @@
 # NOTE: Makefiles are broken, build could stop long time after first fatal error
 # TODO:
 #   - cleanup %%doc ./notes from dll/zip/sh/etc.
+#   - bcond for vtune profiler (proprietary)
 #
 # Conditional build:
 %bcond_without	tls		# don't use TLS (which requires recent 2.4.x or 2.6 kernel)
@@ -12,12 +13,12 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	3.12.1
+Version:	4.2.2.10
 Release:	1
-License:	LGPL v2 (VM), MIT X11/GPL v2 (C# compilers), MIT X11 (classes, tools), GPL v2 (tools)
+License:	LGPL v2 (VM), MIT/GPL v2 (C# compilers), MIT/MSPL/Apache v2.0 (classes), MIT/GPL v2 (tools)
 Group:		Development/Languages
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	ccab015f0c54ffeccd2924b44885809c
+# Source0-md5:	16644eab7d890e568d34a18e93e7a878
 Patch2:		%{name}-sonames.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
@@ -212,7 +213,7 @@ Pakiet ten zawiera dowiązania do programów o nazwach używanych w .NET
 oraz dotGNU.
 
 %prep
-%setup -q
+%setup -q -n mono-4.2.2
 %patch2 -p1
 %patch4 -p1
 %patch5 -p1
@@ -326,7 +327,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE NEWS README.md pld-doc/*
+%doc ChangeLog LICENSE NEWS README.md pld-doc/*
 %attr(755,root,root) %{_bindir}/mono
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_bindir}/cert-sync
@@ -368,8 +369,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libmonosgen-2.0.so.1
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-aot.so.0
-%attr(755,root,root) %{_libdir}/libmono-profiler-cov.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmono-profiler-cov.so.0
 %attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmono-profiler-iomap.so.0
 %attr(755,root,root) %{_libdir}/libmono-profiler-log.so.*.*.*
@@ -379,17 +378,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libikvm-native.so
 %dir %{_prefix}/lib/mono
 %dir %{_prefix}/lib/mono/2.0
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/RabbitMQ.Client.Apigen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/gacutil.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/mkbundle.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/mono-service.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/xsd.exe
 %{_prefix}/lib/mono/2.0/*.dll
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/mscorlib.dll.so
 %dir %{_prefix}/lib/mono/3.5
 %{_prefix}/lib/mono/3.5/*.dll
 %dir %{_prefix}/lib/mono/4.0
-%attr(755,root,root) %{_prefix}/lib/mono/4.0/RabbitMQ.Client.Apigen.exe
 %{_prefix}/lib/mono/4.0/*.dll
 %dir %{_prefix}/lib/mono/4.5
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/RabbitMQ.Client.Apigen.exe
@@ -424,8 +416,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mscorlib.dll.so
 %dir %{_prefix}/lib/mono/4.5/Facades
 %{_prefix}/lib/mono/4.5/Facades/*.dll
-%dir %{_prefix}/lib/mono/compat-2.0
-%{_prefix}/lib/mono/compat-2.0/*.dll
 %dir %{_prefix}/lib/mono/mono-configuration-crypto
 %dir %{_prefix}/lib/mono/mono-configuration-crypto/4.5
 %{_prefix}/lib/mono/mono-configuration-crypto/4.5/Mono.Configuration.Crypto.dll
@@ -511,8 +501,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/mono-api-info
 %attr(755,root,root) %{_bindir}/mono-cil-strip
 %attr(755,root,root) %{_bindir}/mono-heapviz
+%attr(755,root,root) %{_bindir}/mono-symbolicate
 %attr(755,root,root) %{_bindir}/monodis
-%attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
 %attr(755,root,root) %{_bindir}/monop
 %attr(755,root,root) %{_bindir}/monop2
@@ -537,43 +527,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmonoboehm-2.0.so
 %attr(755,root,root) %{_libdir}/libmonosgen-2.0.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so
-%attr(755,root,root) %{_libdir}/libmono-profiler-cov.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-log.so
+%{_libdir}/libmono-profiler-log-static.a
 %{_libdir}/libmono-2.0.la
 %{_libdir}/libmonoboehm-2.0.la
 %{_libdir}/libmonosgen-2.0.la
 %{_libdir}/libmono-profiler-aot.la
-%{_libdir}/libmono-profiler-cov.la
 %{_libdir}/libmono-profiler-iomap.la
 %{_libdir}/libmono-profiler-log.la
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/al.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/culevel.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/genxs.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/monolinker.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/monop.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/nunit-console.exe
-%{_prefix}/lib/mono/2.0/nunit-console.exe.config
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/resgen.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/wsdl.exe
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/xbuild.exe
-%{_prefix}/lib/mono/2.0/xbuild.exe.config
-%{_prefix}/lib/mono/2.0/xbuild.rsp
-%{_prefix}/lib/mono/2.0/MSBuild
-%{_prefix}/lib/mono/2.0/Microsoft.Build.xsd
-%{_prefix}/lib/mono/2.0/Microsoft.CSharp.targets
-%{_prefix}/lib/mono/2.0/Microsoft.Common.targets
-%{_prefix}/lib/mono/2.0/Microsoft.Common.tasks
-%{_prefix}/lib/mono/2.0/Microsoft.VisualBasic.targets
-%attr(755,root,root) %{_prefix}/lib/mono/3.5/xbuild.exe
-%{_prefix}/lib/mono/3.5/xbuild.exe.config
-%{_prefix}/lib/mono/3.5/xbuild.rsp
-%{_prefix}/lib/mono/3.5/MSBuild
-%{_prefix}/lib/mono/3.5/Microsoft.Build.xsd
-%{_prefix}/lib/mono/3.5/Microsoft.CSharp.targets
-%{_prefix}/lib/mono/3.5/Microsoft.Common.targets
-%{_prefix}/lib/mono/3.5/Microsoft.Common.tasks
-%{_prefix}/lib/mono/3.5/Microsoft.VisualBasic.targets
+%{_libdir}/libmono-profiler-log-static.la
 %{_prefix}/lib/mono/4.5/MSBuild
 %{_prefix}/lib/mono/4.5/Microsoft.Build.xsd
 %{_prefix}/lib/mono/4.5/Microsoft.CSharp.targets
@@ -598,6 +561,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-cil-strip.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-shlib-cop.exe
 %{_prefix}/lib/mono/4.5/mono-shlib-cop.exe.config
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-symbolicate.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-xmltool.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/monolinker.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/monop.exe
@@ -611,6 +575,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/xbuild.exe
 %{_prefix}/lib/mono/4.5/xbuild.exe.config
 %{_prefix}/lib/mono/4.5/xbuild.rsp
+# mono support for lldb
+%{_prefix}/lib/mono/lldb
 %{_prefix}/lib/mono/xbuild
 %{_prefix}/lib/mono/xbuild-frameworks
 %{_datadir}/mono-2.0
@@ -648,6 +614,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/mono-api-info.1*
 %{_mandir}/man1/mono-cil-strip.1*
 %{_mandir}/man1/mono-shlib-cop.1*
+%{_mandir}/man1/mono-symbolicate.1*
 %{_mandir}/man1/mono-xmltool.1*
 %{_mandir}/man1/monodis.1*
 %{_mandir}/man1/monolinker.1*
@@ -663,8 +630,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files debug
 %defattr(644,root,root,755)
-%{_prefix}/lib/mono/2.0/*.mdb
-%{_prefix}/lib/mono/3.5/*.mdb
 %{_prefix}/lib/mono/4.5/*.mdb
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_prefix}/lib/mono/mono-configuration-crypto/4.5/*.mdb
@@ -673,7 +638,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/csharp
 %attr(755,root,root) %{_bindir}/dmcs
-%attr(755,root,root) %{_bindir}/gmcs
 %attr(755,root,root) %{_bindir}/mcs
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/csharp.exe
 %{_mandir}/man1/mcs.1*
@@ -682,7 +646,6 @@ rm -rf $RPM_BUILD_ROOT
 %files ilasm
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ilasm
-%attr(755,root,root) %{_prefix}/lib/mono/2.0/ilasm.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/ilasm.exe
 %{_mandir}/man1/ilasm.1*
 
@@ -719,7 +682,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmonoboehm-2.0.a
 %{_libdir}/libmonosgen-2.0.a
 %{_libdir}/libmono-profiler-aot.a
-%{_libdir}/libmono-profiler-cov.a
 %{_libdir}/libmono-profiler-iomap.a
 %{_libdir}/libmono-profiler-log.a
 %endif
