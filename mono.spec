@@ -19,6 +19,8 @@ License:	LGPL v2 (VM), MIT/GPL v2 (C# compilers), MIT/MSPL/Apache v2.0 (classes)
 Group:		Development/Languages
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
 # Source0-md5:	16644eab7d890e568d34a18e93e7a878
+# https://github.com/mono/mono/commit/6b76c7e984cbe42d6455ffcde2fe227aa5ffd801.patch
+Patch0:		%{name}-nunit.patch
 Patch2:		%{name}-sonames.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
@@ -214,6 +216,7 @@ oraz dotGNU.
 
 %prep
 %setup -q -n mono-4.2.2
+%patch0 -p1
 %patch2 -p1
 %patch4 -p1
 %patch5 -p1
