@@ -578,10 +578,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/xbuild.exe
 %{_prefix}/lib/mono/4.5/xbuild.exe.config
 %{_prefix}/lib/mono/4.5/xbuild.rsp
-# mono support for lldb
-%{_prefix}/lib/mono/lldb
 %{_prefix}/lib/mono/xbuild
 %{_prefix}/lib/mono/xbuild-frameworks
+# mono support for lldb
+%if "%{_lib}" != "lib"
+%dir %{_libdir}/mono
+%endif
+%{_libdir}/mono/lldb
 %{_datadir}/mono-2.0
 %attr(755,root,root) %{_rpmlibdir}/mono-find-provides
 %attr(755,root,root) %{_rpmlibdir}/mono-find-requires
