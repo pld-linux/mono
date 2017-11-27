@@ -13,14 +13,12 @@
 Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
-Version:	4.2.2.30
+Version:	4.8.1.0
 Release:	1
 License:	LGPL v2 (VM), MIT/GPL v2 (C# compilers), MIT/MSPL/Apache v2.0 (classes), MIT/GPL v2 (tools)
 Group:		Development/Languages
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
-# Source0-md5:	2c5358041c931b8c1eabf0544565c9a3
-# https://github.com/mono/mono/commit/6b76c7e984cbe42d6455ffcde2fe227aa5ffd801.patch
-Patch0:		%{name}-nunit.patch
+# Source0-md5:	715e7003221c1965eded65aa11c9a90e
 Patch2:		%{name}-sonames.patch
 Patch4:		%{name}-console-no-utf8-bom.patch
 Patch5:		%{name}-pc.patch
@@ -215,8 +213,7 @@ Pakiet ten zawiera dowiązania do programów o nazwach używanych w .NET
 oraz dotGNU.
 
 %prep
-%setup -q -n mono-4.2.2
-%patch0 -p1
+%setup -q -n mono-4.8.1
 %patch2 -p1
 %patch4 -p1
 %patch5 -p1
@@ -312,7 +309,7 @@ cp -a docs/* pld-doc/notes
 
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/libgc-mono
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/mono-find-* $RPM_BUILD_ROOT%{_rpmlibdir}
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/mono-find-* $RPM_BUILD_ROOT%{_rpmlibdir}
 
 # loadable modules
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/lib{MonoPosixHelper,MonoSupportW,ikvm-native}.la
@@ -330,7 +327,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc ChangeLog LICENSE NEWS README.md pld-doc/*
+%doc LICENSE NEWS README.md pld-doc/*
 %attr(755,root,root) %{_bindir}/mono
 %attr(755,root,root) %{_bindir}/caspol
 %attr(755,root,root) %{_bindir}/cert-sync
@@ -380,12 +377,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libMonoSupportW.so
 %attr(755,root,root) %{_libdir}/libikvm-native.so
 %dir %{_prefix}/lib/mono
-%dir %{_prefix}/lib/mono/2.0
-%{_prefix}/lib/mono/2.0/*.dll
-%dir %{_prefix}/lib/mono/3.5
-%{_prefix}/lib/mono/3.5/*.dll
+%dir %{_prefix}/lib/mono/2.0-api
+%{_prefix}/lib/mono/2.0-api/*.dll
+%dir %{_prefix}/lib/mono/3.5-api
+%{_prefix}/lib/mono/3.5-api/*.dll
 %dir %{_prefix}/lib/mono/4.0
+# compat symlinks?
 %{_prefix}/lib/mono/4.0/*.dll
+%dir %{_prefix}/lib/mono/4.0-api
+%{_prefix}/lib/mono/4.0-api/*.dll
 %dir %{_prefix}/lib/mono/4.5
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/RabbitMQ.Client.Apigen.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/browsercaps-updater.exe
@@ -415,10 +415,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono/4.5/sqlmetal.exe.config
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/svcutil.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/xsd.exe
-%{_prefix}/lib/mono/4.5/*.dll
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mscorlib.dll.so
+%{_prefix}/lib/mono/4.5/*.dll
 %dir %{_prefix}/lib/mono/4.5/Facades
 %{_prefix}/lib/mono/4.5/Facades/*.dll
+%dir %{_prefix}/lib/mono/4.5-api
+%{_prefix}/lib/mono/4.5-api/*.dll
+%dir %{_prefix}/lib/mono/4.5-api/Facades
+%{_prefix}/lib/mono/4.5-api/Facades/*.dll
 %dir %{_prefix}/lib/mono/mono-configuration-crypto
 %dir %{_prefix}/lib/mono/mono-configuration-crypto/4.5
 %{_prefix}/lib/mono/mono-configuration-crypto/4.5/Mono.Configuration.Crypto.dll
@@ -429,6 +433,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_prefix}/lib/mono-source-libs
 %dir %{_datadir}/.mono
 %dir %{_datadir}/.mono/keypairs
+%{_mandir}/man1/cert-sync.1*
 %{_mandir}/man1/cert2spc.1*
 %{_mandir}/man1/certmgr.1*
 %{_mandir}/man1/chktrust.1*
@@ -479,7 +484,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files jay
 %defattr(644,root,root,755)
-%doc mcs/jay/{ACKNOWLEDGEMENTS,ChangeLog,NEW_FEATURES,NOTES,README,README.jay}
+%doc mcs/jay/{ACKNOWLEDGEMENTS,NEW_FEATURES,NOTES,README,README.jay}
 %attr(755,root,root) %{_bindir}/jay
 %dir %{_datadir}/jay
 %{_datadir}/jay/skeleton*
@@ -501,11 +506,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/genxs
 %attr(755,root,root) %{_bindir}/ikdasm
 %attr(755,root,root) %{_bindir}/macpack
+%attr(755,root,root) %{_bindir}/mono-api-html
 %attr(755,root,root) %{_bindir}/mono-api-info
 %attr(755,root,root) %{_bindir}/mono-cil-strip
 %attr(755,root,root) %{_bindir}/mono-heapviz
+%attr(755,root,root) %{_bindir}/mono-package-runtime
 %attr(755,root,root) %{_bindir}/mono-symbolicate
 %attr(755,root,root) %{_bindir}/monodis
+%attr(755,root,root) %{_bindir}/monograph
 %attr(755,root,root) %{_bindir}/monolinker
 %attr(755,root,root) %{_bindir}/monop
 %attr(755,root,root) %{_bindir}/monop2
@@ -520,6 +528,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/peverify
 %attr(755,root,root) %{_bindir}/permview
 %attr(755,root,root) %{_bindir}/prj2make
+%attr(755,root,root) %{_bindir}/sgen-grep-binprot
 %attr(755,root,root) %{_bindir}/soapsuds
 %attr(755,root,root) %{_bindir}/sqlsharp
 %attr(755,root,root) %{_bindir}/wsdl
@@ -532,12 +541,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmono-profiler-aot.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-iomap.so
 %attr(755,root,root) %{_libdir}/libmono-profiler-log.so
+%{_libdir}/libmono-profiler-aot-static.a
+%{_libdir}/libmono-profiler-iomap-static.a
 %{_libdir}/libmono-profiler-log-static.a
 %{_libdir}/libmono-2.0.la
 %{_libdir}/libmonoboehm-2.0.la
 %{_libdir}/libmonosgen-2.0.la
 %{_libdir}/libmono-profiler-aot.la
+%{_libdir}/libmono-profiler-aot-static.la
 %{_libdir}/libmono-profiler-iomap.la
+%{_libdir}/libmono-profiler-iomap-static.la
 %{_libdir}/libmono-profiler-log.la
 %{_libdir}/libmono-profiler-log-static.la
 %{_prefix}/lib/mono/4.5/MSBuild
@@ -557,9 +570,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/ikdasm.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/installvst.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/lc.exe
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/linkeranalyzer.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/macpack.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mcs.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mcs.exe.so
+%attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-api-html.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-api-info.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-cil-strip.exe
 %attr(755,root,root) %{_prefix}/lib/mono/4.5/mono-shlib-cop.exe
@@ -637,6 +652,7 @@ rm -rf $RPM_BUILD_ROOT
 %files debug
 %defattr(644,root,root,755)
 %{_prefix}/lib/mono/4.5/*.mdb
+%{_prefix}/lib/mono/4.5/Facades/*.mdb
 %{_prefix}/lib/mono/gac/*/*/*.mdb
 %{_prefix}/lib/mono/mono-configuration-crypto/4.5/*.mdb
 
