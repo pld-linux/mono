@@ -1,0 +1,10 @@
+--- mono-4.8.1/mono/io-layer/processes.c~	2017-04-12 12:51:21.000000000 +0200
++++ mono-4.8.1/mono/io-layer/processes.c	2018-10-21 17:53:30.117068850 +0200
+@@ -29,6 +29,7 @@
+ #include <sys/param.h>
+ #endif
+ #include <ctype.h>
++#include <sys/sysmacros.h>
+ 
+ #ifdef HAVE_SYS_WAIT_H
+ #include <sys/wait.h>

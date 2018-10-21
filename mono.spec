@@ -14,7 +14,7 @@ Summary:	Common Language Infrastructure implementation
 Summary(pl.UTF-8):	Implementacja Common Language Infrastructure
 Name:		mono
 Version:	4.8.1.0
-Release:	2
+Release:	3
 License:	LGPL v2 (VM), MIT/GPL v2 (C# compilers), MIT/MSPL/Apache v2.0 (classes), MIT/GPL v2 (tools)
 Group:		Development/Languages
 Source0:	http://download.mono-project.com/sources/mono/%{name}-%{version}.tar.bz2
@@ -28,6 +28,7 @@ Patch8:		%{name}-docs-build.patch
 Patch9:		%{name}-format-security.patch
 Patch10:	%{name}-x32.patch
 Patch11:	consistent-rpm-prov-req.patch
+Patch12:	glibc.patch
 URL:		http://www.mono-project.com/
 %if %(test -r /dev/random; echo $?)
 BuildRequires:	ACCESSIBLE_/dev/random
@@ -224,6 +225,7 @@ oraz dotGNU.
 %patch9 -p1
 #patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 # for jay
 cat >> mcs/build/config-default.make <<'EOF'
