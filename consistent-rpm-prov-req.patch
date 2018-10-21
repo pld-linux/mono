@@ -1,13 +1,11 @@
---- mono-4.8.1/scripts/mono-find-requires.in~	2018-10-21 17:31:32.000000000 +0200
-+++ mono-4.8.1/scripts/mono-find-requires.in	2018-10-21 17:33:52.246228263 +0200
-@@ -15,6 +15,10 @@
- filelist=($(grep -Ev '/usr/doc/|/usr/share/doc/'))
- monolist=($(printf "%s\n" "${filelist[@]}" | egrep "\\.(exe|dll)\$"))
+--- mono-4.8.1/scripts/mono-find-provides.in~	2017-04-12 12:51:22.000000000 +0200
++++ mono-4.8.1/scripts/mono-find-provides.in	2018-10-21 19:25:53.753471755 +0200
+@@ -16,7 +16,7 @@
  
-+# Only include files with /gac/ in path
-+#  (Allows packages to contain private assemblies that don't conflict with other packages)
-+monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
-+
- # parse .config files to find which native libraries to depend on 
- #  (target attribute must have double quotes for this to work, ie: target="file" )
- # Add /etc/mono/config ?
+ # Only include files with /gac/ in path
+ #  (Allows packages to contain private assemblies that don't conflict with other packages)
+-monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
++#monolist=($(printf "%s\n" "${monolist[@]}" | egrep "/gac/"))
+ # Disabled... see ChangeLog
+ 
+ # Set the prefix, unless it is overriden (used when building mono rpms)
