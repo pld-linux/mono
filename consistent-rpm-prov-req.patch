@@ -9,3 +9,23 @@
  # Disabled... see ChangeLog
  
  # Set the prefix, unless it is overriden (used when building mono rpms)
+@@ -26,7 +26,7 @@
+ bindir=$prefix/bin
+ 
+ # Bail out if monodis or libmono is missing
+-if [ ! -x $bindir/monodis ] || [ ! -f $libdir/libmono-2.0.so.1 ] ; then
++if [ ! -x $bindir/monodis ]; then
+ 	echo "monodis missing or unusable, exiting..." 1>&2
+ 	exit 1
+ fi
+--- mono-4.8.1/scripts/mono-find-requires.in~	2018-10-21 22:38:34.000000000 +0200
++++ mono-4.8.1/scripts/mono-find-requires.in	2018-10-21 22:43:46.468368810 +0200
+@@ -30,7 +30,7 @@
+ bindir=$prefix/bin
+ 
+ # Bail out if monodis or libmono is missing
+-if [ ! -x $bindir/monodis ] || [ ! -f $libdir/libmono-2.0.so.1 ] ; then
++if [ ! -x $bindir/monodis ]; then
+ 	echo "monodis missing or unusable, exiting..." 1>&2
+ 	exit 1
+ fi
